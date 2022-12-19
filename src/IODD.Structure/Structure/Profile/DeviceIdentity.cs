@@ -1,4 +1,3 @@
-using IOLinkNET.IODD.Structure.DataTypes;
 using IOLinkNET.IODD.Structure.Common;
 
 namespace IOLinkNET.IODD.Structure.Profile;
