@@ -14,7 +14,7 @@ internal static class XElementExtensions
     public static string ReadMandatoryAttribute(this XElement element, string attributeName)
 
     {
-        var attribute = element.Attribute(element.Name + attributeName) ?? throw new ArgumentOutOfRangeException($"{attributeName} does not exist on this element");
+        var attribute = element.Attribute(attributeName) ?? throw new ArgumentOutOfRangeException($"{attributeName} does not exist on this element");
         return attribute.Value;
     }
 

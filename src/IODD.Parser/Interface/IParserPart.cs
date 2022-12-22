@@ -9,5 +9,5 @@ internal interface IParserPart<T> : IParserPart
 
 internal interface IParserPart
 {
-    XName Target { get; }
+    bool CanParse(XName target);
 }

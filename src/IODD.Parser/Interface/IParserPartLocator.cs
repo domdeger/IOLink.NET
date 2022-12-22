@@ -5,4 +5,5 @@ namespace IOLinkNET.IODD.Parser;
 internal interface IParserPartLocator
 {
     T Parse<T>(XElement element);
+    void AddPart(IParserPart part);
 }
