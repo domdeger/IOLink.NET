@@ -1,9 +1,10 @@
 using System.Xml.Linq;
 
-using IOLinkNET.IODD.Parser;
-using IOLinkNET.IODD.Structure.Profile;
+using IODD.Structure.Structure.Profile;
 
-namespace IODD.Parser.Parts;
+using IOLinkNET.IODD.Parser;
+
+namespace IODD.Parser.Parts.DeviceFunction;
 
 internal class DeviceFunctionParser : IParserPart<DeviceFunctionT>
 {

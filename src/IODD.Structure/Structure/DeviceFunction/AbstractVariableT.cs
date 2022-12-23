@@ -1,6 +1,10 @@
-using IOLinkNET.IODD.Structure.DataTypes;
+using IODD.Structure.Structure.Datatypes;
+
 using IOLinkNET.IODD.Structure.Common;
-namespace IOLinkNET.IODD.Structure.DeviceFunction;
+using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.DeviceFunction;
+
+namespace IODD.Structure.Structure.DeviceFunction;
 
 public record AbstractVariableT(DatatypeT? Datatype, DatatypeRefT? DatatypeRef, TextRefT Name, TextRefT? Description,
     AccessRightsT AccessRights, IEnumerable<RecordItemInfoT> RecordItemInfos,

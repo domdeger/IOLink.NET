@@ -5,23 +5,21 @@ using IODD.Structure.Structure;
 using IODD.Structure.Structure.Profile;
 
 using IOLinkNET.IODD.Parser;
-using IOLinkNET.IODD.Parser.Parts;
 
-namespace IODD.Parser
+namespace IODD.Parser;
+
+public class IODDParser
 {
-    public class IODDParser
+    private readonly IParserPartLocator _partLocator = new ParserPartLocator();
+    public IODDParser()
     {
-        private readonly IParserPartLocator _partLocator = new ParserPartLocator();
-        public IODDParser()
-        {
-            _partLocator.AddPart(new DeviceIdentityParser(_partLocator));
-            _partLocator.AddPart(new TextRefTParser());
-        }
-        public IODevice? Parse(XElement iodd)
-        {
-            _ = _partLocator.Parse<DeviceIdentityT>(iodd.Descendants(IODDParserConstants.DeviceIdentityName).First());
+        _partLocator.AddPart(new DeviceIdentityParser(_partLocator));
+        _partLocator.AddPart(new TextRefTParser());
+    }
+    public IODevice? Parse(XElement iodd)
+    {
+        _ = _partLocator.Parse<DeviceIdentityT>(iodd.Descendants(IODDParserConstants.DeviceIdentityName).First());
 
-            return null;
-        }
+        return null;
     }
 }

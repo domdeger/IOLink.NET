@@ -28,11 +28,9 @@ internal class DatatypeCollection : IParserPart<IEnumerable<DatatypeT>>
 
         foreach (XElement dataTypeElement in dataTypeElements)
         {
-            string typeName = dataTypeElement.ReadMandatoryAttribute("type");
+            _ = dataTypeElement.ReadMandatoryAttribute("type");
 
-            DatatypeT convertedType = (DatatypeT?)SimpleTypeParser.Parse(typeName, dataTypeElement) ?? ComplexTypeParser.Parse(typeName, dataTypeElement, _partLocator)
-                    ?? throw new NotSupportedException($"Could not parse data type with name {typeName}.");
-
+            DatatypeT convertedType = DatatypeTParser.Parse(dataTypeElement, _partLocator);
             dataTypeCollection.Add(convertedType);
         }
 

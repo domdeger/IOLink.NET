@@ -12,5 +12,7 @@ public static class IODDDeviceFunctionNames
 
     public static readonly XName VariableName = IODDParserConstants.IODDXmlNamespace.GetName("Variable");
 
+    public static readonly XName RecordItemInfo = IODDParserConstants.IODDXmlNamespace.GetName("RecordItemInfo");
+
     public static readonly XName ProcessDataCollectionName = IODDParserConstants.IODDXmlNamespace.GetName("ProcessDataCollection");
 }
