@@ -1,27 +1,22 @@
 using System.Xml.Linq;
 
-namespace IOLinkNET.IODD.Parser;
+using IOLinkNET.IODD.Parser;
 
-internal static class ParserPartLocatorExtensions
+namespace IODD.Parser.Helpers
 {
-    public static T? ParseOptional<T>(this IParserPartLocator locator, XElement? element)
-        where T : class
+    internal static class ParserPartLocatorExtensions
     {
-        if (element is null)
+        public static T? ParseOptional<T>(this IParserPartLocator locator, XElement? element)
+            where T : class
         {
-            return null;
+            return element is null ? null : locator.Parse<T>(element);
         }
 
-        return locator.Parse<T>(element);
-    }
-
-    public static T ParseMandatory<T>(this IParserPartLocator locator, XElement? element)
-    {
-        if (element is null)
+        public static T ParseMandatory<T>(this IParserPartLocator locator, XElement? element)
         {
-            throw new ArgumentNullException(nameof(element));
+            return element is null
+                ? throw new ArgumentNullException(nameof(element))
+                : locator.Parse<T>(element) ?? throw new InvalidOperationException("Could not parse the element as expected.");
         }
-
-        return locator.Parse<T>(element) ?? throw new InvalidOperationException("Could not parse the element as expected.");
     }
 }

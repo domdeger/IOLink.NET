@@ -1,3 +1,6 @@
-namespace IOLinkNET.IODD.Structure.Profile;
+using IOLinkNET.IODD.Structure.Profile;
 
-public record ProfileBodyT(DeviceIdentityT DeviceIdentity, DeviceFunctionT DeviceFunction);
+namespace IODD.Structure.Structure.Profile
+{
+    public record ProfileBodyT(DeviceIdentityT DeviceIdentity, DeviceFunctionT DeviceFunction);
+}

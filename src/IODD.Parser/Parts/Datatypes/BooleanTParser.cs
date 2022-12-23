@@ -1,0 +1,17 @@
+using System.Xml.Linq;
+
+using IODD.Parser.Helpers;
+
+using IOLinkNET.IODD.Structure.DataTypes;
+
+namespace IODD.Parser.Parts.Datatypes;
+
+internal static class BooleanTParser
+{
+    public static BooleanT Parse(XElement elem)
+    {
+        string id = elem.ReadMandatoryAttribute("id");
+
+        return new BooleanT(id, Enumerable.Empty<SingleValueT<bool>>());
+    }
+}

@@ -1,44 +1,45 @@
 using System.Xml.Linq;
 
-using IOLinkNET.IODD.Parser.Parts.Constants;
+using IODD.Parser.Helpers;
+using IODD.Parser.Parts.Constants;
+using IODD.Structure.Structure.Profile;
+
+using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.Profile;
 
-namespace IOLinkNET.IODD.Parser.Parts;
-
-internal class DeviceIdentityParser : IParserPart<DeviceIdentityT>
+namespace IODD.Parser.Parts
 {
-    private readonly IParserPartLocator _parserLocator;
-
-    public DeviceIdentityParser(IParserPartLocator parserLocator)
+    internal class DeviceIdentityParser : IParserPart<DeviceIdentityT>
     {
-        _parserLocator = parserLocator;
-    }
-    public XName Target => IODDParserConstants.DeviceIdentityName;
+        private readonly IParserPartLocator _parserLocator;
 
-    public bool CanParse(XName name) => name == Target;
+        public DeviceIdentityParser(IParserPartLocator parserLocator)
+        {
+            _parserLocator = parserLocator;
+        }
+        public static XName Target => IODDParserConstants.DeviceIdentityName;
 
-    public DeviceIdentityT Parse(XElement element)
-    {
-        var deviceId = element.ReadMandatoryAttribute<uint>("deviceId");
-        var vendorId = element.ReadMandatoryAttribute<ushort>("vendorId");
-        var vendorName = element.ReadMandatoryAttribute("vendorName");
+        public bool CanParse(XName name) => name == Target;
 
-        var textRefs = GetChildTextRefs(element);
+        public DeviceIdentityT Parse(XElement element)
+        {
+            uint deviceId = element.ReadMandatoryAttribute<uint>("deviceId");
+            ushort vendorId = element.ReadMandatoryAttribute<ushort>("vendorId");
+            string vendorName = element.ReadMandatoryAttribute("vendorName");
+            (TextRefT deviceName, TextRefT vendorText, TextRefT vendorUrl, TextRefT deviceFamilyName) = GetChildTextRefs(element);
 
-        return new DeviceIdentityT(vendorId, deviceId, vendorName, textRefs.VendorName, textRefs.VendorUrl, textRefs.DeviceName, textRefs.DeviceFamilyName, textRefs.VendorLogo);
-    }
+            return new DeviceIdentityT(vendorId, deviceId, vendorName, vendorText, vendorUrl, deviceName, deviceFamilyName);
+        }
 
-    private (TextRefT DeviceName, TextRefT VendorName, TextRefT VendorUrl, TextRefT DeviceFamilyName, TextRefT? VendorLogo) GetChildTextRefs(XElement element)
-    {
-        var vendorTextRef = this._parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.VendorTextName).FirstOrDefault());
-        var vendorUrlRef = this._parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.VendorUrlName).FirstOrDefault());
+        private (TextRefT DeviceName, TextRefT VendorName, TextRefT VendorUrl, TextRefT DeviceFamilyName) GetChildTextRefs(XElement element)
+        {
+            TextRefT vendorTextRef = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.VendorTextName).FirstOrDefault());
+            TextRefT vendorUrlRef = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.VendorUrlName).FirstOrDefault());
 
-        var deviceName = this._parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.DeviceNameName).FirstOrDefault());
-        var deviceFamiliy = this._parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.DeviceFamilyName).FirstOrDefault());
+            TextRefT deviceName = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.DeviceNameName).FirstOrDefault());
+            TextRefT deviceFamiliy = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.DeviceFamilyName).FirstOrDefault());
 
-        var vendorLogoRef = this._parserLocator.ParseOptional<TextRefT>(element.Descendants(IODDTextRefNames.VendorLogoName).FirstOrDefault());
-
-        return (deviceName, vendorTextRef, vendorUrlRef, deviceFamiliy, vendorLogoRef);
+            return (deviceName, vendorTextRef, vendorUrlRef, deviceFamiliy);
+        }
     }
 }

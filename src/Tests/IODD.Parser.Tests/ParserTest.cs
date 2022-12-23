@@ -1,14 +1,14 @@
 using System.Xml.Linq;
-using IOLinkNET.IODD.Parser;
 
-namespace IODD.Parser.Tests;
-
-public class UnitTest1
+namespace IODD.Parser.Tests
 {
-    [Fact]
-    public void Should_Parse_IODDs()
+    public class UnitTest1
     {
-        IODDParser parser = new IODDParser();
-        parser.Parse(XElement.Load("TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml"));
+        [Fact]
+        public void ShouldParseIODDs()
+        {
+            IODDParser parser = new();
+            _ = parser.Parse(XElement.Load("TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml"));
+        }
     }
 }

@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IOLinkNET.IODD.Parser.Parts.Constants;
+namespace IODD.Parser.Parts.Constants;
 
 public static class IODDTextRefNames
 {
@@ -13,4 +13,8 @@ public static class IODDTextRefNames
     public static readonly XName DeviceNameName = IODDParserConstants.IODDXmlNamespace.GetName("DeviceName");
 
     public static readonly XName DeviceFamilyName = IODDParserConstants.IODDXmlNamespace.GetName("DeviceFamily");
+
+    public static readonly XName Name = IODDParserConstants.IODDXmlNamespace.GetName("Name");
+
+    public static readonly XName DescriptionName = IODDParserConstants.IODDXmlNamespace.GetName("Description");
 }

@@ -88,7 +88,7 @@ csharp_style_expression_bodied_constructors = false:silent
 csharp_style_expression_bodied_indexers = true:silent
 csharp_style_expression_bodied_lambdas = true:suggestion
 csharp_style_expression_bodied_local_functions = false:silent
-csharp_style_expression_bodied_methods = false:silent
+csharp_style_expression_bodied_methods = true:silent
 csharp_style_expression_bodied_operators = false:silent
 csharp_style_expression_bodied_properties = true:silent
 
@@ -170,6 +170,9 @@ csharp_space_between_square_brackets = false
 # Wrapping preferences
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
+
+# Namespaces
+csharp_style_namespace_declarations = file_scoped
 
 #### Naming styles ####
 [*.{cs,vb}]
