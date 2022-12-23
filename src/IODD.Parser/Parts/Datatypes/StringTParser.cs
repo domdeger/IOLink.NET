@@ -10,7 +10,7 @@ internal static class StringTParser
 {
     public static StringT Parse(XElement elem)
     {
-        string id = elem.ReadMandatoryAttribute("id");
+        string? id = elem.ReadOptionalAttribute("id");
         byte fixedLength = elem.ReadMandatoryAttribute<byte>("fixedLength");
         string encoding = elem.ReadMandatoryAttribute("encoding");
 

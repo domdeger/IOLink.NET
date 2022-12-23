@@ -10,7 +10,7 @@ internal static class BooleanTParser
 {
     public static BooleanT Parse(XElement elem)
     {
-        string id = elem.ReadMandatoryAttribute("id");
+        string? id = elem.ReadOptionalAttribute("id");
 
         return new BooleanT(id, Enumerable.Empty<SingleValueT<bool>>());
     }

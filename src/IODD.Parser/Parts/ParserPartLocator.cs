@@ -31,7 +31,7 @@ internal class ParserPartLocator : IParserPartLocator
     public T Parse<T>(XElement element)
     {
         IParserPart<T> part = _parserParts.OfType<IParserPart<T>>().FirstOrDefault(part => part.CanParse(element.Name))
-            ?? throw new InvalidOperationException("Could not find suitable implementation part.");
+            ?? throw new InvalidOperationException($"Could not find suitable implementation part for {typeof(T).Name}.");
 
         return part.Parse(element);
     }

@@ -10,11 +10,11 @@ public enum AccessRightsT
 
 public static class AccessRightsTConverter
 {
-    public static AccessRightsT? ParseOptional(string accessRights) => accessRights switch
+    public static AccessRightsT? ParseOptional(string accessRights) => accessRights.ToLower(System.Globalization.CultureInfo.CurrentCulture) switch
     {
-        "Ro" => AccessRightsT.ReadOnly,
-        "Rw" => AccessRightsT.ReadWrite,
-        "Wo" => AccessRightsT.WriteOnly,
+        "ro" => AccessRightsT.ReadOnly,
+        "rw" => AccessRightsT.ReadWrite,
+        "wo" => AccessRightsT.WriteOnly,
         _ => null
     };
 

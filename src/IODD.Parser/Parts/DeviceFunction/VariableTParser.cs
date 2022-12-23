@@ -13,11 +13,11 @@ using IOLinkNET.IODD.Structure.DeviceFunction;
 
 namespace IODD.Parser.Parts.DeviceFunction;
 
-internal class VariableParser : IParserPart<VariableT>
+internal class VariableTParser : IParserPart<VariableT>
 {
     private readonly IParserPartLocator _parserLocator;
 
-    public VariableParser(IParserPartLocator parserLocator)
+    public VariableTParser(IParserPartLocator parserLocator)
     {
         _parserLocator = parserLocator;
     }

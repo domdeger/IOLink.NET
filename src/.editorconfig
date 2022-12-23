@@ -173,7 +173,7 @@ csharp_preserve_single_line_statements = true
 
 # Namespaces
 csharp_style_namespace_declarations = file_scoped
-
+csharp_style_var_when_type_is_apparent = true
 #### Naming styles ####
 [*.{cs,vb}]
 

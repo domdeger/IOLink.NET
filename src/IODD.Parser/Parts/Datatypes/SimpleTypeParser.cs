@@ -20,6 +20,6 @@ internal static class SimpleTypeParser
         };
 
     public static SimpleDatatypeT? Parse(XElement? dataTypeElement)
-        => dataTypeElement is null ? null : Parse(dataTypeElement.ReadMandatoryAttribute("type"), dataTypeElement);
+        => dataTypeElement is null ? null : Parse(dataTypeElement.ReadMandatoryAttribute("type", IODDParserConstants.XSIXmlNamespace), dataTypeElement);
 
 }

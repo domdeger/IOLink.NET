@@ -11,9 +11,11 @@ internal static class XElementExtensions
         return T.Parse(value, null);
     }
 
-    public static string ReadMandatoryAttribute(this XElement element, string attributeName)
+    public static string ReadMandatoryAttribute(this XElement element, string attributeName, XNamespace? xmlNamespace = null)
     {
-        XAttribute attribute = element.Attribute(attributeName) ?? throw new ArgumentOutOfRangeException($"{attributeName} does not exist on this element");
+        XName fqName = xmlNamespace is not null ? xmlNamespace.GetName(attributeName) : attributeName;
+
+        XAttribute attribute = element.Attribute(fqName) ?? throw new ArgumentOutOfRangeException($"{attributeName} does not exist on this element");
         return attribute.Value;
     }
 

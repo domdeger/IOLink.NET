@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
 using IODD.Parser.Parts.Constants;
 using IODD.Parser.Parts.Datatypes;
 
@@ -9,17 +8,17 @@ using IOLinkNET.IODD.Structure.DataTypes;
 
 namespace IODD.Parser.Parts;
 
-internal class DatatypeCollection : IParserPart<IEnumerable<DatatypeT>>
+internal class DatatypeCollectionTParser : IParserPart<IEnumerable<DatatypeT>>
 {
     private readonly IParserPartLocator _partLocator;
 
-    public DatatypeCollection(IParserPartLocator partLocator)
+    public DatatypeCollectionTParser(IParserPartLocator partLocator)
     {
         _partLocator = partLocator;
     }
 
     public bool CanParse(XName name)
-        => name == IODDParserConstants.DeviceFunctionName;
+        => name == IODDParserConstants.DatatypeCollectionName;
 
     public IEnumerable<DatatypeT> Parse(XElement element)
     {
@@ -28,8 +27,6 @@ internal class DatatypeCollection : IParserPart<IEnumerable<DatatypeT>>
 
         foreach (XElement dataTypeElement in dataTypeElements)
         {
-            _ = dataTypeElement.ReadMandatoryAttribute("type");
-
             DatatypeT convertedType = DatatypeTParser.Parse(dataTypeElement, _partLocator);
             dataTypeCollection.Add(convertedType);
         }
