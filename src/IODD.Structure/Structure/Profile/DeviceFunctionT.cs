@@ -1,6 +1,8 @@
-using IOLinkNET.IODD.Structure.DeviceFunction;
-using IOLinkNET.IODD.Structure.Common;
+using IODD.Structure.Structure.DeviceFunction;
 
-namespace IOLinkNET.IODD.Structure.Profile;
+using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.ProcessData;
 
-public record DeviceFunctionT(ushort VendorId, uint DeviceId, TextRefT VendorName, TextRefT VendorUrl, TextRefT DeviceName, TextRefT DeviceFamily, string? VendorLogo);
+namespace IODD.Structure.Structure.Profile;
+
+public record DeviceFunctionT(IEnumerable<DatatypeT> DatatypeCollection, IEnumerable<VariableT> VariableCollection, IEnumerable<ProcessDataT> ProcessDataCollection);
