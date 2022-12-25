@@ -6,7 +6,7 @@ using IODD.Parser.Parts.Datatypes;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.ProcessData;
 
 namespace IODD.Parser.Parts.DeviceFunction;

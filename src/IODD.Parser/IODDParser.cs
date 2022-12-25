@@ -2,10 +2,10 @@
 
 using IODD.Parser.Parts;
 using IODD.Parser.Parts.DeviceFunction;
-using IODD.Structure.Structure;
-using IODD.Structure.Structure.Profile;
 
 using IOLinkNET.IODD.Parser;
+using IOLinkNET.IODD.Structure;
+using IOLinkNET.IODD.Structure.Profile;
 
 namespace IODD.Parser;
 

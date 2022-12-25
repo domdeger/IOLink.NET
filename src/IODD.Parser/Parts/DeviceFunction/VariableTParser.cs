@@ -3,12 +3,10 @@ using System.Xml.Linq;
 using IODD.Parser.Helpers;
 using IODD.Parser.Parts.Constants;
 using IODD.Parser.Parts.Datatypes;
-using IODD.Structure.Structure.Datatypes;
-using IODD.Structure.Structure.DeviceFunction;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 
 namespace IODD.Parser.Parts.DeviceFunction;

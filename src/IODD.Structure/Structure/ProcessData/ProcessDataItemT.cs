@@ -1,5 +1,5 @@
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IOLinkNET.IODD.Structure.ProcessData;
 

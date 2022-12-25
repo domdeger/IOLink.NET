@@ -2,12 +2,12 @@ using System.Xml.Linq;
 
 using IODD.Parser.Helpers;
 using IODD.Parser.Parts.Constants;
-using IODD.Structure.Structure.DeviceFunction;
-using IODD.Structure.Structure.Profile;
 
 using IOLinkNET.IODD.Parser;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
+using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.ProcessData;
+using IOLinkNET.IODD.Structure.Profile;
 
 namespace IODD.Parser.Parts.DeviceFunction;
 

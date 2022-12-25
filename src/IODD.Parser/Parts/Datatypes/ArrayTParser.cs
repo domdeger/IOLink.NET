@@ -1,10 +1,10 @@
 using System.Xml.Linq;
 
 using IODD.Parser.Helpers;
-using IODD.Structure.Structure.Datatypes;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
+using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IODD.Parser.Parts.Datatypes;
 
