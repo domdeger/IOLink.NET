@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IODD.Parser;
+namespace IOLinkNET.IODD;
 
 internal class IODDParserConstants
 {

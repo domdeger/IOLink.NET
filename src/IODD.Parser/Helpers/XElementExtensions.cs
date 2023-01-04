@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IODD.Parser.Helpers;
+namespace IOLinkNET.IODD.Helpers;
 
 internal static class XElementExtensions
 {

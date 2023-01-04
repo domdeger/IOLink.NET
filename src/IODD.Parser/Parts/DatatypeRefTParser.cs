@@ -1,11 +1,11 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
+using IOLinkNET.IODD.Helpers;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
 
-namespace IODD.Parser.Parts;
+namespace IOLinkNET.IODD.Parts;
 
 internal class DatatypeRefTParser : IParserPart<DatatypeRefT>
 {

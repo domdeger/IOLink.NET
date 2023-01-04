@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Datatypes;
 
-namespace IODD.Parser.Parts.Datatypes;
+namespace IOLinkNET.IODD.Parts.Datatypes;
 
 internal static class ComplexTypeParser
 {

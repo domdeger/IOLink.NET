@@ -1,7 +1,7 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
-using IODD.Parser.Parts.Constants;
+using IOLinkNET.IODD.Helpers;
+using IOLinkNET.IODD.Parts.Constants;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Datatypes;
@@ -9,7 +9,7 @@ using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.ProcessData;
 using IOLinkNET.IODD.Structure.Profile;
 
-namespace IODD.Parser.Parts.DeviceFunction;
+namespace IOLinkNET.IODD.Parts.DeviceFunction;
 
 internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
 {

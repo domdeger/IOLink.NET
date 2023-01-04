@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IODD.Parser.Parts.Constants;
+namespace IOLinkNET.IODD.Parts.Constants;
 
 public static class IODDDeviceFunctionNames
 {

@@ -1,12 +1,12 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Parts.Constants;
-using IODD.Parser.Parts.Datatypes;
+using IOLinkNET.IODD.Parts.Constants;
+using IOLinkNET.IODD.Parts.Datatypes;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Datatypes;
 
-namespace IODD.Parser.Parts;
+namespace IOLinkNET.IODD.Parts;
 
 internal class DatatypeCollectionTParser : IParserPart<IEnumerable<DatatypeT>>
 {
