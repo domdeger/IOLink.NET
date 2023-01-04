@@ -11,6 +11,7 @@ public class ParameterTypeResolver
 
     private readonly ParsableDatatypeConverter _converter;
     private readonly DatatypeResolver _datatypeResolver;
+
     public ParameterTypeResolver(IODevice device)
     {
         _device = device;
@@ -24,7 +25,7 @@ public class ParameterTypeResolver
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
         var type = _datatypeResolver.Resolve(variable);
-        
+
         if (subIndex is not null)
         {
             var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex) 

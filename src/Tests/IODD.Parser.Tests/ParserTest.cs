@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IODD.Parser.Tests;
+namespaceIOLinkNET.IODD.Tests;
 
 public class ParserTest
 {

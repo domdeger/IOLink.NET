@@ -27,7 +27,7 @@
   </ItemGroup>
 
    <ItemGroup>
-    <Content Include="TestData\*.*">
+    <Content Include="..\TestData\*.*">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>  
   </ItemGroup>
