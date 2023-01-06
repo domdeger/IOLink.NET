@@ -73,7 +73,7 @@ internal class ParsableDatatypeConverter
     {
         var parsableRecordItems = recordType.Items.Select(rItem => new ParsableRecordItem(
             ConvertScalar(_datatypeResolver.Resolve(rItem) as SimpleDatatypeT ?? throw new InvalidOperationException("RecordItem did not contain simple type."), rItem.Name.TextId),
-                            rItem.BitOffset));
+                            rItem.Name.TextId, rItem.BitOffset, rItem.Subindex));
         var recordName = recordType.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
 
         return new ParsableRecord(recordName, parsableRecordItems);

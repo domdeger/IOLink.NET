@@ -5,6 +5,7 @@ namespace IOLinkNET.IODD;
 internal class IODDParserConstants
 {
     public static readonly XNamespace IODDXmlNamespace = XNamespace.Get("http://www.io-link.com/IODD/2010/10");
+    
     public static readonly XNamespace XSIXmlNamespace = XNamespace.Get("http://www.w3.org/2001/XMLSchema-instance");
     public static readonly XName DeviceIdentityName = IODDXmlNamespace.GetName("DeviceIdentity");
 

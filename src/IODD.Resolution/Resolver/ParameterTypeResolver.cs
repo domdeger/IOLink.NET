@@ -24,16 +24,16 @@ public class ParameterTypeResolver
         var variables = _device.ProfileBody.DeviceFunction.VariableCollection;
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
-        var type = _datatypeResolver.Resolve(variable);
-
+        
         if (subIndex is not null)
         {
+            var type = _datatypeResolver.Resolve(variable);
             var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex) 
                 ?? throw new InvalidOperationException($"{type.Id} is no Record or has no item with subindex {subIndex}");
             
             return _converter.Convert(_datatypeResolver.Resolve(recordItem), recordItem.Name.TextId);
         }
 
-        return _converter.Convert(type);
+        return _converter.Convert(variable);
     }
 }

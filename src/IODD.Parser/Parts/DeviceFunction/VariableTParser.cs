@@ -29,7 +29,7 @@ internal class VariableTParser : IParserPart<VariableT>
         TextRefT name = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.Name).FirstOrDefault());
         TextRefT? description = _parserLocator.ParseOptional<TextRefT>(element.Descendants(IODDTextRefNames.DescriptionName).FirstOrDefault());
         AccessRightsT accessRights = AccessRightsTConverter.Parse(element.ReadMandatoryAttribute("accessRights"));
-        IEnumerable<RecordItemInfoT> recordItemInfos = element.Descendants(IODDDeviceFunctionNames.RecordItemInfo).Select(_parserLocator.Parse<RecordItemInfoT>);
+        IEnumerable<RecordItemInfoT> recordItemInfos = element.Descendants(IODDDeviceFunctionNames.RecordItemInfoName).Select(_parserLocator.Parse<RecordItemInfoT>);
         ushort index = element.ReadMandatoryAttribute<ushort>("index");
         
         return new VariableT(index, dataType, dataTypeRef, name, description, accessRights, recordItemInfos);

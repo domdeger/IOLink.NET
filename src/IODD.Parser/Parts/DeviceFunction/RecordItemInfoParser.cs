@@ -16,7 +16,7 @@ internal class RecordItemInfoParser : IParserPart<RecordItemInfoT>
     }
 
     public bool CanParse(XName name)
-        => name == IODDDeviceFunctionNames.RecordItemInfo;
+        => name == IODDDeviceFunctionNames.RecordItemInfoName;
 
     public RecordItemInfoT Parse(XElement element)
     {
