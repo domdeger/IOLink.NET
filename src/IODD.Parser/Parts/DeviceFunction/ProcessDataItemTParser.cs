@@ -1,15 +1,15 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
-using IODD.Parser.Parts.Constants;
-using IODD.Parser.Parts.Datatypes;
+using IOLinkNET.IODD.Helpers;
+using IOLinkNET.IODD.Parts.Constants;
+using IOLinkNET.IODD.Parts.Datatypes;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.ProcessData;
 
-namespace IODD.Parser.Parts.DeviceFunction;
+namespace IOLinkNET.IODD.Parts.DeviceFunction;
 
 internal class ProcessDataItemParser : IParserPart<ProcessDataItemT>
 {

@@ -1,4 +1,4 @@
-namespace IODD.Parser.Parts.Datatypes;
+namespace IOLinkNET.IODD.Parts.Datatypes;
 
 internal static class DatatypeNames
 {

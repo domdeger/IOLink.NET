@@ -2,7 +2,7 @@ using System.Xml.Linq;
 
 using IOLinkNET.IODD.Parser;
 
-namespace IODD.Parser.Helpers
+namespace IOLinkNET.IODD.Helpers
 {
     internal static class ParserPartLocatorExtensions
     {

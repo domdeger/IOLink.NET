@@ -1,6 +1,5 @@
-using IODD.Structure.Structure.Profile;
+using IOLinkNET.IODD.Structure.Profile;
 
-namespace IODD.Structure.Structure
-{
-    public record IODevice(ProfileBodyT ProfileBody);
-}
+namespace IOLinkNET.IODD.Structure;
+
+public record IODevice(ProfileBodyT ProfileBody);

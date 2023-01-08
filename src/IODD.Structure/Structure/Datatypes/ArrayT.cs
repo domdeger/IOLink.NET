@@ -1,6 +1,10 @@
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Interfaces;
 
-namespace IODD.Structure.Structure.Datatypes;
+namespace IOLinkNET.IODD.Structure.Datatypes;
 
-public record ArrayT(string? Id, byte Count, SimpleDatatypeT? Type, DatatypeRefT? Ref, bool SubindexAccessSupported = true) : ComplexDatatypeT(Id, SubindexAccessSupported);
+public record ArrayT(string? Id, byte Count, SimpleDatatypeT? Type, DatatypeRefT? Ref, bool SubindexAccessSupported = true)
+    : ComplexDatatypeT(Id, SubindexAccessSupported), IDatatypeOrTypeRef
+{
+    DatatypeT? IDatatypeOrTypeRef.Type => Type;
+}

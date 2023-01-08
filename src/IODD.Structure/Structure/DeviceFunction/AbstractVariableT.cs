@@ -1,11 +1,9 @@
-using IODD.Structure.Structure.Datatypes;
-
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
-using IOLinkNET.IODD.Structure.DeviceFunction;
+using IOLinkNET.IODD.Structure.Datatypes;
+using IOLinkNET.IODD.Structure.Interfaces;
 
-namespace IODD.Structure.Structure.DeviceFunction;
+namespace IOLinkNET.IODD.Structure.DeviceFunction;
 
-public record AbstractVariableT(DatatypeT? Datatype, DatatypeRefT? DatatypeRef, TextRefT Name, TextRefT? Description,
+public record AbstractVariableT(DatatypeT? Type, DatatypeRefT? Ref, TextRefT Name, TextRefT? Description,
     AccessRightsT AccessRights, IEnumerable<RecordItemInfoT> RecordItemInfos,
-    bool Dynamic = false, bool ModifiesOtherVariables = false, bool ExcludedFromDataStorage = false);
+    bool Dynamic = false, bool ModifiesOtherVariables = false, bool ExcludedFromDataStorage = false) : IDatatypeOrTypeRef;

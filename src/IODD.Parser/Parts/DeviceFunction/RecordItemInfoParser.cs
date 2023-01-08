@@ -1,12 +1,12 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
-using IODD.Parser.Parts.Constants;
+using IOLinkNET.IODD.Helpers;
+using IOLinkNET.IODD.Parts.Constants;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 
-namespace IODD.Parser.Parts.DeviceFunction;
+namespace IOLinkNET.IODD.Parts.DeviceFunction;
 
 internal class RecordItemInfoParser : IParserPart<RecordItemInfoT>
 {
@@ -16,7 +16,7 @@ internal class RecordItemInfoParser : IParserPart<RecordItemInfoT>
     }
 
     public bool CanParse(XName name)
-        => name == IODDDeviceFunctionNames.RecordItemInfo;
+        => name == IODDDeviceFunctionNames.RecordItemInfoName;
 
     public RecordItemInfoT Parse(XElement element)
     {

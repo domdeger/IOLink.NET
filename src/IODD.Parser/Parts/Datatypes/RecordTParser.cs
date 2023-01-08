@@ -1,13 +1,13 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
-using IODD.Parser.Parts.Constants;
-using IODD.Structure.Structure.Datatypes;
+using IOLinkNET.IODD.Helpers;
+using IOLinkNET.IODD.Parts.Constants;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
+using IOLinkNET.IODD.Structure.Datatypes;
 
-namespace IODD.Parser.Parts.Datatypes;
+namespace IOLinkNET.IODD.Parts.Datatypes;
 
 internal static class RecordTParser
 {
@@ -18,17 +18,17 @@ internal static class RecordTParser
 
         _ = bool.TryParse(elem.ReadOptionalAttribute("subindexAccessSupported"), out bool subindexAccessSupported);
 
-        return new RecordT(id, bitLenght, elem.Descendants(IODDParserConstants.SimpleDatatypeName).Select(elem => ParseRecordItem(elem, parserLocator)), subindexAccessSupported);
+        return new RecordT(id, bitLenght, elem.Descendants(IODDDeviceFunctionNames.RecordItemName).Select(elem => ParseRecordItem(elem, parserLocator)), subindexAccessSupported);
     }
 
     private static RecordItemT ParseRecordItem(XElement elem, IParserPartLocator parserLocator)
     {
-        byte subIndex = elem.ReadMandatoryAttribute<byte>("subIndex");
+        byte subIndex = elem.ReadMandatoryAttribute<byte>("subindex");
         ushort bitOffset = elem.ReadMandatoryAttribute<ushort>("bitOffset");
 
         TextRefT name = parserLocator.ParseMandatory<TextRefT>(elem.Descendants(IODDTextRefNames.Name).First());
-        TextRefT? description = parserLocator.ParseOptional<TextRefT>(elem.Descendants(IODDTextRefNames.DescriptionName).First());
-        DatatypeRefT? typeRef = parserLocator.ParseOptional<DatatypeRefT>(elem.Descendants(IODDParserConstants.DatatypeRefName).First());
+        TextRefT? description = parserLocator.ParseOptional<TextRefT>(elem.Descendants(IODDTextRefNames.DescriptionName).FirstOrDefault());
+        DatatypeRefT? typeRef = parserLocator.ParseOptional<DatatypeRefT>(elem.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
 
         return new RecordItemT(subIndex, bitOffset, name, description, SimpleTypeParser.Parse(elem.Descendants(IODDParserConstants.SimpleDatatypeName).FirstOrDefault()), typeRef);
     }

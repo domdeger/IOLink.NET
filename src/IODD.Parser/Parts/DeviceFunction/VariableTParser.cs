@@ -1,17 +1,15 @@
 using System.Xml.Linq;
 
-using IODD.Parser.Helpers;
-using IODD.Parser.Parts.Constants;
-using IODD.Parser.Parts.Datatypes;
-using IODD.Structure.Structure.Datatypes;
-using IODD.Structure.Structure.DeviceFunction;
+using IOLinkNET.IODD.Helpers;
+using IOLinkNET.IODD.Parts.Constants;
+using IOLinkNET.IODD.Parts.Datatypes;
 
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure.Common;
-using IOLinkNET.IODD.Structure.DataTypes;
+using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 
-namespace IODD.Parser.Parts.DeviceFunction;
+namespace IOLinkNET.IODD.Parts.DeviceFunction;
 
 internal class VariableTParser : IParserPart<VariableT>
 {
@@ -28,11 +26,13 @@ internal class VariableTParser : IParserPart<VariableT>
     {
         DatatypeT? dataType = DatatypeTParser.ParseOptional(element.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), _parserLocator);
         DatatypeRefT? dataTypeRef = _parserLocator.ParseOptional<DatatypeRefT>(element.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
-        TextRefT name = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.Name).FirstOrDefault());
-        TextRefT? description = _parserLocator.ParseOptional<TextRefT>(element.Descendants(IODDTextRefNames.DescriptionName).FirstOrDefault());
+        TextRefT name = _parserLocator.ParseMandatory<TextRefT>(element.Element(IODDTextRefNames.Name));
+        TextRefT? description = _parserLocator.ParseOptional<TextRefT>(element.Element(IODDTextRefNames.DescriptionName));
         AccessRightsT accessRights = AccessRightsTConverter.Parse(element.ReadMandatoryAttribute("accessRights"));
-        IEnumerable<RecordItemInfoT> recordItemInfos = element.Descendants(IODDDeviceFunctionNames.RecordItemInfo).Select(_parserLocator.Parse<RecordItemInfoT>);
+        IEnumerable<RecordItemInfoT> recordItemInfos = element.Descendants(IODDDeviceFunctionNames.RecordItemInfoName).Select(_parserLocator.Parse<RecordItemInfoT>);
+        ushort index = element.ReadMandatoryAttribute<ushort>("index");
+        var id = element.ReadMandatoryAttribute("id");
 
-        return new VariableT(dataType, dataTypeRef, name, description, accessRights, recordItemInfos);
+        return new VariableT(id, index, dataType, dataTypeRef, name, description, accessRights, recordItemInfos);
     }
 }

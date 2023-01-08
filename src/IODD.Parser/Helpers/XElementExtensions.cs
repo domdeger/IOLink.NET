@@ -1,6 +1,6 @@
 using System.Xml.Linq;
 
-namespace IODD.Parser.Helpers;
+namespace IOLinkNET.IODD.Helpers;
 
 internal static class XElementExtensions
 {
@@ -21,7 +21,8 @@ internal static class XElementExtensions
 
     public static string? ReadOptionalAttribute(this XElement element, string attributeName)
     {
-        XAttribute? attribute = element.Attribute(element.Name + attributeName);
+        XAttribute? attribute = element.Attribute(element.Name + attributeName) 
+            ?? element.Attribute(attributeName);
         return attribute?.Value;
     }
 
