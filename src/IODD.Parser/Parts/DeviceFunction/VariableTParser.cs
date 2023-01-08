@@ -26,12 +26,13 @@ internal class VariableTParser : IParserPart<VariableT>
     {
         DatatypeT? dataType = DatatypeTParser.ParseOptional(element.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), _parserLocator);
         DatatypeRefT? dataTypeRef = _parserLocator.ParseOptional<DatatypeRefT>(element.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
-        TextRefT name = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.Name).FirstOrDefault());
-        TextRefT? description = _parserLocator.ParseOptional<TextRefT>(element.Descendants(IODDTextRefNames.DescriptionName).FirstOrDefault());
+        TextRefT name = _parserLocator.ParseMandatory<TextRefT>(element.Element(IODDTextRefNames.Name));
+        TextRefT? description = _parserLocator.ParseOptional<TextRefT>(element.Element(IODDTextRefNames.DescriptionName));
         AccessRightsT accessRights = AccessRightsTConverter.Parse(element.ReadMandatoryAttribute("accessRights"));
         IEnumerable<RecordItemInfoT> recordItemInfos = element.Descendants(IODDDeviceFunctionNames.RecordItemInfoName).Select(_parserLocator.Parse<RecordItemInfoT>);
         ushort index = element.ReadMandatoryAttribute<ushort>("index");
-        
-        return new VariableT(index, dataType, dataTypeRef, name, description, accessRights, recordItemInfos);
+        var id = element.ReadMandatoryAttribute("id");
+
+        return new VariableT(id, index, dataType, dataTypeRef, name, description, accessRights, recordItemInfos);
     }
 }

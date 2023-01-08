@@ -18,13 +18,13 @@ internal class ParsableDatatypeConverter
     public ParsableDatatype Convert(DatatypeT type) => ConvertInternal(type);
 
     internal ParsableDatatype Convert(DatatypeT type, string name) => ConvertInternal(type, name);
-    public ParsableDatatype Convert(VariableT variable) => ConvertInternal(_datatypeResolver.Resolve(variable), variable.Name.TextId);
+    public ParsableDatatype Convert(VariableT variable) => ConvertInternal(_datatypeResolver.Resolve(variable), variable.Id);
 
         private ParsableDatatype ConvertInternal(DatatypeT type, string? name = null)
         => type switch
         {
             ComplexDatatypeT complex => ConvertComplex(complex, name),
-            SimpleDatatypeT simple => ConvertScalar(simple),
+            SimpleDatatypeT simple => ConvertScalar(simple, name),
             _ => throw new InvalidOperationException($"{type.GetType().Name} cannot be converted to a parsable datatype.")
         };
 
@@ -32,7 +32,7 @@ internal class ParsableDatatypeConverter
     {
         var kindOfDataType = DetermineKindOfDatatype(scalarType);
         var length = DetermineScalarBitLength(scalarType);
-        return new ParsableSimpleDatatypeDef(scalarType.Id ?? name ?? string.Empty, kindOfDataType, length);
+        return new ParsableSimpleDatatypeDef(name ?? scalarType.Id ?? string.Empty, kindOfDataType, length);
     }
 
     private static ushort DetermineScalarBitLength(SimpleDatatypeT scalarType) 

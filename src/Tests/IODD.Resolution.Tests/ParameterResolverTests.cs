@@ -30,9 +30,10 @@ public class ParameterResolverTests
         param.Should().BeOfType<ParsableRecord>();
         var recordParam = param as ParsableRecord;
 
-        recordParam?.Entries?.Should().NotBeEmpty();
-        recordParam!.Entries.Should().HaveElementAt(0, new(new ParsableSimpleDatatypeDef("DT_Inversion", KindOfSimpleType.Boolean, 1), "TI_VAR_Inversion_P0P4", 0, 1));
-        recordParam!.Entries.Should().EndWith(new ParsableRecordItem(new ParsableSimpleDatatypeDef("DT_Inversion", KindOfSimpleType.Boolean, 1), "TI_VAR_Inversion_P0P4", 7, 8));
+        recordParam!.Name.Should().Be("V_Inversion_Record");
+        recordParam!.Entries?.Should().NotBeEmpty();
+        recordParam!.Entries.Should().HaveElementAt(0, new(new ParsableSimpleDatatypeDef("TI_VAR_Inversion_P0P4", KindOfSimpleType.Boolean, 1), "TI_VAR_Inversion_P0P4", 0, 1));
+        recordParam!.Entries.Should().EndWith(new ParsableRecordItem(new ParsableSimpleDatatypeDef("TI_VAR_Inversion_P3P2", KindOfSimpleType.Boolean, 1), "TI_VAR_Inversion_P3P2", 7, 8));
     }
 
     [Fact]
@@ -41,6 +42,23 @@ public class ParameterResolverTests
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(210, 1);
-        param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>();
+        param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        
+        var simpleDatatype = param as ParsableSimpleDatatypeDef;
+        simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.Boolean);
+        simpleDatatype!.Name.Should().Be("V_Inversion_Record_1");
+    }
+
+        [Fact]
+    public void Can_Resolve_Scalar()
+    {
+        var parameterResolver = new ParameterTypeResolver(_iodd);
+
+        var param = parameterResolver.GetParameter(112);
+        param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        
+        var simpleDatatype = param as ParsableSimpleDatatypeDef;
+        simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.UInteger);
+        simpleDatatype!.Name.Should().Be("V_Diag_Level_Config");
     }
 }

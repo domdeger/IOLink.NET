@@ -31,7 +31,7 @@ public class ParameterTypeResolver
             var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex) 
                 ?? throw new InvalidOperationException($"{type.Id} is no Record or has no item with subindex {subIndex}");
             
-            return _converter.Convert(_datatypeResolver.Resolve(recordItem), recordItem.Name.TextId);
+            return _converter.Convert(_datatypeResolver.Resolve(recordItem), $"{variable.Id}_{subIndex}");
         }
 
         return _converter.Convert(variable);
