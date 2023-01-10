@@ -19,7 +19,6 @@ public class ParameterResolverTests
             ?? throw new NullReferenceException();
     }
 
-
     [Fact]
     public void Can_Resolve_Record_Type()
     {
@@ -43,20 +42,20 @@ public class ParameterResolverTests
 
         var param = parameterResolver.GetParameter(210, 1);
         param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
-        
+
         var simpleDatatype = param as ParsableSimpleDatatypeDef;
         simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.Boolean);
         simpleDatatype!.Name.Should().Be("V_Inversion_Record_1");
     }
 
-        [Fact]
+    [Fact]
     public void Can_Resolve_Scalar()
     {
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(112);
         param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
-        
+
         var simpleDatatype = param as ParsableSimpleDatatypeDef;
         simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.UInteger);
         simpleDatatype!.Name.Should().Be("V_Diag_Level_Config");

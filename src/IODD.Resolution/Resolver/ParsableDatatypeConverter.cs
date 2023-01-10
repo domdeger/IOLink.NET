@@ -1,9 +1,7 @@
-using IODD.Resolution.Model;
-
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 
-namespace IODD.Resolution;
+namespace IOLinkNET.IODD.Resolution;
 
 internal class ParsableDatatypeConverter
 {
@@ -20,22 +18,28 @@ internal class ParsableDatatypeConverter
     internal ParsableDatatype Convert(DatatypeT type, string name) => ConvertInternal(type, name);
     public ParsableDatatype Convert(VariableT variable) => ConvertInternal(_datatypeResolver.Resolve(variable), variable.Id);
 
-        private ParsableDatatype ConvertInternal(DatatypeT type, string? name = null)
-        => type switch
-        {
-            ComplexDatatypeT complex => ConvertComplex(complex, name),
-            SimpleDatatypeT simple => ConvertScalar(simple, name),
-            _ => throw new InvalidOperationException($"{type.GetType().Name} cannot be converted to a parsable datatype.")
-        };
+    private ParsableDatatype ConvertInternal(DatatypeT type, string? name = null)
+    => type switch
+    {
+        ComplexDatatypeT complex => ConvertComplex(complex, name),
+        SimpleDatatypeT simple => ConvertScalar(simple, name),
+        _ => throw new InvalidOperationException($"{type.GetType().Name} cannot be converted to a parsable datatype.")
+    };
 
     private static ParsableSimpleDatatypeDef ConvertScalar(SimpleDatatypeT scalarType, string? name = null)
     {
         var kindOfDataType = DetermineKindOfDatatype(scalarType);
         var length = DetermineScalarBitLength(scalarType);
-        return new ParsableSimpleDatatypeDef(name ?? scalarType.Id ?? string.Empty, kindOfDataType, length);
+        var typeFriendlyName = name ?? scalarType.Id ?? string.Empty;
+
+        return kindOfDataType switch
+        {
+            KindOfSimpleType.String => new ParsableStringDef(typeFriendlyName, ((StringT)scalarType).Encoding),
+            _ => new ParsableSimpleDatatypeDef(typeFriendlyName, kindOfDataType, length)
+        };
     }
 
-    private static ushort DetermineScalarBitLength(SimpleDatatypeT scalarType) 
+    private static ushort DetermineScalarBitLength(SimpleDatatypeT scalarType)
         => scalarType switch
         {
             UIntegerT uInteger => uInteger.BitLength,
@@ -62,8 +66,8 @@ internal class ParsableDatatypeConverter
             _ => throw new InvalidOperationException($"{scalarType.GetType().Name} cannot be mapped to a simple type.")
         };
 
-    private ParsableDatatype ConvertComplex(ComplexDatatypeT complexType, string? name = null) 
-        => complexType switch 
+    private ParsableDatatype ConvertComplex(ComplexDatatypeT complexType, string? name = null)
+        => complexType switch
         {
             RecordT recordT => ConvertRecord(recordT, name),
             _ => throw new InvalidOperationException()
