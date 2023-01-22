@@ -34,7 +34,7 @@ internal class ParsableDatatypeConverter
 
         return kindOfDataType switch
         {
-            KindOfSimpleType.String => new ParsableStringDef(typeFriendlyName, ((StringT)scalarType).Encoding),
+            KindOfSimpleType.String => new ParsableStringDef(typeFriendlyName, ((StringT)scalarType).FixedLength, ((StringT)scalarType).Encoding),
             _ => new ParsableSimpleDatatypeDef(typeFriendlyName, kindOfDataType, length)
         };
     }
