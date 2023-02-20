@@ -16,7 +16,7 @@ internal static class IoddComplexConverter
     {
         var result = new List<(string key, object value)>();
 
-        foreach (var recordItemDef in recordType.Entries.OrderBy(x => x.BitOffset))
+        foreach (ParsableRecordItem? recordItemDef in recordType.Entries.OrderBy(x => x.BitOffset))
         {
             result.Add((recordItemDef.Name,
                 IoddScalarConverter.Convert(recordItemDef.Type,
@@ -28,19 +28,20 @@ internal static class IoddComplexConverter
 
     private static ReadOnlySpan<byte> ReadWithPadding(ReadOnlySpan<byte> data, ushort offset, ushort length)
     {
-        var startByte = offset / 8;
-        var endByte = startByte + (length / 8) + 1;
+        int startByte = offset / 8;
+        int byteLength = length / 8;
+        int endByte = startByte + (byteLength > 1 ? byteLength : 1);
 
-        var result = data[startByte..endByte];
+        ReadOnlySpan<byte> result = data[^endByte..^startByte];
 
-        var startShiftNeeded = offset % 8 != 0;
-        var endShiftNeeded = (length + offset) % 8 != 0;
+        bool startShiftNeeded = offset % 8 != 0;
+        bool endShiftNeeded = (length + offset) % 8 != 0;
 
         if (startShiftNeeded || endShiftNeeded)
         {
-            var temp = result.ToArray();
-            temp[0] = startShiftNeeded ? (byte)(temp[0] >> offset % 8) : temp[0];
-            temp[^1] = endShiftNeeded ? (byte)(temp[^1] >> length % 8) : temp[^1];
+            byte[] temp = result.ToArray();
+            temp[0] = startShiftNeeded ? (byte)(temp[0] >> (offset % 8)) : temp[0];
+            temp[^1] = endShiftNeeded ? (byte)(temp[^1] >> (length % 8)) : temp[^1];
 
             result = temp.AsSpan();
         }

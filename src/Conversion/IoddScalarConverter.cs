@@ -1,6 +1,5 @@
 
 using System.Collections;
-using System.Numerics;
 using System.Text;
 
 using IOLinkNET.IODD.Resolution;
@@ -8,7 +7,7 @@ using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IOLinkNET.Conversion;
 
-internal class IoddScalarConverter
+public class IoddScalarConverter
 {
     public static object Convert(ParsableSimpleDatatypeDef typeDef, ReadOnlySpan<byte> data)
         => typeDef switch
@@ -34,33 +33,48 @@ internal class IoddScalarConverter
     private static long GetInt(ReadOnlySpan<byte> data, ushort bitLength)
         => data.Length switch
         {
-            1 => data[0],
-            2 => BitConverter.ToInt16(data),
+            1 => BitConverter.ToInt16(PadToComplementaryIntIfNeeded(2, bitLength, data)),
+            2 => BitConverter.ToInt16(PadToComplementaryIntIfNeeded(2, bitLength, data)),
             > 2 and <= 4 => BitConverter.ToInt32(PadToComplementaryIntIfNeeded(4, bitLength, data)),
-            > 4 => BitConverter.ToInt64(PadToComplementaryIntIfNeeded(8, bitLength, data))
+            > 4 => BitConverter.ToInt64(PadToComplementaryIntIfNeeded(8, bitLength, data)),
+            _ => throw new ArgumentOutOfRangeException(nameof(data), "Data is too long to be converted into a long")
         };
 
     private static ReadOnlySpan<byte> PadToComplementaryIntIfNeeded(byte size, ushort bitLength, ReadOnlySpan<byte> data)
         => data switch
         {
-            _ when data.Length == size => data,
-            _ when data.Length < size => PadToComplementaryInt(size, bitLength, data),
+            _ when bitLength % 8 == 0 && bitLength / 8 == size => data,
+            _ when data.Length <= size => PadToComplementaryInt(size, bitLength, data),
             _ => throw new InvalidOperationException("Desired span width is smaller than the actual size of the input.")
         };
 
     private static ReadOnlySpan<byte> PadToComplementaryInt(byte size, ushort bitLength, ReadOnlySpan<byte> data)
     {
-        var bitRepresentation = new BitArray(data.ToArray());
-        var signBit = bitRepresentation[^bitLength];
+        byte[] dataArray = data.ToArray();
+
+        static int ConvertToBitArrayIndex(int bitIndex, int byteLength)
+        {
+            int totalBitLength = byteLength * 8;
+            int desiredBit = totalBitLength - bitIndex;
+
+            int result = 7 - desiredBit;
+
+            return result;
+        }
+
+        Console.Write(ConvertToBitArrayIndex(1, 0));
+
+        var bitRepresentation = new BitArray(dataArray);
+        bool signBit = bitRepresentation[^(bitLength + 1)];
 
         var result = new BitArray(size * 8, signBit);
 
         for (int i = 0; i < bitLength; i++)
         {
-            result[^(bitLength - i)] = bitRepresentation[^(bitLength - i)];
+            result[i] = bitRepresentation[i];
         }
 
-        var resultBytes = new byte[size];
+        byte[] resultBytes = new byte[size];
         result.CopyTo(resultBytes, 0);
 
         return resultBytes.AsSpan();
