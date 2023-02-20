@@ -26,24 +26,24 @@ public class IoddScalarConverter
             1 => data[0],
             2 => BitConverter.ToUInt16(data),
             > 2 and <= 4 => BitConverter.ToUInt32(PadToIfNeeded(4, data)),
-            > 4 => BitConverter.ToUInt64(PadToIfNeeded(8, data)),
+            > 4 and <= 8 => BitConverter.ToUInt64(PadToIfNeeded(8, data)),
             _ => throw new ArgumentOutOfRangeException(nameof(data), "Data is too long to be converted into a long")
         };
 
     private static object GetInt(ReadOnlySpan<byte> data, ushort bitLength)
-        => data.Length switch
+        => (object)data.Length switch
         {
             1 => BitConverter.ToInt16(PadToComplementaryIntIfNeeded(2, bitLength, data)),
             2 => BitConverter.ToInt16(PadToComplementaryIntIfNeeded(2, bitLength, data)),
             > 2 and <= 4 => BitConverter.ToInt32(PadToComplementaryIntIfNeeded(4, bitLength, data)),
-            > 4 => BitConverter.ToInt64(PadToComplementaryIntIfNeeded(8, bitLength, data)),
+            > 4 and <= 8 => (object)BitConverter.ToInt64(PadToComplementaryIntIfNeeded(8, bitLength, data)),
             _ => throw new ArgumentOutOfRangeException(nameof(data), "Data is too long to be converted into a long")
         };
 
     private static ReadOnlySpan<byte> PadToComplementaryIntIfNeeded(byte size, ushort bitLength, ReadOnlySpan<byte> data)
         => data switch
         {
-            _ when bitLength % 8 == 0 && bitLength / 8 == size => data,
+            _ when bitLength % 8 == 0 && bitLength / 8 == size => data.ToArray().Reverse().ToArray().AsSpan(),
             _ when data.Length <= size => PadToComplementaryInt(size, bitLength, data),
             _ => throw new InvalidOperationException("Desired span width is smaller than the actual size of the input.")
         };
