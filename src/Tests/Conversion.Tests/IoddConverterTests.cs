@@ -23,6 +23,11 @@ public class IoddConverterTests
     public void CanConvertRecordT()
     {
         byte[] data = Convert.FromBase64String("AB0AHAAdABMALgATAC4=");
+        byte[] binaryData = new byte[]
+                            { 0b00000000, 0b00011101, 0b00000000, 0b00011100, 0b00000000, 0b00011101, 0b00000000,
+                              0b00010011, 0b00000000, 0b00101110, 0b00000000, 0b00010011, 0b00000000, 0b00101110 };
+
+        _ = data.Should().BeEquivalentTo(binaryData);
         var converter = new IoddConverter();
 
         var testRecord = new ParsableRecord("DemoRecord", new[] {

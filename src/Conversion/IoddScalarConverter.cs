@@ -20,7 +20,7 @@ public class IoddScalarConverter
             _ => throw new NotImplementedException()
         };
 
-    private static ulong GetUint(ReadOnlySpan<byte> data)
+    private static object GetUint(ReadOnlySpan<byte> data)
         => data.Length switch
         {
             1 => data[0],
@@ -30,7 +30,7 @@ public class IoddScalarConverter
             _ => throw new ArgumentOutOfRangeException(nameof(data), "Data is too long to be converted into a long")
         };
 
-    private static long GetInt(ReadOnlySpan<byte> data, ushort bitLength)
+    private static object GetInt(ReadOnlySpan<byte> data, ushort bitLength)
         => data.Length switch
         {
             1 => BitConverter.ToInt16(PadToComplementaryIntIfNeeded(2, bitLength, data)),
@@ -50,36 +50,65 @@ public class IoddScalarConverter
 
     private static ReadOnlySpan<byte> PadToComplementaryInt(byte size, ushort bitLength, ReadOnlySpan<byte> data)
     {
-        byte[] dataArray = data.ToArray();
-
-        static int ConvertToBitArrayIndex(int bitIndex, int byteLength)
+        static int TranslateToBitArrayIndex(int byteSize, int bitIndex)
         {
-            int totalBitLength = byteLength * 8;
-            int desiredBit = totalBitLength - bitIndex;
+            int bitSize = byteSize * 8;
+            int bitIndexInTargetByte = bitIndex % 8;
 
-            int result = 7 - desiredBit;
+            if (byteSize == 1)
+            {
+                return bitIndex;
+            }
+
+            int result = bitSize - bitIndex - 8 + bitIndexInTargetByte;
 
             return result;
         }
 
-        Console.Write(ConvertToBitArrayIndex(1, 0));
+        byte[] dataArray = data.ToArray();
 
         var bitRepresentation = new BitArray(dataArray);
-        bool signBit = bitRepresentation[^(bitLength + 1)];
+        bool signBit = bitRepresentation[TranslateToBitArrayIndex(data.Length, bitLength - 1)];
 
-        var result = new BitArray(size * 8, signBit);
+        byte[] result = new byte[size];
+        CopyToEnd(result, bitRepresentation, bitLength);
 
-        for (int i = 0; i < bitLength; i++)
+        if (signBit)
         {
-            result[i] = bitRepresentation[i];
+            int payloadOffset = GetOffset(result.Length, bitLength);
+            for (byte i = 0; i < payloadOffset; i++)
+            {
+                result[i] = BuildSignByte(8);
+            }
+
+            int signMaskLength = (size * 8) - (payloadOffset * 8) - bitLength;
+            result[payloadOffset] = (byte)(result[payloadOffset] | BuildSignByte(signMaskLength));
         }
 
-        byte[] resultBytes = new byte[size];
-        result.CopyTo(resultBytes, 0);
+        Span<byte> span = result.AsSpan();
+        span.Reverse();
 
-        return resultBytes.AsSpan();
+        return span;
     }
 
+    private static byte BuildSignByte(int count)
+    {
+        byte result = 0xff;
+        for (int i = count; i < 8; i++)
+        {
+            result <<= 1;
+        }
+
+        return result;
+    }
+
+    private static void CopyToEnd(byte[] result, BitArray bitRepresentation, int bitLength)
+    {
+        int offset = GetOffset(result.Length, bitLength);
+        bitRepresentation.CopyTo(result, offset);
+    }
+
+    private static int GetOffset(int containerLength, int bitLength) => containerLength - ((bitLength / 8) + 1);
 
     private static ReadOnlySpan<byte> PadToIfNeeded(byte size, ReadOnlySpan<byte> data)
         => data switch

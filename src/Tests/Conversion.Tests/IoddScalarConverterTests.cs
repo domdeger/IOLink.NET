@@ -19,7 +19,10 @@ public class IoddScalarConverterTests
     public void CanConvert4BitNegativeInteger()
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 4);
+
         object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b0000_1100 });
+
+
         _ = result.Should().Be(-4);
     }
 
@@ -27,7 +30,7 @@ public class IoddScalarConverterTests
     public void CanConvert17BitNegativeInteger()
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 17);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 1, 0b10010001, 0b10100110 });
+        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00000001, 0b10010001, 0b10100110 });
         _ = result.Should().Be(-28250);
     }
 }
