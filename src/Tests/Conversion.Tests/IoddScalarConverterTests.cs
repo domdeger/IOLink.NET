@@ -2,6 +2,7 @@ using FluentAssertions;
 
 using IOLinkNET.Conversion;
 using IOLinkNET.IODD.Resolution;
+using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace Conversion.Tests;
 
@@ -114,4 +115,21 @@ public class IoddScalarConverterTests
     }
 
 
+    [Fact]
+    public static void CanConvertAsciiString()
+    {
+        var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.ASCII);
+        object result = IoddScalarConverter.Convert(typeDef, "Hello"u8);
+        _ = result.Should().Be("Hello");
+        _ = result.Should().BeOfType<string>();
+    }
+
+    [Fact]
+    public static void CanConvertUtf8String()
+    {
+        var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.UTF8);
+        object result = IoddScalarConverter.Convert(typeDef, "Hello"u8);
+        _ = result.Should().Be("Hello");
+        _ = result.Should().BeOfType<string>();
+    }
 }
