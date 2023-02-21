@@ -44,4 +44,20 @@ public class IoddConverterTests
 
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
     }
+
+    [Fact]
+    public void CanConvertArray()
+    {
+        var arrayDefinition = new ParsableArray("V_SomeArray", new ParsableSimpleDatatypeDef("uint_1", KindOfSimpleType.UInteger, 3), 5);
+        var converter = new IoddConverter();
+
+        byte[] data = new byte[] { 0b0101101, 0b00111101 };
+        object result = converter.Convert(arrayDefinition, data);
+
+        _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
+        var array = result as IEnumerable<(string, object)>;
+
+        _ = array.Should().HaveCount(5);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_0" && (int)x.Item2 == 2);
+    }
 }
