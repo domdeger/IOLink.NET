@@ -1,4 +1,5 @@
 using System.Collections;
+
 using IOLinkNET.IODD.Resolution;
 
 namespace IOLinkNET.Conversion;
@@ -16,11 +17,11 @@ internal static class IoddComplexConverter
     private static IEnumerable<(string key, object value)> ConvertArrayT(ParsableArray arrayTypeDef, ReadOnlySpan<byte> data)
     {
         var result = new List<(string key, object value)>();
-
+        var bits = new BitArray(data.ToArray());
         for (var i = 0; i < arrayTypeDef.Length; i++)
         {
             var itemOffset = (ushort)(i * arrayTypeDef.Type.Length);
-            var itemData = ReadWithPadding(data, itemOffset, arrayTypeDef.Type.Length);
+            var itemData = ReadWithPadding(bits, itemOffset, arrayTypeDef.Type.Length);
             result.Add(($"{arrayTypeDef.Name}_{i}", IoddScalarConverter.Convert(arrayTypeDef.Type, itemData)));
         }
 
@@ -30,20 +31,19 @@ internal static class IoddComplexConverter
     private static IEnumerable<(string key, object value)> ConvertRecordType(ParsableRecord recordType, ReadOnlySpan<byte> data)
     {
         var result = new List<(string key, object value)>();
-
+        var bits = new BitArray(data.ToArray());
         foreach (ParsableRecordItem? recordItemDef in recordType.Entries.OrderBy(x => x.BitOffset))
         {
             result.Add((recordItemDef.Name,
                 IoddScalarConverter.Convert(recordItemDef.Type,
-                ReadWithPadding(data, recordItemDef.BitOffset, recordItemDef.Type.Length))));
+                ReadWithPadding(bits, recordItemDef.BitOffset, recordItemDef.Type.Length))));
         }
 
         return result;
     }
 
-    private static ReadOnlySpan<byte> ReadWithPadding(ReadOnlySpan<byte> data, ushort offset, ushort length)
+    private static ReadOnlySpan<byte> ReadWithPadding(BitArray bits, ushort offset, ushort length)
     {
-        var bits = new BitArray(data.ToArray());
         var result = new byte[length / 8 + 1];
 
         for (var i = 0; i < length; i++)
@@ -54,5 +54,4 @@ internal static class IoddComplexConverter
 
         return result;
     }
-
 }

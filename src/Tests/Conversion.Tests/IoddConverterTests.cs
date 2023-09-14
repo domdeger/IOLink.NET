@@ -58,6 +58,10 @@ public class IoddConverterTests
         var array = result as IEnumerable<(string, object)>;
 
         _ = array.Should().HaveCount(5);
-        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_0" && (int)x.Item2 == 2);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_0" && (byte)x.Item2 == 5);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_1" && (byte)x.Item2 == 5);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_2" && (byte)x.Item2 == 6);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_3" && (byte)x.Item2 == 6);
+        _ = array.Should().Contain(x => x.Item1 == "V_SomeArray_4" && (byte)x.Item2 == 3);
     }
 }
