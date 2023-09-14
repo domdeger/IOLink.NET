@@ -1,9 +1,7 @@
-using IODD.Resolution.Model;
-
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Datatypes;
 
-namespace IODD.Resolution;
+namespace IOLinkNET.IODD.Resolution;
 
 public class ParameterTypeResolver
 {
@@ -24,13 +22,13 @@ public class ParameterTypeResolver
         var variables = _device.ProfileBody.DeviceFunction.VariableCollection;
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
-        
+
         if (subIndex is not null)
         {
             var type = _datatypeResolver.Resolve(variable);
-            var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex) 
+            var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
                 ?? throw new InvalidOperationException($"{type.Id} is no Record or has no item with subindex {subIndex}");
-            
+
             return _converter.Convert(_datatypeResolver.Resolve(recordItem), $"{variable.Id}_{subIndex}");
         }
 

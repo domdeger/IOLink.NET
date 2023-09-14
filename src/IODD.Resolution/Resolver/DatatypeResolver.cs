@@ -1,7 +1,7 @@
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.Interfaces;
 
-namespace IODD.Resolution;
+namespace IOLinkNET.IODD.Resolution;
 
 internal class DatatypeResolver
 {
@@ -13,6 +13,6 @@ internal class DatatypeResolver
     }
 
     public DatatypeT Resolve(IDatatypeOrTypeRef resolvee)
-        => resolvee.Type ?? _datatypes.FirstOrDefault(type => type.Id == resolvee.Ref?.DatatypeId) 
+        => resolvee.Type ?? _datatypes.FirstOrDefault(type => type.Id == resolvee.Ref?.DatatypeId)
                 ?? throw new ArgumentOutOfRangeException(nameof(resolvee), "Datatype could not be resolved.");
 }
