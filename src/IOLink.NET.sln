@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IODD.Parser.Tests", "Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IODD.Resolution.Tests", "Tests\IODD.Resolution.Tests\IODD.Resolution.Tests.csproj", "{50A473CC-55EF-4DC4-9B8B-6E3D3ECC193C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversion", "Conversion\Conversion.csproj", "{44A65C0C-C0C8-4FF1-BA39-51652259580F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{50A473CC-55EF-4DC4-9B8B-6E3D3ECC193C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50A473CC-55EF-4DC4-9B8B-6E3D3ECC193C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50A473CC-55EF-4DC4-9B8B-6E3D3ECC193C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44A65C0C-C0C8-4FF1-BA39-51652259580F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44A65C0C-C0C8-4FF1-BA39-51652259580F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44A65C0C-C0C8-4FF1-BA39-51652259580F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44A65C0C-C0C8-4FF1-BA39-51652259580F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E15B2355-25E7-4BA4-B541-1878426EADDA} = {A87B4B20-7BB8-452F-934A-8860F6252B80}
