@@ -1,3 +1,4 @@
+using System.Collections;
 using IOLinkNET.IODD.Resolution;
 
 namespace IOLinkNET.Conversion;
@@ -8,9 +9,23 @@ internal static class IoddComplexConverter
         => complexTypeDef switch
         {
             ParsableRecord recordType => ConvertRecordType(recordType, data),
-            // ToDo: ArrayT missing
+            ParsableArray arrayTypeDef => ConvertArrayT(arrayTypeDef, data),
             _ => throw new InvalidOperationException($"Type {complexTypeDef.GetType().Name} is not supported.")
         };
+
+    private static IEnumerable<(string key, object value)> ConvertArrayT(ParsableArray arrayTypeDef, ReadOnlySpan<byte> data)
+    {
+        var result = new List<(string key, object value)>();
+
+        for (var i = 0; i < arrayTypeDef.Length; i++)
+        {
+            var itemOffset = (ushort)(i * arrayTypeDef.Type.Length);
+            var itemData = ReadWithPadding(data, itemOffset, arrayTypeDef.Type.Length);
+            result.Add(($"{arrayTypeDef.Name}_{i}", IoddScalarConverter.Convert(arrayTypeDef.Type, itemData)));
+        }
+
+        return result;
+    }
 
     private static IEnumerable<(string key, object value)> ConvertRecordType(ParsableRecord recordType, ReadOnlySpan<byte> data)
     {
@@ -28,22 +43,13 @@ internal static class IoddComplexConverter
 
     private static ReadOnlySpan<byte> ReadWithPadding(ReadOnlySpan<byte> data, ushort offset, ushort length)
     {
-        int startByte = offset / 8;
-        int byteLength = length / 8;
-        int endByte = startByte + (byteLength > 1 ? byteLength : 1);
+        var bits = new BitArray(data.ToArray());
+        var result = new byte[length / 8 + 1];
 
-        ReadOnlySpan<byte> result = data[^endByte..^startByte];
-
-        bool startShiftNeeded = offset % 8 != 0;
-        bool endShiftNeeded = (length + offset) % 8 != 0;
-
-        if (startShiftNeeded || endShiftNeeded)
+        for (var i = 0; i < length; i++)
         {
-            byte[] temp = result.ToArray();
-            temp[0] = startShiftNeeded ? (byte)(temp[0] >> (offset % 8)) : temp[0];
-            temp[^1] = endShiftNeeded ? (byte)(temp[^1] >> (length % 8)) : temp[^1];
-
-            result = temp.AsSpan();
+            var bit = bits[offset + i];
+            result[i / 8] |= (byte)(bit ? 1 << (i % 8) : 0);
         }
 
         return result;

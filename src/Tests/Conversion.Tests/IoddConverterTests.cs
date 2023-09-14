@@ -51,7 +51,7 @@ public class IoddConverterTests
         var arrayDefinition = new ParsableArray("V_SomeArray", new ParsableSimpleDatatypeDef("uint_1", KindOfSimpleType.UInteger, 3), 5);
         var converter = new IoddConverter();
 
-        byte[] data = new byte[] { 0b0101101, 0b00111101 };
+        byte[] data = new byte[] { 0b10101101, 0b00111101 };
         object result = converter.Convert(arrayDefinition, data);
 
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
