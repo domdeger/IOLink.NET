@@ -12,7 +12,7 @@ public class IODDFinderPublicClient : IIODDProvider
     {
         _httpClient = new() { BaseAddress = baseUrl };
     }
-    public async Task<Stream> GetDeviceAsync(ushort vendorId, uint deviceId, string productId, CancellationToken cancellationToken = default)
+    public async Task<Stream> GetIODDPackageAsync(ushort vendorId, uint deviceId, string productId, CancellationToken cancellationToken = default)
     {
         var entries = await _httpClient.GetFromJsonAsync<IODDFinderSearchResponse>($"api/drivers?status=APPROVED&status=UPLOADED&vendorId={vendorId}&deviceId={deviceId}&productId={productId}");
         if (entries is null)
