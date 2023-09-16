@@ -7,7 +7,7 @@ public record ParsableSimpleDatatypeDef(string Name, KindOfSimpleType Datatype, 
 public record ParsableStringDef(string Name, ushort Length, StringTEncoding Encoding) : ParsableSimpleDatatypeDef(Name, KindOfSimpleType.String, Length);
 
 public record ParsableComplexDataTypeDef(string Name) : ParsableDatatype(Name);
-public record ParsableRecord(string Name, IEnumerable<ParsableRecordItem> Entries) : ParsableComplexDataTypeDef(Name);
+public record ParsableRecord(string Name, ushort Length, IEnumerable<ParsableRecordItem> Entries) : ParsableComplexDataTypeDef(Name);
 public record ParsableArray(string Name, ParsableSimpleDatatypeDef Type, ushort Length) : ParsableComplexDataTypeDef(Name);
 public record ParsableRecordItem(ParsableSimpleDatatypeDef Type, string Name, ushort BitOffset, ushort Subindex);
 
