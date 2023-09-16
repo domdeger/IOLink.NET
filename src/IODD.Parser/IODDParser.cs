@@ -28,7 +28,7 @@ public class IODDParser
 
     public static bool IsIODDFile(XDocument xml)
     {
-        return xml.Descendants(IODDParserConstants.DeviceIdentityName).Any();
+        return xml.Descendants().Any(d => d.Name.LocalName == "DeviceIdentity");
     }
 
     public IODevice Parse(XElement iodd)

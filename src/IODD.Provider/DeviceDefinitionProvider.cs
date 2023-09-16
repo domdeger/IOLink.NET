@@ -3,7 +3,6 @@ using System.IO.Compression;
 using System.Xml.Linq;
 
 using IOLinkNET.IODD.Structure;
-using IOLinkNET.IODD;
 
 namespace IOLinkNET.IODD.Provider;
 
@@ -15,6 +14,7 @@ public class DeviceDefinitionProvider : IDeviceDefinitionProvider
     {
         _ioddProvider = ioddProvider;
     }
+
     public async Task<IODevice> GetDeviceDefinitionAsync(ushort vendorId, uint deviceId, string productId, CancellationToken cancellationToken = default)
     {
         var ioddPackage = await _ioddProvider.GetIODDPackageAsync(vendorId, deviceId, productId, cancellationToken);
