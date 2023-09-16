@@ -25,7 +25,13 @@ public class IODDParser
         _partLocator.AddPart(new VariableTParser(_partLocator));
         _partLocator.AddPart(new DatatypeCollectionTParser(_partLocator));
     }
-    public IODevice? Parse(XElement iodd)
+
+    public static bool IsIODDFile(XDocument xml)
+    {
+        return xml.Descendants().Any(d => d.Name.LocalName == "DeviceIdentity");
+    }
+
+    public IODevice Parse(XElement iodd)
     {
         DeviceIdentityT deviceIdentity = _partLocator.Parse<DeviceIdentityT>(iodd.Descendants(IODDParserConstants.DeviceIdentityName).First());
         DeviceFunctionT deviceFunction = _partLocator.Parse<DeviceFunctionT>(iodd.Descendants(IODDParserConstants.DeviceFunctionName).First());
