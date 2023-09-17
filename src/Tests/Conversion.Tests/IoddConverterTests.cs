@@ -2,6 +2,7 @@ using FluentAssertions;
 
 using IOLinkNET.Conversion;
 using IOLinkNET.IODD.Resolution;
+using IOLinkNET.IODD.Structure.Datatypes;
 
 using Xunit.Sdk;
 
@@ -64,10 +65,24 @@ public class IoddConverterTests
             new ParsableRecordItem(new ParsableSimpleDatatypeDef("CR2", KindOfSimpleType.Boolean, 1), "CR2", 35, 4),
             new ParsableRecordItem(new ParsableSimpleDatatypeDef("Control", KindOfSimpleType.Boolean, 1), "Control", 38, 5),
             new ParsableRecordItem(new ParsableSimpleDatatypeDef("Setpoint", KindOfSimpleType.OctetString, 16), "Setpoint", 16, 6),
-            new ParsableRecordItem(new ParsableSimpleDatatypeDef("Unit", KindOfSimpleType.String, 8), "Unit", 8, 7),
-            new ParsableRecordItem(new ParsableSimpleDatatypeDef("Enable", KindOfSimpleType.OctetString, 8), "Enable", 8, 8),
+            new ParsableRecordItem(new ParsableStringDef("Unit", 8, StringTEncoding.ASCII), "Unit", 8, 7),
+            new ParsableRecordItem(new ParsableSimpleDatatypeDef("Enable", KindOfSimpleType.OctetString, 8), "Enable", 0, 8),
         });
-        var data = new byte[] { 0b01001001, 0xF8, 0x23, 0x41, 0xCe };
+        var data = new byte[] { 0b01001001, 0xF8, 0x23, 0x41, 0xC3 };
+        var result = converter.Convert(recordDef, data);
+
+        result.Should().NotBeNull();
+        result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
+        var record = result as IEnumerable<(string, object)>;
+        record.Should().HaveCount(8);
+        record.Should().Contain(x => x.Item1 == "NewBit" && (bool)x.Item2 == true);
+        record.Should().Contain(x => x.Item1 == "DR4" && (bool)x.Item2 == false);
+        record.Should().Contain(x => x.Item1 == "CR3" && (bool)x.Item2 == false);
+        record.Should().Contain(x => x.Item1 == "CR2" && (bool)x.Item2 == true);
+        record.Should().Contain(x => x.Item1 == "Control" && (bool)x.Item2 == true);
+        record.Should().Contain(x => x.Item1 == "Setpoint" && (string)x.Item2 == "F823");
+        record.Should().Contain(x => x.Item1 == "Unit" && (string)x.Item2 == "A");
+        record.Should().Contain(x => x.Item1 == "Enable" && (string)x.Item2 == "C3");
     }
 
     [Fact]

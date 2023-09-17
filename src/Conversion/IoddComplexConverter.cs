@@ -38,7 +38,7 @@ internal static class IoddComplexConverter
             var translatedOffset = (ushort)(recordType.Length - recordItemDef.BitOffset);
             result.Add((recordItemDef.Name,
                 IoddScalarConverter.Convert(recordItemDef.Type,
-                ReadWithPadding(bits, recordItemDef.BitOffset, recordItemDef.Type.Length))));
+                ReadWithPadding(bits, recordItemDef.BitOffset, recordItemDef.Type.Length).ToArray().Reverse().ToArray())));
         }
 
         return result;
@@ -46,7 +46,7 @@ internal static class IoddComplexConverter
 
     private static ReadOnlySpan<byte> ReadWithPadding(BitArray bits, ushort offset, ushort length)
     {
-        var result = new byte[length / 8 + 1];
+        var result = new byte[length / 8 + (length % 8 != 0 ? 1 : 0)];
 
         for (var i = 0; i < length; i++)
         {

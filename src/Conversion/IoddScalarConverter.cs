@@ -17,6 +17,7 @@ public class IoddScalarConverter
             { Datatype: KindOfSimpleType.Float } => BinaryPrimitives.ReadSingleBigEndian(data),
             { Datatype: KindOfSimpleType.UInteger } => GetUint(data),
             { Datatype: KindOfSimpleType.Integer } => GetInt(data, typeDef.Length),
+            { Datatype: KindOfSimpleType.OctetString } => System.Convert.ToHexString(data),
             ParsableStringDef s => ConvertString(s, data),
             _ => throw new NotImplementedException()
         };
