@@ -44,8 +44,8 @@ internal class ParsableDatatypeConverter
         {
             UIntegerT uInteger => uInteger.BitLength,
             IntegerT integer => integer.BitLength,
-            StringT stringT => stringT.FixedLength,
-            OctetStringT octetString => octetString.FixedLength,
+            StringT stringT => (ushort)(stringT.FixedLength * 8),
+            OctetStringT octetString => (ushort)(octetString.FixedLength * 8),
             BooleanT => 1,
             TimeSpanT => 64,
             TimeT => 64,
@@ -80,6 +80,6 @@ internal class ParsableDatatypeConverter
                             rItem.Name.TextId, rItem.BitOffset, rItem.Subindex));
         var recordName = recordType.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
 
-        return new ParsableRecord(recordName, parsableRecordItems);
+        return new ParsableRecord(recordName, recordType.BitLength, parsableRecordItems);
     }
 }
