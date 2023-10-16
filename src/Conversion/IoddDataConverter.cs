@@ -1,5 +1,3 @@
-using System.Xml.Serialization;
-
 using IOLinkNET.IODD.Resolution;
 
 namespace IOLinkNET.Conversion;
