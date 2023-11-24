@@ -25,7 +25,7 @@ internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
     public DeviceFunctionT Parse(XElement element)
     {
         IEnumerable<DatatypeT> dataTypeCollection = _parserLocator
-                        .ParseMandatory<IEnumerable<DatatypeT>>(element.Descendants(IODDDeviceFunctionNames.DatatypeCollectionName).First()).ToArray();
+                        .ParseOptional<IEnumerable<DatatypeT>>(element.Descendants(IODDDeviceFunctionNames.DatatypeCollectionName).FirstOrDefault())?.ToArray() ?? Array.Empty<DatatypeT>();
         IEnumerable<VariableT> variableCollection = element.Descendants(IODDDeviceFunctionNames.VariableName)
                         .Select(_parserLocator.ParseMandatory<VariableT>).ToArray();
         IEnumerable<ProcessDataT> pdCollection = element.Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName).Descendants(IODDDeviceFunctionNames.ProcessDataName)

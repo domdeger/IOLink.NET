@@ -21,6 +21,13 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Conversion\Conversion.csproj" />
     <ProjectReference Include="..\..\IODD.Resolution\IODD.Abstraction.csproj" />
+    <ProjectReference Include="..\..\IODD.Parser\IODD.Parser.csproj" />
   </ItemGroup>
 
+   <ItemGroup>
+    <Content Include="..\TestData\**">
+      <Link>TestData\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
 </Project>

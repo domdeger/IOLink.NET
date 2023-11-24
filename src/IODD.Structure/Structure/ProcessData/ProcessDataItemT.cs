@@ -4,7 +4,7 @@ using IOLinkNET.IODD.Structure.Interfaces;
 
 namespace IOLinkNET.IODD.Structure.ProcessData;
 
-public record ProcessDataItemT(DatatypeT? Datatype, DatatypeRefT? Ref, TextRefT Name, ushort BitLength) : IDatatypeOrTypeRef
+public record ProcessDataItemT(DatatypeT? Datatype, DatatypeRefT? Ref, string Id, ushort BitLength) : IDatatypeOrTypeRef
 {
-    public DatatypeT? Type => Type;
+    public DatatypeT? Type => Datatype;
 }

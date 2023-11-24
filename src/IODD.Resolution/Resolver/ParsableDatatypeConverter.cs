@@ -1,5 +1,6 @@
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
+using IOLinkNET.IODD.Structure.ProcessData;
 
 namespace IOLinkNET.IODD.Resolution;
 
@@ -12,7 +13,7 @@ internal class ParsableDatatypeConverter
         _datatypeResolver = datatypeResolver;
     }
 
-
+    public ParsableDatatype Convert(ProcessDataItemT processDataIn) => ConvertInternal(_datatypeResolver.Resolve(processDataIn), processDataIn.Id);
     public ParsableDatatype Convert(DatatypeT type) => ConvertInternal(type);
 
     internal ParsableDatatype Convert(DatatypeT type, string name) => ConvertInternal(type, name);

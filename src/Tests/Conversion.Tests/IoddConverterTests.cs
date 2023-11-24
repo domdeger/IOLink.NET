@@ -4,8 +4,6 @@ using IOLinkNET.Conversion;
 using IOLinkNET.IODD.Resolution;
 using IOLinkNET.IODD.Structure.Datatypes;
 
-using Xunit.Sdk;
-
 namespace Conversion.Tests;
 
 public class IoddConverterTests
@@ -18,7 +16,7 @@ public class IoddConverterTests
         var recordItem1 = new ParsableRecordItem(new ParsableSimpleDatatypeDef("uint_2", KindOfSimpleType.UInteger, 4), "Test", 4, 1);
         var testRecord = new ParsableRecord("Test", 8, new[] { recordItem, recordItem1 });
 
-        object result = converter.Convert(testRecord, new byte[] { /*1111 1111*/ 0xff });
+        object result = converter.Convert(testRecord, [/*1111 1111*/ 0xff]);
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
     }
 

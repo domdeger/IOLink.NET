@@ -17,7 +17,7 @@ internal class ConditionTParser : IParserPart<ConditionT>
     {
         string variableId = element.ReadMandatoryAttribute("variableId");
         byte subIndex = element.ReadMandatoryAttribute<byte>("subIndex");
-        byte value = element.ReadMandatoryAttribute<byte>("value");
+        int value = element.ReadMandatoryAttribute<int>("value");
         return new ConditionT(variableId, subIndex, value);
     }
 }

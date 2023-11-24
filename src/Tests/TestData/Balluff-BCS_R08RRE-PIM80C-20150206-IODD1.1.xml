@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<IODevice xmlns = "http://www.io-link.com/IODD/2010/10" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://www.io-link.com/IODD/2010/10 IODD1.1.xsd">
+  <DocumentInfo copyright = "Copyright 2015, Balluff GmbH" releaseDate = "2015-02-06" version = "V0.72"/>
+  <ProfileHeader>
+    <ProfileIdentification>IO Device Profile</ProfileIdentification>
+    <ProfileRevision>1.1</ProfileRevision>
+    <ProfileName>Device Profile for IO Devices</ProfileName>
+    <ProfileSource>IO-Link Consortium</ProfileSource>
+    <ProfileClassID>Device</ProfileClassID>
+    <ISO15745Reference>
+      <ISO15745Part>1</ISO15745Part>
+      <ISO15745Edition>1</ISO15745Edition>
+      <ProfileTechnology>IODD</ProfileTechnology>
+    </ISO15745Reference>
+  </ProfileHeader>
+  <ProfileBody>
+    <DeviceIdentity vendorId = "888" vendorName = "BALLUFF" deviceId = "459267">
+      <VendorText textId = "TN_VendorText"/>
+      <VendorUrl textId = "TN_VendorUrl"/>
+      <VendorLogo name = "Balluff-logo.png"/>
+      <DeviceName textId = "TN_DeviceName"/>
+      <DeviceFamily textId = "TN_DeviceFamily"/>
+      <DeviceVariantCollection>
+        <DeviceVariant productId = "BCS012N" deviceSymbol = "Balluff-Microbox-pic.png" deviceIcon = "Balluff-Microbox-icon.png">
+          <Name textId = "TN_Device1_Name"/>
+          <Description textId = "TN_Device1_Desc"/>
+        </DeviceVariant>
+      </DeviceVariantCollection>
+    </DeviceIdentity>
+    <DeviceFunction>
+      <Features blockParameter = "true" dataStorage = "true" profileCharacteristic = "1 32768 32769 32770 32771 32772">
+        <SupportedAccessLocks parameter = "true" dataStorage = "true" localParameterization = "true" localUserInterface = "false"/>
+      </Features>
+      <VariableCollection>
+        <StdVariableRef id = "V_DirectParameters_1"/>
+        <StdVariableRef id = "V_DirectParameters_2"/>
+        <StdVariableRef id = "V_SystemCommand">
+          <SingleValue value = "77">
+            <Name textId = "TN_Teach_Near"/>
+          </SingleValue>
+          <SingleValue value = "78">
+            <Name textId = "TN_Teach_Far"/>
+          </SingleValue>
+          <SingleValue value = "163">
+            <Name textId = "TN_SysCmd_Restore_BDC"/>
+          </SingleValue>
+          <StdSingleValueRef value = "128"/>
+          <StdSingleValueRef value = "130"/>
+        </StdVariableRef>
+        <StdVariableRef id = "V_VendorName"/>
+        <StdVariableRef id = "V_VendorText"/>
+        <StdVariableRef id = "V_ProductName"/>
+        <StdVariableRef id = "V_ProductID"/>
+        <StdVariableRef id = "V_ProductText"/>
+        <StdVariableRef id = "V_HardwareRevision"/>
+        <StdVariableRef id = "V_FirmwareRevision"/>
+        <StdVariableRef id = "V_SerialNumber"/>
+        <StdVariableRef id = "V_ApplicationSpecificTag" defaultValue = "" fixedLengthRestriction = "32"/>
+        <StdVariableRef id = "V_ProcessDataInput"/>
+        <StdVariableRef id = "V_DeviceAccessLocks"/>
+        <StdVariableRef id = "V_DeviceStatus"/>
+        <StdVariableRef id = "V_DetailedDeviceStatus" fixedLengthRestriction = "4"/>
+        <Variable id = "V_TeachInChannel" index = "58" accessRights = "ro" defaultValue = "0">
+          <Datatype xsi:type = "UIntegerT" bitLength = "8">
+            <SingleValue value = "0">
+              <Name textId = "TN_Predef_BDC"/>
+            </SingleValue>
+          </Datatype>
+          <Name textId = "TN_TeachInChannel"/>
+          <Description textId = "TD_TeachInChannel"/>
+        </Variable>
+        <Variable id = "V_TeachInStatus" index = "59" accessRights = "ro" dynamic = "true">
+          <Datatype xsi:type = "RecordT" bitLength = "8" subindexAccessSupported = "false">
+            <RecordItem bitOffset = "0" subindex = "1">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "4">
+                <SingleValue value = "0">
+                  <Name textId = "TN_Idle"/>
+                </SingleValue>
+                <SingleValue value = "1">
+                  <Name textId = "TN_SP1_success"/>
+                </SingleValue>
+                <SingleValue value = "2">
+                  <Name textId = "TN_SP2_success"/>
+                </SingleValue>
+                <SingleValue value = "3">
+                  <Name textId = "TN_SP1_SP2_success"/>
+                </SingleValue>
+                <SingleValue value = "4">
+                  <Name textId = "TN_Wait_for_command"/>
+                </SingleValue>
+                <SingleValue value = "5">
+                  <Name textId = "TN_Busy"/>
+                </SingleValue>
+                <SingleValue value = "6">
+                  <Name textId = "TN_Reserved"/>
+                </SingleValue>
+                <SingleValue value = "7">
+                  <Name textId = "TN_Error"/>
+                </SingleValue>
+                <ValueRange upperValue = "15" lowerValue = "8">
+                  <Name textId = "TN_Reserved"/>
+                </ValueRange>
+              </SimpleDatatype>
+              <Name textId = "TN_TeachState"/>
+            </RecordItem>
+            <RecordItem subindex = "2" bitOffset = "4">
+              <SimpleDatatype xsi:type = "BooleanT"/>
+              <Name textId = "TN_SP1_TP1_Teach_Flag"/>
+            </RecordItem>
+            <RecordItem subindex = "3" bitOffset = "5">
+              <SimpleDatatype xsi:type = "BooleanT"/>
+              <Name textId = "TN_SP1_TP2_Teach_Flag"/>
+            </RecordItem>
+            <RecordItem subindex = "4" bitOffset = "6">
+              <SimpleDatatype xsi:type = "BooleanT"/>
+              <Name textId = "TN_SP2_TP1_Teach_Flag"/>
+            </RecordItem>
+            <RecordItem subindex = "5" bitOffset = "7">
+              <SimpleDatatype xsi:type = "BooleanT"/>
+              <Name textId = "TN_SP2_TP2_Teach_Flag"/>
+            </RecordItem>
+          </Datatype>
+          <Name textId = "TN_TeachInStatus"/>
+          <Description textId = "TD_TeachInStatus"/>
+        </Variable>
+        <Variable id = "V_SetPointValueBDC1" index = "60" accessRights = "rw" dynamic = "true">
+          <Datatype xsi:type = "RecordT" bitLength = "32">
+            <RecordItem subindex = "1" bitOffset = "16">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "16"></SimpleDatatype>
+              <Name textId = "TN_SetPoint1"/>
+              <Description textId = "TD_SetPoint1"/>
+            </RecordItem>
+            <RecordItem subindex = "2" bitOffset = "0">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "16"></SimpleDatatype>
+              <Name textId = "TN_SetPoint2"/>
+              <Description textId = "TD_SetPoint2"/>
+            </RecordItem>
+          </Datatype>
+          <RecordItemInfo subindex = "1" defaultValue = "1800"/>
+          <RecordItemInfo subindex = "2" defaultValue = "0"/>
+          <Name textId = "TN_SetPointValueBDC1"/>
+          <Description textId = "TD_SetPointValueBDC1"/>
+        </Variable>
+        <Variable id = "V_SwitchPointConfigBDC1" index = "61" accessRights = "rw">
+          <Datatype xsi:type = "RecordT" bitLength = "24">
+            <RecordItem subindex = "1" bitOffset = "16">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "8">
+                <SingleValue value = "0">
+                  <Name textId = "TN_SwitchpointLogic_Normal"/>
+                </SingleValue>
+                <SingleValue value = "1">
+                  <Name textId = "TN_SwitchpointLogic_Inverted"/>
+                </SingleValue>
+              </SimpleDatatype>
+              <Name textId = "TN_SwitchpointLogic"/>
+              <Description textId = "TD_SwitchpointLogic"/>
+            </RecordItem>
+            <RecordItem subindex = "2" bitOffset = "8">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "8">
+                <SingleValue value = "1">
+                  <Name textId = "TN_SwitchpointMode_Single"/>
+                </SingleValue>
+                <SingleValue value = "2">
+                  <Name textId = "TN_SwitchpointMode_Window"/>
+                </SingleValue>
+                <SingleValue value = "3">
+                  <Name textId = "TN_SwitchpointMode_TwoPoint"/>
+                </SingleValue>
+              </SimpleDatatype>
+              <Name textId = "TN_SwitchpointMode"/>
+              <Description textId = "TD_SwitchpointMode"/>
+            </RecordItem>
+            <RecordItem subindex = "3" bitOffset = "0">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "8"></SimpleDatatype>
+              <Name textId = "TN_SwitchpointHysteresis"/>
+              <Description textId = "TD_SwitchpointHysteresis"/>
+            </RecordItem>
+          </Datatype>
+          <RecordItemInfo subindex = "1" defaultValue = "0"/>
+          <RecordItemInfo subindex = "2" defaultValue = "1"/>
+          <RecordItemInfo subindex = "3" defaultValue = "5"/>
+          <Name textId = "TN_SwitchpointConfigBDC1"/>
+          <Description textId = "TD_SwitchpointConfig"/>
+        </Variable>
+        <Variable id = "V_TeachOffset" index = "177" accessRights = "rw" defaultValue = "10">
+          <Datatype xsi:type = "UIntegerT" bitLength = "16"></Datatype>
+          <Name textId = "TN_TeachOffset"/>
+          <Description textId = "TD_TeachOffset"/>
+        </Variable>
+        <Variable id = "V_Debounce" index = "178" accessRights = "rw">
+          <Datatype xsi:type = "RecordT" bitLength = "48">
+            <RecordItem subindex = "1" bitOffset = "32">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "16"></SimpleDatatype>
+              <Name textId = "TN_DbcPulseRise"/>
+            </RecordItem>
+            <RecordItem subindex = "2" bitOffset = "16">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "16"></SimpleDatatype>
+              <Name textId = "TN_DbcPulseFall"/>
+            </RecordItem>
+            <RecordItem subindex = "3" bitOffset = "0">
+              <SimpleDatatype xsi:type = "UIntegerT" bitLength = "16"></SimpleDatatype>
+              <Name textId = "TN_DbcFilter"/>
+            </RecordItem>
+          </Datatype>
+          <RecordItemInfo subindex = "1" defaultValue = "0"/>
+          <RecordItemInfo subindex = "2" defaultValue = "0"/>
+          <RecordItemInfo subindex = "3" defaultValue = "0"/>
+          <Name textId = "TN_Debounce"/>
+          <Description textId = "TD_Debounce"/>
+        </Variable>
+        <Variable id = "V_SioMode" index = "180" accessRights = "rw" defaultValue = "1">
+          <Datatype xsi:type = "UIntegerT" bitLength = "8">
+            <SingleValue value = "1">
+              <Name textId = "TN_SioMode_PNP"/>
+            </SingleValue>
+            <SingleValue value = "2">
+              <Name textId = "TN_SioMode_NPN"/>
+            </SingleValue>
+            <SingleValue value = "3">
+              <Name textId = "TN_SioMode_PP"/>
+            </SingleValue>
+          </Datatype>
+          <Name textId = "TN_SioMode"/>
+          <Description textId = "TD_SioMode"/>
+        </Variable>
+      </VariableCollection>
+      <ProcessDataCollection>
+        <ProcessData id = "V_PD">
+          <ProcessDataIn id = "V_PDI" bitLength = "16">
+            <Datatype xsi:type = "RecordT" subindexAccessSupported = "false" bitLength = "16">
+              <RecordItem subindex = "1" bitOffset = "0">
+                <SimpleDatatype xsi:type = "BooleanT"/>
+                <Name textId = "TN_PDI_BDC1"/>
+              </RecordItem>
+              <RecordItem subindex = "2" bitOffset = "4">
+                <SimpleDatatype xsi:type = "UIntegerT" bitLength = "12">
+                  <ValueRange lowerValue = "0" upperValue = "4095"/>
+                </SimpleDatatype>
+                <Name textId = "TN_PDI_PDV"/>
+              </RecordItem>
+            </Datatype>
+            <Name textId = "TN_PDI"/>
+          </ProcessDataIn>
+        </ProcessData>
+      </ProcessDataCollection>
+      <ErrorTypeCollection>
+        <StdErrorTypeRef additionalCode = "17"/>
+        <StdErrorTypeRef additionalCode = "18"/>
+        <StdErrorTypeRef additionalCode = "32"/>
+        <StdErrorTypeRef additionalCode = "33"/>
+        <StdErrorTypeRef additionalCode = "34"/>
+        <StdErrorTypeRef additionalCode = "35"/>
+        <StdErrorTypeRef additionalCode = "48"/>
+        <StdErrorTypeRef additionalCode = "49"/>
+        <StdErrorTypeRef additionalCode = "50"/>
+        <StdErrorTypeRef additionalCode = "51"/>
+        <StdErrorTypeRef additionalCode = "52"/>
+        <StdErrorTypeRef additionalCode = "53"/>
+        <StdErrorTypeRef additionalCode = "54"/>
+        <StdErrorTypeRef additionalCode = "64"/>
+        <StdErrorTypeRef additionalCode = "130"/>
+      </ErrorTypeCollection>
+      <EventCollection>
+        <StdEventRef code = "16912"/>
+        <StdEventRef code = "20753"/>
+        <StdEventRef code = "35872"/>
+      </EventCollection>
+      <UserInterface>
+        <MenuCollection>
+          <Menu id = "ME_OB_Identification">
+            <VariableRef variableId = "V_VendorName"/>
+            <VariableRef variableId = "V_VendorText"/>
+            <VariableRef variableId = "V_ProductName"/>
+            <VariableRef variableId = "V_ProductID"/>
+            <VariableRef variableId = "V_ProductText"/>
+            <VariableRef variableId = "V_HardwareRevision"/>
+            <VariableRef variableId = "V_FirmwareRevision"/>
+            <VariableRef variableId = "V_SerialNumber"/>
+            <VariableRef variableId = "V_ApplicationSpecificTag" accessRightRestriction = "ro"/>
+          </Menu>
+          <Menu id = "ME_SP_Identification">
+            <VariableRef variableId = "V_VendorName"/>
+            <VariableRef variableId = "V_VendorText"/>
+            <VariableRef variableId = "V_ProductName"/>
+            <VariableRef variableId = "V_ProductID"/>
+            <VariableRef variableId = "V_ProductText"/>
+            <VariableRef variableId = "V_HardwareRevision"/>
+            <VariableRef variableId = "V_FirmwareRevision"/>
+            <VariableRef variableId = "V_SerialNumber"/>
+            <VariableRef variableId = "V_ApplicationSpecificTag" accessRightRestriction = "rw"/>
+          </Menu>
+          <Menu id = "ME_OB_Parameter">
+            <RecordItemRef subindex = "1" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "2" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "1" variableId = "V_SetPointValueBDC1" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "1" variableId = "V_SwitchPointConfigBDC1" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_SwitchPointConfigBDC1" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "1" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "2" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <VariableRef variableId = "V_SioMode" displayFormat = "Dec" accessRightRestriction = "ro"/>
+          </Menu>
+          <Menu id = "ME_M_Parameter">
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "77"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "78"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "128"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "130"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "163"/>
+            </VariableRef>
+            <RecordItemRef subindex = "1" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "2" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_DeviceAccessLocks" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "1" variableId = "V_SetPointValueBDC1" accessRightRestriction = "rw"/>
+            <RecordItemRef subindex = "1" variableId = "V_SwitchPointConfigBDC1" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_SwitchPointConfigBDC1" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "1" variableId = "V_TeachInStatus"/>
+            <RecordItemRef subindex = "1" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "2" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <RecordItemRef subindex = "3" variableId = "V_Debounce" accessRightRestriction = "ro"/>
+            <VariableRef variableId = "V_SioMode" displayFormat = "Dec" accessRightRestriction = "ro"/>
+          </Menu>
+          <Menu id = "ME_SP_Parameter">
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "77"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "78"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "128"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "130"/>
+            </VariableRef>
+            <VariableRef variableId = "V_SystemCommand">
+              <Button buttonValue = "163"/>
+            </VariableRef>
+            <RecordItemRef subindex = "1" variableId = "V_DeviceAccessLocks"/>
+            <RecordItemRef subindex = "2" variableId = "V_DeviceAccessLocks"/>
+            <RecordItemRef subindex = "3" variableId = "V_DeviceAccessLocks"/>
+            <RecordItemRef subindex = "1" variableId = "V_SetPointValueBDC1"/>
+            <RecordItemRef subindex = "1" variableId = "V_SwitchPointConfigBDC1"/>
+            <RecordItemRef subindex = "3" variableId = "V_SwitchPointConfigBDC1"/>
+            <RecordItemRef subindex = "1" variableId = "V_TeachInStatus"/>
+            <VariableRef variableId = "V_TeachOffset"/>
+            <RecordItemRef subindex = "1" variableId = "V_Debounce"/>
+            <RecordItemRef subindex = "2" variableId = "V_Debounce"/>
+            <RecordItemRef subindex = "3" variableId = "V_Debounce"/>
+            <VariableRef variableId = "V_SioMode" displayFormat = "Dec"/>
+          </Menu>
+          <Menu id = "ME_Diagnosis">
+            <VariableRef variableId = "V_DeviceStatus"/>
+            <VariableRef variableId = "V_DetailedDeviceStatus"/>
+          </Menu>
+          <Menu id = "ME_OB_Observation">
+            <VariableRef variableId = "V_ProcessDataInput" accessRightRestriction = "ro"/>
+          </Menu>
+          <Menu id = "ME_SP_Observation">
+            <VariableRef variableId = "V_ProcessDataInput" accessRightRestriction = "ro"/>
+          </Menu>
+        </MenuCollection>
+        <ObserverRoleMenuSet>
+          <IdentificationMenu menuId = "ME_OB_Identification"/>
+          <ParameterMenu menuId = "ME_OB_Parameter"/>
+          <ObservationMenu menuId = "ME_OB_Observation"/>
+          <DiagnosisMenu menuId = "ME_Diagnosis"/>
+        </ObserverRoleMenuSet>
+        <MaintenanceRoleMenuSet>
+          <IdentificationMenu menuId = "ME_SP_Identification"/>
+          <ParameterMenu menuId = "ME_M_Parameter"/>
+          <ObservationMenu menuId = "ME_OB_Observation"/>
+          <DiagnosisMenu menuId = "ME_Diagnosis"/>
+        </MaintenanceRoleMenuSet>
+        <SpecialistRoleMenuSet>
+          <IdentificationMenu menuId = "ME_SP_Identification"/>
+          <ParameterMenu menuId = "ME_SP_Parameter"/>
+          <ObservationMenu menuId = "ME_SP_Observation"/>
+          <DiagnosisMenu menuId = "ME_Diagnosis"/>
+        </SpecialistRoleMenuSet>
+      </UserInterface>
+    </DeviceFunction>
+  </ProfileBody>
+  <CommNetworkProfile xsi:type = "IOLinkCommNetworkProfileT" iolinkRevision = "V1.1">
+    <TransportLayers>
+      <PhysicalLayer bitrate = "COM2" minCycleTime = "5000" sioSupported = "true" mSequenceCapability = "17">
+        <Connection xsi:type = "M12-4ConnectionT">
+          <ProductRef productId = "BCS012N"></ProductRef>
+          <Wire1 function = "L+"/>
+          <Wire2 function = "Other"/>
+          <Wire3 function = "L-"/>
+          <Wire4 function = "C/Q"/>
+        </Connection>
+      </PhysicalLayer>
+    </TransportLayers>
+    <Test>
+      <Config1 index = "141" testValue = "0x81"/>
+      <Config2 index = "272" testValue = "0x12,0x34"/>
+      <Config3 index = "24" testValue = "0x53,0x65,0x6E,0x73,0x6F,0x72,0x20,0x57,0x6F,0x72,0x6C,0x64,0x77,0x69,0x64,0x65"/>
+      <Config7 index = "140">
+        <EventTrigger disappearValue = "161" appearValue = "162"></EventTrigger>
+        <EventTrigger disappearValue = "163" appearValue = "164"></EventTrigger>
+      </Config7>
+    </Test>
+  </CommNetworkProfile>
+  <ExternalTextCollection>
+    <PrimaryLanguage xml:lang = "en">
+      <Text id = "TN_VendorText" value = "BALLUFF"></Text>
+      <Text id = "TN_VendorUrl" value = "www.balluff.com"/>
+      <Text id = "TN_DeviceFamily" value = "BCS - MicroBox"/>
+      <Text id = "TN_DeviceName" value = "BCS R08RRE"/>
+      <Text id = "TN_Device1_Name" value = "BCS R08RRE-PIM80C-EP00,3-GS04"/>
+      <Text id = "TN_Device1_Desc" value = "Capacitive Proximity Switch, Microbox, Standard"/>
+      <Text id = "TD_TeachInChannel" value = "Addresses BDC"/>
+      <Text id = "TN_TeachInChannel" value = "Teach-In Channel"/>
+      <Text id = "TN_Predef_BDC" value = "Default BDC (BDC1)"/>
+      <Text id = "TD_TeachInStatus" value = "Shows state of Teach-In"/>
+      <Text id = "TN_TeachInStatus" value = "Teach-In Status"/>
+      <Text id = "TN_TeachState" value = "Teach State"/>
+      <Text id = "TN_TeachOffset" value = "Teach Offset"/>
+      <Text id = "TD_TeachOffset" value = "Offset value for Teach Far and Teach Near"/>
+      <Text id = "TN_Idle" value = "Idle"/>
+      <Text id = "TN_SP2_success" value = "SP2 success"/>
+      <Text id = "TN_SP1_SP2_success" value = "SP1+2 success"/>
+      <Text id = "TN_SP1_success" value = "SP1 success"/>
+      <Text id = "TN_Wait_for_command" value = "Wait for command"/>
+      <Text id = "TN_Busy" value = "Busy"/>
+      <Text id = "TN_Error" value = "Error"/>
+      <Text id = "TN_SP1_TP1_Teach_Flag" value = "Teach Flag SP1 TP1"/>
+      <Text id = "TN_SP1_TP2_Teach_Flag" value = "Teach Flag SP1 TP2"/>
+      <Text id = "TN_SP2_TP1_Teach_Flag" value = "Teach Flag SP2 TP1"/>
+      <Text id = "TN_SP2_TP2_Teach_Flag" value = "Teach Flag SP2 TP2"/>
+      <Text id = "TD_SetPointValueBDC1" value = "BDC1 switching threshold values of binary data channel (BDC1) "/>
+      <Text id = "TN_SetPointValueBDC1" value = "Setpoint values BDC1"/>
+      <Text id = "TD_SetPoint1" value = "Setpoint 1 of the BDC1"/>
+      <Text id = "TN_SetPoint1" value = "SP1"/>
+      <Text id = "TD_SetPoint2" value = "Setpoint 2 of the BDC1"/>
+      <Text id = "TN_SetPoint2" value = "SP2"/>
+      <Text id = "TN_PDI" value = "Process Data Inputs"/>
+      <Text id = "TN_PDI_BDC1" value = "Switching signal of BDC1"/>
+      <Text id = "TN_PDI_PDV" value = "Process data value"/>
+      <Text id = "TN_Reserved" value = "reserved"/>
+      <Text id = "TD_SwitchpointConfig" value = "Settings to define Binary Data Channel behaviour"/>
+      <Text id = "TN_SwitchpointConfigBDC1" value = "Switchpoint configuration BDC1"/>
+      <Text id = "TD_SwitchpointMode" value = "Defines the switching mode of the binary data channel (BDC). "/>
+      <Text id = "TN_SwitchpointMode" value = "Switchpoint Mode"/>
+      <Text id = "TN_SwitchpointMode_Single" value = "Single Point"/>
+      <Text id = "TN_SwitchpointMode_Window" value = "Window"/>
+      <Text id = "TN_SwitchpointMode_TwoPoint" value = "Two Point "/>
+      <Text id = "TD_SwitchpointHysteresis" value = "Define the hysteresis from 0 (lowest) to 10 (highest)"/>
+      <Text id = "TN_SwitchpointHysteresis" value = "Switchpoint Hysteresis"/>
+      <Text id = "TN_SwitchpointLogic" value = "Switchpoint Logic"/>
+      <Text id = "TD_SwitchpointLogic" value = "Defines the switching behaviour of the switching signal. Normal: Signal becomes active when target approaches"/>
+      <Text id = "TN_SwitchpointLogic_Inverted" value = "Inverted (N.C.)"/>
+      <Text id = "TN_SwitchpointLogic_Normal" value = "Normal (N.O.)"/>
+      <Text id = "TN_Teach_Near" value = "Teach Near state (Full)"></Text>
+      <Text id = "TN_Teach_Far" value = "Teach Far state (Empty)"></Text>
+      <Text id = "TN_SysCmd_Restore_BDC" value = "Restore BDC"></Text>
+      <Text id = "TD_SioMode" value = "Mode of Output Driver during SIO operation"></Text>
+      <Text id = "TN_SioMode" value = "SIO Mode"></Text>
+      <Text id = "TN_SioMode_PNP" value = "PNP"></Text>
+      <Text id = "TN_SioMode_NPN" value = "NPN"></Text>
+      <Text id = "TN_SioMode_PP" value = "PushPull"></Text>
+      <Text id = "TD_Debounce" value = "Settings for filtering of switch signal"></Text>
+      <Text id = "TN_Debounce" value = "Debounce"></Text>
+      <Text id = "TN_DbcFilter" value = "Filter Time"></Text>
+      <Text id = "TN_DbcPulseRise" value = "Pulsewidth Rising"></Text>
+      <Text id = "TN_DbcPulseFall" value = "Pulsewidth Falling"></Text>
+    </PrimaryLanguage>
+  </ExternalTextCollection>
+  <Stamp crc="787928513"><Checker name="IODD-Checker V1.1.1" version="V1.1.1.0"/></Stamp>
+</IODevice>

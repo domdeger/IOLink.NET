@@ -28,10 +28,9 @@ internal class ProcessDataItemParser : IParserPart<ProcessDataItemT>
     {
         DatatypeT? datatypeT = DatatypeTParser.ParseOptional(element.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), _parserLocator);
         DatatypeRefT? datatypeRef = _parserLocator.ParseOptional<DatatypeRefT>(element.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
-        TextRefT? name = _parserLocator.ParseMandatory<TextRefT>(element.Descendants(IODDTextRefNames.Name).FirstOrDefault());
-
+        var id = element.ReadMandatoryAttribute<string>("id");
         ushort bitLength = element.ReadMandatoryAttribute<ushort>("bitLength");
 
-        return new ProcessDataItemT(datatypeT, datatypeRef, name, bitLength);
+        return new ProcessDataItemT(datatypeT, datatypeRef, id, bitLength);
     }
 }
