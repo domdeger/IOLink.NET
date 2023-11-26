@@ -33,5 +33,5 @@ runs:
     if: ${{ inputs.publish_Release == 'true' }}
     uses: actions/upload-artifact@v2
     with:
-      name: ${{ inputs.projectPath }}
+      name: ${{ steps.gitversion.outputs.nugetVersionV2 }}
       path: ${{ inputs.projectPath }}/bin/Release/*.nupkg
