@@ -1,20 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\IODD.Parser\IODD.Parser.csproj" />
     <ProjectReference Include="..\..\src\Conversion\Conversion.csproj" />
     <ProjectReference Include="..\..\src\IODD.Provider\IODD.Provider.csproj" />
     <ProjectReference Include="..\..\src\IODD.Resolution\IODD.Resolution.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <InformationalVersion>0.1.0+15.Branch.main.Sha.d6058282db27fe28bc9c33e5aed16016287219d5</InformationalVersion>
+    <Version>0.1.0</Version>
   </PropertyGroup>
-   <ItemGroup>
+  <ItemGroup>
     <Content Include="..\iodds\**">
       <Link>iodds\%(RecursiveDir)/%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>  
+    </Content>
   </ItemGroup>
 </Project>
