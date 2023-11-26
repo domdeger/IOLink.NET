@@ -21,13 +21,13 @@ jobs:
         run: dotnet build ./src --no-restore
       - name: Test
         run: dotnet test ./src --no-build --verbosity normal
-      - name: Build Nuget Packages
-        run: ls ./.github/actions
 
   pack:
     name: Build Nuget Packages 
     runs-on: ubuntu-latest
+    needs: build
     steps:
+        - uses: actions/checkout@v3
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
