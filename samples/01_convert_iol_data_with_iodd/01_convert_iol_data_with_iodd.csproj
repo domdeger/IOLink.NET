@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\IODD.Parser\IODD.Parser.csproj" />
+    <ProjectReference Include="..\..\src\Conversion\Conversion.csproj" />
+    <ProjectReference Include="..\..\src\IODD.Provider\IODD.Provider.csproj" />
+    <ProjectReference Include="..\..\src\IODD.Resolution\IODD.Abstraction.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+   <ItemGroup>
+    <Content Include="..\iodds\**">
+      <Link>iodds\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+</Project>
