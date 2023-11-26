@@ -21,6 +21,8 @@ jobs:
         run: dotnet build ./src --no-restore
       - name: Test
         run: dotnet test ./src --no-build --verbosity normal
+      - name: Build Nuget Packages
+        run: ls ./.github/actions
 
   pack:
     name: Build Nuget Packages 

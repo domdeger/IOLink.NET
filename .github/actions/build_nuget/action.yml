@@ -1,14 +1,17 @@
 name: deploy
-
+description: Build Nuget Packages
 # Were we can define the inputs that our action will accept
 inputs:
   projectPath: 
     required: true
+    description: The path to the project to build
   publish_Release:
+    description: Publish the Release version of the package
     required: true
-    default: false
+    default: "false"
 
 runs:
+  using: "composite"
   steps:
   - name: Install GitVersion
     uses: gittools/actions/gitversion/setup@v0
@@ -20,7 +23,9 @@ runs:
     uses: gittools/actions/gitversion/execute@v0
     with:
       useConfigFile: true
+
   - name: Build Nuget Package for ${{ inputs.projectPath }}
+    shell: bash
     working-directory: ${{ inputs.projectPath }}
     run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} -c Release
   - name: Publish Nuget Package for ${{ inputs.projectPath }}
