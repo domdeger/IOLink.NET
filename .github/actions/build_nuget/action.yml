@@ -28,8 +28,8 @@ runs:
     shell: bash
     working-directory: ${{ inputs.projectPath }}
     run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} -c Release
+  
   - name: Publish Nuget Package for ${{ inputs.projectPath }}
-    working-directory: ${{ inputs.projectPath }}
     if: ${{ inputs.publish_Release == 'true' }}
     uses: actions/upload-artifact@v2
     with:
