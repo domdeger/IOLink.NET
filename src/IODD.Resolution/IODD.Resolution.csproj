@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
-    <ProjectReference Include="..\IODD.Resolution\IODD.Abstraction.csproj" />
     <ProjectReference Include="..\IODD.Structure\IODD.Structure.csproj" />
   </ItemGroup>
-
 </Project>

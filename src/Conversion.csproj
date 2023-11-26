@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\IODD.Resolution\IODD.Resolution.csproj" />
+    <ProjectReference Include="..\IODD.Structure\IODD.Structure.csproj" />
+  </ItemGroup>
+
+
+<PropertyGroup>
+  <PackageId>IOLinkNET.Conversion</PackageId>
+
+</PropertyGroup>
+</Project>

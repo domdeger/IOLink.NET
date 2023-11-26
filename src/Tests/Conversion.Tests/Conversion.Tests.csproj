@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Conversion\Conversion.csproj" />
-    <ProjectReference Include="..\..\IODD.Resolution\IODD.Abstraction.csproj" />
+    <ProjectReference Include="..\..\IODD.Resolution\IODD.Resolution.csproj" />
     <ProjectReference Include="..\..\IODD.Parser\IODD.Parser.csproj" />
   </ItemGroup>
 

@@ -52,6 +52,4 @@ void DecodeProcessData()
     {
         Console.WriteLine($"{item.Item1}: {item.Item2}");
     }
-
-
 }

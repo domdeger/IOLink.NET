@@ -1,0 +1,22 @@
+name: deploy
+
+# Were we can define the inputs that our action will accept
+inputs:
+  projectPath: 
+    required: true
+  publish_Release:
+    required: true
+    default: false
+
+runs:
+  steps:
+  - name: Build Nuget Package for ${{ inputs.projectPath }}
+    working-directory: ${{ inputs.projectPath }}
+    run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true
+  - name: Publish Nuget Package for ${{ inputs.projectPath }}
+    working-directory: ${{ inputs.projectPath }}
+    if: ${{ inputs.publish_Release == 'true' }}
+    uses: actions/upload-artifact@v2
+    with:
+      name: ${{ inputs.projectPath }}
+      path: ${{ inputs.projectPath }}/bin/Release/*.nupkg

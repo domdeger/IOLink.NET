@@ -4,4 +4,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
  </PropertyGroup>
+
+ <PropertyGroup>
+   <Version>0.1.0</Version>
+   <Authors>Dominik Deschner</Authors>
+ </PropertyGroup>
 </Project>
