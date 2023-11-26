@@ -26,7 +26,7 @@ jobs:
     name: Build Nuget Packages 
     runs-on: ubuntu-latest
     steps:
-        - uses: ./.github/actions/build_nuget
+        - uses: ./.github/actions/build_nuget.yml
           with:
             projectPath: ./src/Conversion
             publish_Release: true
