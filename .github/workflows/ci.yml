@@ -33,11 +33,11 @@ jobs:
             fetch-depth: 0
         - run: pwd
         - run: ls -la
-        - run: mkdir -p $GITHUB_PATH && mkdir -p $GITHUB_PATH/npkgs
+        - run: mkdir -p $PWD/npks
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
-            outputDirectory: $GITHUB_PATH/npkgs
+            outputDirectory: $PWD/npks
         # - uses: ./.github/actions/build_nuget
         #   with:
         #     projectPath: ./src/Device
@@ -63,5 +63,5 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: packages
-            path: ${{env.GITHUB_PATH}}/npkgs/*.nupkg
+            path: $PWD/npks/*.nupkg
 
