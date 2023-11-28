@@ -5,6 +5,10 @@ inputs:
   projectPath: 
     required: true
     description: The path to the project to build
+  outputDirectory:
+    required: false
+    description: The directory to output the package to
+    default: "./bin/Release"
   publish_Release:
     description: Publish the Release version of the package
     required: true
@@ -27,11 +31,6 @@ runs:
   - name: Build Nuget Package for ${{ inputs.projectPath }}
     shell: bash
     working-directory: ${{ inputs.projectPath }}
-    run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} -c Release
-  
-  - name: Publish Nuget Package for ${{ inputs.projectPath }}
-    if: ${{ inputs.publish_Release == 'true' }}
-    uses: actions/upload-artifact@v2
-    with:
-      name: ${{ steps.gitversion.outputs.nugetVersionV2 }}
-      path: ${{ inputs.projectPath }}/bin/Release/*.nupkg
+    run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} -c Release -o ${{ inputs.outputDirectory }}
+
+    

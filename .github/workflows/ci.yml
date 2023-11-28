@@ -34,4 +34,31 @@ jobs:
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
-            publish_Release: true
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+          with:
+            projectPath: ./src/Device
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+          with:
+            projectPath: ./src/IODD.Parser
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+          with:
+            projectPath: ./src/IODD.Provider
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+          with:
+            projectPath: ./src/IODD.Resolution
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+          with:
+            projectPath: ./src/IODD.Structure
+            outputDirectory: ${{GITHUB_PATH}}/npkgs
+
+        - name: Publish Nuget Package for ${{ inputs.projectPath }}
+          uses: actions/upload-artifact@v2
+          with:
+            name: packages
+            path: ${{GITHUB_PATH}}/npkgs/*.nupkg
+
