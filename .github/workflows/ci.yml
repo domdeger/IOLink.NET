@@ -32,10 +32,11 @@ jobs:
           with:
             fetch-depth: 0
         - run: env
+        - run: echo ${{ env.GITHUB_PATH }}
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
-            outputDirectory: "${{ env.GITHUB_PATH }}/npkgs"
+            outputDirectory: ${{ env.GITHUB_PATH }}/npkgs
         # - uses: ./.github/actions/build_nuget
         #   with:
         #     projectPath: ./src/Device
