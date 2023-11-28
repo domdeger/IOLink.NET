@@ -37,7 +37,7 @@ jobs:
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
-            outputDirectory: ${{ env.GITHUB_PATH }}/npkgs
+            outputDirectory: $GITHUB_PATH/npkgs
         # - uses: ./.github/actions/build_nuget
         #   with:
         #     projectPath: ./src/Device
