@@ -71,5 +71,5 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: packages
-            path: $PWD/npks/*.nupkg
+            path: $PWD/**/npks/*.nupkg
 
