@@ -31,33 +31,41 @@ jobs:
         - uses: actions/checkout@v3
           with:
             fetch-depth: 0
-        - run: pwd
-        - run: ls -la
+
         - run: mkdir -p $PWD/npks
         - uses: ./.github/actions/build_nuget
+          name: Build Nuget Package for Conversion
           with:
             projectPath: ./src/Conversion
             outputDirectory: $PWD/npks
-        # - uses: ./.github/actions/build_nuget
-        #   with:
-        #     projectPath: ./src/Device
-        #     outputDirectory: ${{ env.GITHUB_PATH }}/npkgs
-        # - uses: ./.github/actions/build_nuget
-        #   with:
-        #     projectPath: ./src/IODD.Parser
-        #     outputDirectory: ${{ env.GITHUB_PATH }}/npkgs
-        # - uses: ./.github/actions/build_nuget
-        #   with:
-        #     projectPath: ./src/IODD.Provider
-        #     outputDirectory: ${{ env.GITHUB_PATH }}/npkgs
-        # - uses: ./.github/actions/build_nuget
-        #   with:
-        #     projectPath: ./src/IODD.Resolution
-        #     outputDirectory: ${{env.GITHUB_PATH}}/npkgs
-        # - uses: ./.github/actions/build_nuget
-        #   with:
-        #     projectPath: ./src/IODD.Structure
-        #     outputDirectory: ${{env.GITHUB_PATH}}/npkgs
+        - uses: ./.github/actions/build_nuget
+
+          with:
+            projectPath: ./src/Device
+            outputDirectory: $PWD/npkgs
+        - uses: ./.github/actions/build_nuget
+          name: Build Nuget Package for IODD.Parser
+          with:
+            projectPath: ./src/IODD.Parser
+            outputDirectory: $PWD/npkgs
+
+        - uses: ./.github/actions/build_nuget
+          name: Build Nuget Package for IODD.Provider
+          with:
+            projectPath: ./src/IODD.Provider
+            outputDirectory: $PWD/npkgs
+
+        - uses: ./.github/actions/build_nuget
+          name: Build Nuget Package for IODD.Resolution
+          with:
+            projectPath: ./src/IODD.Resolution
+            outputDirectory: $PWD/npkgs
+
+        - uses: ./.github/actions/build_nuget
+          name: Build Nuget Package for IODD.Structure
+          with:
+            projectPath: ./src/IODD.Structure
+            outputDirectory: $PWD/npkgs
 
         - name: Publish Nuget Package for ${{ inputs.projectPath }}
           uses: actions/upload-artifact@v2
