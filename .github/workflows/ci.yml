@@ -33,6 +33,7 @@ jobs:
             fetch-depth: 0
         - run: env
         - run: echo ${{ env.GITHUB_PATH }}
+        - run: echo $GITHUB_PATH
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Conversion
