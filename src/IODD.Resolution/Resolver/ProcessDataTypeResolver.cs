@@ -1,9 +1,10 @@
+using IOLinkNET.IODD.Resolution.Contracts;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.ProcessData;
 
 namespace IOLinkNET.IODD.Resolution;
 
-public class ProcessDataTypeResolver
+public class ProcessDataTypeResolver : IProcessDataTypeResolver
 {
     private readonly IODevice _device;
 
@@ -20,14 +21,7 @@ public class ProcessDataTypeResolver
     public bool HasCondition() => _device.ProfileBody.DeviceFunction.ProcessDataCollection.Any(pd => pd.Condition is not null);
 
     public ResolvedCondition ResolveCondition()
-    {
-        var condition = _device.ProfileBody.DeviceFunction.ProcessDataCollection.FirstOrDefault(pd => pd.Condition is not null)?.Condition
-            ?? throw new InvalidOperationException("No process data condition available. ");
-
-        var variable = _device.ProfileBody.DeviceFunction.VariableCollection.First(v => v.Id == condition.VariableId);
-
-        return new(condition, variable);
-    }
+        => ResolveConditionInternal(_device.ProfileBody.DeviceFunction.ProcessDataCollection);
 
     public ParsableDatatype ResolveProcessDataIn(int? condition = null)
     {
@@ -43,6 +37,16 @@ public class ProcessDataTypeResolver
             ?? throw new ArgumentOutOfRangeException(nameof(condition));
 
         return ResolveProcessData(pd.ProcessDataOut ?? throw new InvalidOperationException("ProcessDataOut is null."));
+    }
+
+    private ResolvedCondition ResolveConditionInternal(IEnumerable<ProcessDataT> processDataCollection)
+    {
+        var condition = processDataCollection.FirstOrDefault(pd => pd.Condition is not null)?.Condition
+            ?? throw new InvalidOperationException("No process data condition available. ");
+
+        var variable = _device.ProfileBody.DeviceFunction.VariableCollection.First(v => v.Id == condition.VariableId);
+
+        return new(condition, variable);
     }
 
     private ParsableDatatype ResolveProcessData(ProcessDataItemT processData)

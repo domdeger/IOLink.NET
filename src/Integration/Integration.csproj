@@ -2,6 +2,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Device\Device.csproj" />
     <ProjectReference Include="..\IODD.Provider\IODD.Provider.csproj" />
+    <ProjectReference Include="..\IODD.Resolution\IODD.Resolution.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <PackageId>IOLinkNET.Integration</PackageId>

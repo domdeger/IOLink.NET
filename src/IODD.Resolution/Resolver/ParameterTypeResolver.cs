@@ -1,9 +1,10 @@
+using IOLinkNET.IODD.Resolution.Contracts;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IOLinkNET.IODD.Resolution;
 
-public class ParameterTypeResolver
+public class ParameterTypeResolver : IParameterTypeResolver
 {
     private readonly IODevice _device;
 
