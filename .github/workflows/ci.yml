@@ -100,5 +100,5 @@ jobs:
         name: Publish Nuget Package for Conversion
         with:
           nugetApiKey: ${{ secrets.NUGET_API_KEY }}
-          nugetPackageSource: ${{ secrets.NUGET_PACKAGE_SOURCE }}
+          nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
           nugetPackageDirectory: $PWD/packages
