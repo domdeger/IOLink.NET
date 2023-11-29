@@ -41,12 +41,12 @@ jobs:
           name: Build Nuget Package for Conversion
           with:
             projectPath: ./src/Conversion
-            outputDirectory: ../npks
+            outputDirectory: ../../npks
 
         - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Device
-            outputDirectory: ../npkgs
+            outputDirectory: ../../npkgs
         - uses: ./.github/actions/build_nuget
           name: Build Nuget Package for IODD.Parser
           with:
@@ -57,19 +57,19 @@ jobs:
           name: Build Nuget Package for IODD.Provider
           with:
             projectPath: ./src/IODD.Provider
-            outputDirectory: ../npkgs
+            outputDirectory: ../../npkgs
 
         - uses: ./.github/actions/build_nuget
           name: Build Nuget Package for IODD.Resolution
           with:
             projectPath: ./src/IODD.Resolution
-            outputDirectory: ../npkgs
+            outputDirectory: ../../npkgs
 
         - uses: ./.github/actions/build_nuget
           name: Build Nuget Package for IODD.Structure
           with:
             projectPath: ./src/IODD.Structure
-            outputDirectory: ../npkgs
+            outputDirectory: ../../npkgs
 
         - name: Publish Nuget Package for ${{ inputs.projectPath }}
           uses: actions/upload-artifact@v2
