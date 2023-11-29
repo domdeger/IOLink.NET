@@ -72,11 +72,12 @@ jobs:
             outputDirectory: ../../npkgs
 
         - run: echo $PWD
+        - run: ls -la $PWD/npkgs
         - name: Publish Nuget Package for ${{ inputs.projectPath }}
           uses: actions/upload-artifact@v2
           with:
             name: packages
-            path: $PWD/npkgs/*.nupkg
+            path: $PWD/npkgs
 
   publish:
     name: Publish Nuget Packages
