@@ -15,17 +15,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-  - name: Install GitVersion
-    uses: gittools/actions/gitversion/setup@v0
-    with:
-      versionSpec: '5.x'
-      preferLatestVersion: true
-      
-  - name: Determine Version
-    id: gitversion
-    uses: gittools/actions/gitversion/execute@v0
-    with:
-      useConfigFile: true
 
   - name: Publish Nuget Packages
     shell: bash
