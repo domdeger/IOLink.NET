@@ -81,7 +81,7 @@ jobs:
 
   publish:
     name: Publish Nuget Packages
-    if: github.ref == 'refs/heads/$default-branch'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: pack
     steps:
