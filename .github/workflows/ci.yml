@@ -71,6 +71,7 @@ jobs:
             projectPath: ./src/IODD.Structure
             outputDirectory: ../../npkgs
 
+        - run: echo $PWD
         - name: Publish Nuget Package for ${{ inputs.projectPath }}
           uses: actions/upload-artifact@v2
           with:
