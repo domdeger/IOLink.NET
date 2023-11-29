@@ -75,7 +75,7 @@ jobs:
           uses: actions/upload-artifact@v2
           with:
             name: packages
-            path: ./npks/*.nupkg
+            path: $PWD/*.nupkg
 
   publish:
     name: Publish Nuget Packages
