@@ -21,7 +21,7 @@ runs:
     working-directory: ${{ inputs.projectPath }}
     run: |
       for file in ${{ inputs.nugetPackageDirectory }}/*.nupkg; do
-        dotnet nuget push $file -k ${{ inputs.nugetApiKey }} -s ${{ inputs.nugetPackageSource }}
+        dotnet nuget push $file -k ${{ inputs.nugetApiKey }} -s ${{ inputs.nugetPackageSource }} --skip-duplicate
       done
 
     
