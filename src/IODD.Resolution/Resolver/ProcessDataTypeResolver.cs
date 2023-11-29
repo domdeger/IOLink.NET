@@ -1,7 +1,5 @@
 using IOLinkNET.IODD.Structure;
-using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.ProcessData;
-using IOLinkNET.IODD.Structure.Profile;
 
 namespace IOLinkNET.IODD.Resolution;
 
@@ -17,6 +15,18 @@ public class ProcessDataTypeResolver
         _device = device;
         _datatypeResolver = new(_device.ProfileBody.DeviceFunction.DatatypeCollection);
         _converter = new(_datatypeResolver);
+    }
+
+    public bool HasCondition() => _device.ProfileBody.DeviceFunction.ProcessDataCollection.Any(pd => pd.Condition is not null);
+
+    public ResolvedCondition ResolveCondition()
+    {
+        var condition = _device.ProfileBody.DeviceFunction.ProcessDataCollection.FirstOrDefault(pd => pd.Condition is not null)?.Condition
+            ?? throw new InvalidOperationException("No process data condition available. ");
+
+        var variable = _device.ProfileBody.DeviceFunction.VariableCollection.First(v => v.Id == condition.VariableId);
+
+        return new(condition, variable);
     }
 
     public ParsableDatatype ResolveProcessDataIn(int? condition = null)
