@@ -12,14 +12,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
       - name: Restore dependencies
         run: dotnet restore ./src
+
       - name: Build
         run: dotnet build ./src --no-restore
+
       - name: Test
         run: dotnet test ./src --no-build --verbosity normal
 
@@ -33,13 +36,14 @@ jobs:
             fetch-depth: 0
 
         - run: mkdir -p $PWD/npks
+
         - uses: ./.github/actions/build_nuget
           name: Build Nuget Package for Conversion
           with:
             projectPath: ./src/Conversion
             outputDirectory: $PWD/npks
-        - uses: ./.github/actions/build_nuget
 
+        - uses: ./.github/actions/build_nuget
           with:
             projectPath: ./src/Device
             outputDirectory: $PWD/npkgs
@@ -73,3 +77,25 @@ jobs:
             name: packages
             path: $PWD/**/npks/*.nupkg
 
+  publish:
+    name: Publish Nuget Packages
+    runs-on: ubuntu-latest
+    needs: pack
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v2
+        with:
+          name: packages
+          path: $PWD/packages
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - uses: ./.github/actions/publish_nuget
+        name: Publish Nuget Package for Conversion
+        with:
+          nugetApiKey: ${{ secrets.NUGET_API_KEY }}
+          nugetPackageSource: ${{ secrets.NUGET_PACKAGE_SOURCE }}
+          nugetPackageDirectory: $PWD/packages
