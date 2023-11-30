@@ -46,8 +46,9 @@ public class IODDPortReader
 
     public async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
     {
-        var value = await _connection.ReadIndexAsync(InitilizationState.Port, index, subindex);
         var paramTypeDef = InitilizationState.ParameterTypeResolver.GetParameter(index, subindex);
+
+        var value = await _connection.ReadIndexAsync(InitilizationState.Port, index, subindex);
 
         var convertedValue = _ioddDataConverter.Convert(paramTypeDef, value.Span);
 
