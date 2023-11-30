@@ -44,7 +44,7 @@ public class IODDPortReader
         _initilizationState = new PortReaderInitilizationResult(pdInType, pdOutType, port, pdDataResolver, paramDataResolver, deviceDefinition);
     }
 
-    public async Task<object> ReadConvertedParameter(ushort index, byte subindex)
+    public async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
     {
         var value = await _connection.ReadIndexAsync(InitilizationState.Port, index, subindex);
         var paramTypeDef = InitilizationState.ParameterTypeResolver.GetParameter(index, subindex);
@@ -54,7 +54,7 @@ public class IODDPortReader
         return convertedValue;
     }
 
-    public async Task<object> ReadConvertedProcessDataIn()
+    public async Task<object> ReadConvertedProcessDataInAsync()
     {
         if (InitilizationState.PdIn is null)
         {
@@ -67,7 +67,7 @@ public class IODDPortReader
         return convertedValue;
     }
 
-    public async Task<object> ReadConvertedProcessDataOut()
+    public async Task<object> ReadConvertedProcessDataOutAsync()
     {
         if (InitilizationState.PdOut is null)
         {

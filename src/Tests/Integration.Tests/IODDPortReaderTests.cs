@@ -9,6 +9,7 @@ using IOLinkNET.IODD;
 using IOLinkNET.IODD.Provider;
 
 using NSubstitute;
+using NSubstitute.ExceptionExtensions;
 
 namespace Integration.Tests;
 
@@ -28,6 +29,34 @@ public class IODDPortReaderTests
         await masterConnection.Received().GetPortInformationAsync(1, Arg.Any<CancellationToken>());
     }
 
+    [Fact]
+    public async Task ShouldThrowIfUninitializedParameterReadAsync()
+    {
+        var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
+        Func<Task> readParamTask = () => portReader.ReadConvertedParameterAsync(58, 0);
+
+        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+    }
+
+    [Fact]
+    public async Task ShouldThrowIfUninitializedProcessDataInReadAsync()
+    {
+        var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
+        Func<Task> readParamTask = () => portReader.ReadConvertedProcessDataInAsync();
+
+        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+    }
+
+
+    [Fact]
+    public async Task ShouldThrowIfUninitializedProcessDataOutReadAsync()
+    {
+        var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
+        Func<Task> readParamTask = () => portReader.ReadConvertedProcessDataOutAsync();
+
+        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+    }
+
     [Theory]
     [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
     public async Task CanReadConvertedParameterAsync(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
@@ -36,7 +65,7 @@ public class IODDPortReaderTests
         masterConnection.ReadIndexAsync(1, 58).Returns(new byte[] { 0x00, 0x00, 0x00, 0x04 });
         await portReader.InitializeForPortAsync(1);
 
-        var converted = await portReader.ReadConvertedParameter(58, 0);
+        var converted = await portReader.ReadConvertedParameterAsync(58, 0);
         converted.Should().Be(4);
     }
 
