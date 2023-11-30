@@ -24,7 +24,7 @@ public class ParameterTypeResolver : IParameterTypeResolver
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
 
-        if (subIndex is not null)
+        if (subIndex is not null && subIndex > 0)
         {
             var type = _datatypeResolver.Resolve(variable);
             var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)

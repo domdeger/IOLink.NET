@@ -23,20 +23,24 @@ public class ProcessDataTypeResolver : IProcessDataTypeResolver
     public ResolvedCondition ResolveCondition()
         => ResolveConditionInternal(_device.ProfileBody.DeviceFunction.ProcessDataCollection);
 
-    public ParsableDatatype ResolveProcessDataIn(int? condition = null)
+    public ParsableDatatype? ResolveProcessDataIn(int? condition = null)
     {
-        var pd = _device.ProfileBody.DeviceFunction.ProcessDataCollection.FirstOrDefault(pd => pd.Condition?.Value == condition)
-            ?? throw new ArgumentOutOfRangeException(nameof(condition));
-
-        return ResolveProcessData(pd.ProcessDataIn ?? throw new InvalidOperationException("ProcessDataIn is null."));
+        var pd = FindProcessDataByCondition(condition);
+        return pd?.ProcessDataIn is null ? null : ResolveProcessData(pd.ProcessDataIn);
     }
 
-    public ParsableDatatype ResolveProcessDataOut(int? condition = null)
+    public ParsableDatatype? ResolveProcessDataOut(int? condition = null)
     {
-        var pd = _device.ProfileBody.DeviceFunction.ProcessDataCollection.FirstOrDefault(pd => pd.Condition?.Value == condition)
-            ?? throw new ArgumentOutOfRangeException(nameof(condition));
+        var pd = FindProcessDataByCondition(condition);
+        return pd?.ProcessDataOut is null ? null : ResolveProcessData(pd.ProcessDataOut);
+    }
 
-        return ResolveProcessData(pd.ProcessDataOut ?? throw new InvalidOperationException("ProcessDataOut is null."));
+    private ProcessDataT? FindProcessDataByCondition(int? condition)
+    {
+        var pd = _device.ProfileBody.DeviceFunction.ProcessDataCollection.FirstOrDefault(pd => pd.Condition?.Value == condition);
+        return pd is null && condition is not null
+            ? throw new InvalidOperationException($"No process data with condition {condition} available.")
+            : pd;
     }
 
     private ResolvedCondition ResolveConditionInternal(IEnumerable<ProcessDataT> processDataCollection)

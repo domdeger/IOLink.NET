@@ -1,5 +1,7 @@
 using System.Xml.Linq;
 
+using FluentAssertions;
+
 using IOLinkNET.Conversion;
 using IOLinkNET.Device.Contract;
 using IOLinkNET.Integration;
@@ -13,24 +15,44 @@ namespace Integration.Tests;
 public class IODDPortReaderTests
 {
 
-    [Fact]
-    public async Task CanInitializeForPort()
+    [Theory]
+    [InlineData(888, 328205, "BNI IOL-727-S51-P012", "Balluff", "TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml")]
+    [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
+    public async Task CanInitializeForPortAsync(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
     {
-        ushort vendorId = 888;
-        uint deviceId = 328205;
-        var productId = "BNI IOL-727-S51-P012";
+        var (portReader, ioddProvider, masterConnection) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
 
+        await portReader.InitializeForPortAsync(1);
+
+        await ioddProvider.Received().GetDeviceDefinitionAsync(vendorId, deviceId, productId, Arg.Any<CancellationToken>());
+        await masterConnection.Received().GetPortInformationAsync(1, Arg.Any<CancellationToken>());
+    }
+
+    [Theory]
+    [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
+    public async Task CanReadConvertedParameterAsync(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
+    {
+        var (portReader, _, masterConnection) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
+        masterConnection.ReadIndexAsync(1, 58).Returns(new byte[] { 0x00, 0x00, 0x00, 0x04 });
+        await portReader.InitializeForPortAsync(1);
+
+        var converted = await portReader.ReadConvertedParameter(58, 0);
+        converted.Should().Be(4);
+    }
+
+    private (IODDPortReader, IDeviceDefinitionProvider, IMasterConnection) PreparePortReader(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
+    {
         var ioddParser = new IODDParser();
-        var device = ioddParser.Parse(XElement.Load("TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml"));
+        var device = ioddParser.Parse(XElement.Load(ioddPath));
         var ioddProvider = Substitute.For<IDeviceDefinitionProvider>();
         ioddProvider.GetDeviceDefinitionAsync(vendorId, deviceId, productId, Arg.Any<CancellationToken>())
             .Returns(device);
 
-        var masterConnection = GetMasterConnectionMock(vendorId, deviceId, productId, "Balluff");
+        var masterConnection = GetMasterConnectionMock(vendorId, deviceId, productId, vendorName);
 
         var portReader = new IODDPortReader(masterConnection, ioddProvider, new IoddConverter());
 
-        await portReader.InitializeForPortAsync(1);
+        return (portReader, ioddProvider, masterConnection);
     }
 
     private IMasterConnection GetMasterConnectionMock(ushort vendorId, uint deviceId, string productId, string vendorName)
