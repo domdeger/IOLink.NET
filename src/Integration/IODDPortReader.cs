@@ -12,13 +12,9 @@ public class IODDPortReader
     private readonly IMasterConnection _connection;
     private readonly IDeviceDefinitionProvider _deviceDefinitionProvider;
     private readonly IIoddDataConverter _ioddDataConverter;
-    private IProcessDataTypeResolver? _processDataTypeResolver;
-    private IParameterTypeResolver? _parameterTypeResolver;
-    private ParsableDatatype? _pdInType;
-    private ParsableDatatype? _pdOutType;
-    private IODevice? _deviceDefinition;
 
-    private byte? _port;
+    private PortReaderInitilizationResult? _initilizationState;
+    private PortReaderInitilizationResult InitilizationState => _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
 
     public IODDPortReader(IMasterConnection connection, IDeviceDefinitionProvider deviceDefinitionProvider, IIoddDataConverter ioddDataConverter)
     {
@@ -30,7 +26,7 @@ public class IODDPortReader
     public async Task InitializeForPortAsync(byte port)
     {
         var portInfo = await _connection.GetPortInformationAsync(port);
-        if (portInfo.Status != PortStatus.IOLink)
+        if (!portInfo.Status.HasFlag(PortStatus.IOLink))
         {
             throw new InvalidOperationException("Port is not in IO-Link mode");
         }
@@ -40,20 +36,46 @@ public class IODDPortReader
             throw new InvalidOperationException($"Device information is not available for requested port {port}");
         }
 
-        _deviceDefinition = await _deviceDefinitionProvider.GetDeviceDefinitionAsync(portInfo.DeviceInformation.VendorId, portInfo.DeviceInformation.DeviceId, portInfo.DeviceInformation.ProductId);
-        _processDataTypeResolver = new ProcessDataTypeResolver(_deviceDefinition);
-        _parameterTypeResolver = new ParameterTypeResolver(_deviceDefinition);
+        var deviceDefinition = await _deviceDefinitionProvider.GetDeviceDefinitionAsync(portInfo.DeviceInformation.VendorId, portInfo.DeviceInformation.DeviceId, portInfo.DeviceInformation.ProductId);
+        var pdDataResolver = new ProcessDataTypeResolver(deviceDefinition);
+        var paramDataResolver = new ParameterTypeResolver(deviceDefinition);
 
-        (_pdInType, _pdOutType) = await GetProcessDataTypesAsync(port, _processDataTypeResolver);
-        _port = port;
+        var (pdInType, pdOutType) = await GetProcessDataTypesAsync(port, pdDataResolver);
+        _initilizationState = new PortReaderInitilizationResult(pdInType, pdOutType, port, pdDataResolver, paramDataResolver, deviceDefinition);
     }
 
-    public async Task<object> ReadParameter(ushort index, byte subindex)
+    public async Task<object> ReadConvertedParameter(ushort index, byte subindex)
     {
-        var value = await _connection.ReadIndexAsync(_port!.Value, index, subindex);
-        var paramTypeDef = _parameterTypeResolver!.GetParameter(index, subindex);
+        var value = await _connection.ReadIndexAsync(InitilizationState.Port, index, subindex);
+        var paramTypeDef = InitilizationState.ParameterTypeResolver.GetParameter(index, subindex);
 
         var convertedValue = _ioddDataConverter.Convert(paramTypeDef, value.Span);
+
+        return convertedValue;
+    }
+
+    public async Task<object> ReadConvertedProcessDataIn()
+    {
+        if (InitilizationState.PdIn is null)
+        {
+            throw new InvalidOperationException("Device has no process data in declared.");
+        }
+
+        var value = await _connection.ReadProcessDataInAsync(InitilizationState.Port);
+        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdIn, value.Span);
+
+        return convertedValue;
+    }
+
+    public async Task<object> ReadConvertedProcessDataOut()
+    {
+        if (InitilizationState.PdOut is null)
+        {
+            throw new InvalidOperationException("Device has no process data out declared.");
+        }
+
+        var value = await _connection.ReadProcessDataOutAsync(InitilizationState.Port);
+        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdOut, value.Span);
 
         return convertedValue;
     }
@@ -77,4 +99,6 @@ public class IODDPortReader
 
         return (pdInType, pdOutType);
     }
+
+    private record PortReaderInitilizationResult(ParsableDatatype? PdIn, ParsableDatatype? PdOut, byte Port, IProcessDataTypeResolver ProcessDataTypeResolver, IParameterTypeResolver ParameterTypeResolver, IODevice DeviceDefinition);
 }
