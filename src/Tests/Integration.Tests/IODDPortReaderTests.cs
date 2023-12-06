@@ -58,6 +58,18 @@ public class IODDPortReaderTests
         await readParamTask.Should().ThrowAsync<InvalidOperationException>();
     }
 
+    [Fact]
+    public async Task CanReadConvertedProcessDataInWithConditionAsync()
+    {
+        var (portReader, _, masterConnection) = PreparePortReader(1222, 18, "CSS 01411.2-xx", "STEGO", "TestData/STEGO-SmartSensor-CSS014-08-20190726-IODD1.1.xml");
+        masterConnection.ReadIndexAsync(1, 66).Returns(new byte[] { 0x00 });
+        masterConnection.ReadProcessDataInAsync(1).Returns(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x0, 0x0, 0x0, 0x0 });
+        await portReader.InitializeForPortAsync(1);
+
+        var pd = (await portReader.ReadConvertedProcessDataInAsync()) as IEnumerable<(string, object)>;
+        pd.Should().ContainEquivalentOf(("TN_PDI_Feuchte", 0));
+    }
+
     [Theory]
     [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
     public async Task CanReadConvertedParameterAsync(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)

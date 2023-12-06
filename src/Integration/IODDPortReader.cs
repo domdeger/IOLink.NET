@@ -90,7 +90,7 @@ public class IODDPortReader
         if (processDataTypeResolver.HasCondition())
         {
             var condition = processDataTypeResolver.ResolveCondition();
-            var conditionValue = await _connection.ReadIndexAsync(port, condition.VariableDef.Index, condition.ConditionDef.Subindex);
+            var conditionValue = await _connection.ReadIndexAsync(port, condition.VariableDef.Index, condition.ConditionDef.Subindex ?? 0);
             pdInType = processDataTypeResolver.ResolveProcessDataIn(conditionValue.Span[0]);
             pdOutType = processDataTypeResolver.ResolveProcessDataOut(conditionValue.Span[0]);
         }

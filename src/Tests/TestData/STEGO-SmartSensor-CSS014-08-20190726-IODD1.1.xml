@@ -1,0 +1,1415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<IODevice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.io-link.com/IODD/2010/10" xsi:schemaLocation="http://www.io-link.com/IODD/2010/10 IODD1.1.xsd">
+	<DocumentInfo version="V1.03" releaseDate="2019-07-26" copyright="Copyright 2018-19, STEGO Elektrotechnik GmbH"/>
+	<ProfileHeader>
+		<ProfileIdentification>IO Device Profile</ProfileIdentification>
+		<ProfileRevision>1.1</ProfileRevision>
+		<ProfileName>Device Profile for IO Devices</ProfileName>
+		<ProfileSource>IO-Link Consortium</ProfileSource>
+		<ProfileClassID>Device</ProfileClassID>
+		<ISO15745Reference>
+			<ISO15745Part>1</ISO15745Part>
+			<ISO15745Edition>1</ISO15745Edition>
+			<ProfileTechnology>IODD</ProfileTechnology>
+		</ISO15745Reference>
+	</ProfileHeader>
+	<ProfileBody>
+    <!-- ‭0x000010‬ -->
+		<DeviceIdentity vendorId="1222" vendorName="STEGO Elektrotechnik GmbH" deviceId="18">  <!-- ‭1222 == 0x04C6 -->
+			<VendorText textId="T_VendorText"/>
+			<VendorUrl textId="T_VendorUrl"/>
+			<VendorLogo name="STEGO-logo.png"/> 
+			<DeviceName textId="T_DeviceName"/>
+			<DeviceFamily textId="T_DeviceFamily"/>
+			<DeviceVariantCollection>
+				<DeviceVariant productId="CSS 01411.2-xx" deviceSymbol="STEGO-SmartSensor-CSS014-08-pic.png" deviceIcon="STEGO-SmartSensor-CSS014-08-icon.png">
+					<Name textId="TN_ProductName"/>
+					<Description textId="TD_ProductText"/>
+				</DeviceVariant>
+			</DeviceVariantCollection>
+		</DeviceIdentity>
+		<DeviceFunction>
+			<Features blockParameter="true" dataStorage="true" profileCharacteristic="16384">
+				<SupportedAccessLocks parameter="true" dataStorage="true" localParameterization="false" localUserInterface="false" />
+			</Features>
+      
+      <!-- ========================================================================== -->
+      <!-- VariableCollection -->
+
+			<VariableCollection>
+      
+				<StdVariableRef id="V_DirectParameters_1"/><!--0-->
+				<StdVariableRef id="V_DirectParameters_2"/><!--1-->
+				<StdVariableRef id="V_SystemCommand"><!--2-->
+					<StdSingleValueRef value="130"/><!-- Reset Factory Settings-->
+					<SingleValue value="160">
+						<Name textId="TN_SystemCommand_160"/>
+					</SingleValue>
+					<SingleValue value="161">
+						<Name textId="TN_SystemCommand_161"/>
+					</SingleValue>
+					<SingleValue value="162">
+						<Name textId="TN_SystemCommand_162"/>
+					</SingleValue>
+					<SingleValue value="163">
+						<Name textId="TN_SystemCommand_163"/>
+					</SingleValue>
+					<SingleValue value="164">
+						<Name textId="TN_SystemCommand_164"/>
+					</SingleValue>
+					<SingleValue value="165">
+						<Name textId="TN_SystemCommand_165"/>
+					</SingleValue>
+					<SingleValue value="166">
+						<Name textId="TN_SystemCommand_166"/>
+					</SingleValue>
+					<SingleValue value="167">
+						<Name textId="TN_SystemCommand_167"/>
+					</SingleValue>
+					<SingleValue value="168">
+						<Name textId="TN_SystemCommand_168"/>
+					</SingleValue>
+					<SingleValue value="169">
+						<Name textId="TN_SystemCommand_169"/>
+					</SingleValue>
+          
+					<SingleValue value="170">
+						<Name textId="TN_SystemCommand_170"/>
+					</SingleValue>
+					<SingleValue value="171">
+						<Name textId="TN_SystemCommand_171"/>
+					</SingleValue>
+					<SingleValue value="172">
+						<Name textId="TN_SystemCommand_172"/>
+					</SingleValue>
+					<SingleValue value="173">
+						<Name textId="TN_SystemCommand_173"/>
+					</SingleValue>
+					<SingleValue value="174">
+						<Name textId="TN_SystemCommand_174"/>
+					</SingleValue>
+					<SingleValue value="175">
+						<Name textId="TN_SystemCommand_175"/>
+					</SingleValue>
+					<SingleValue value="176">
+						<Name textId="TN_SystemCommand_176"/>
+					</SingleValue>
+					<SingleValue value="177">
+						<Name textId="TN_SystemCommand_177"/>
+					</SingleValue>
+					<SingleValue value="178">
+						<Name textId="TN_SystemCommand_178"/>
+					</SingleValue>
+					<SingleValue value="179">
+						<Name textId="TN_SystemCommand_179"/>
+					</SingleValue>
+				</StdVariableRef>				
+				<StdVariableRef id="V_DeviceAccessLocks"><!--12-->
+					<!-- Bit 15-4: Reserved, Bit 3: Local user interface, Bit 2: Local parameterization, Bit 1: Data storage, Bit 0: Parameter access -->
+					<StdRecordItemRef subindex="1" defaultValue="0"/>
+					<StdRecordItemRef subindex="2" defaultValue="0"/>
+				</StdVariableRef>
+				<StdVariableRef id="V_VendorName" defaultValue="STEGO Elektrotechnik GmbH"/><!--16-->
+				<StdVariableRef id="V_VendorText" defaultValue="www.stego.de"/><!--17-->
+				<StdVariableRef id="V_ProductName" defaultValue="CSS 014"/><!--18-->
+				<StdVariableRef id="V_ProductID" defaultValue="CSS 01411"/><!--19-->
+				<StdVariableRef id="V_ProductText" defaultValue="Smart Sensor for temperature and humidity"/> <!--20-->
+				<StdVariableRef id="V_SerialNumber"/><!--21-->
+				<StdVariableRef id="V_HardwareRevision" defaultValue="030-3" />             <!-- 22 -->
+				<StdVariableRef id="V_FirmwareRevision" defaultValue="01.03.03       " />   <!-- 23 -->
+				<StdVariableRef id="V_ApplicationSpecificTag" defaultValue="***" fixedLengthRestriction="32"/><!--24-->
+				<!-- 27-31 reserved -->
+				<StdVariableRef id="V_ErrorCount"/>          <!--32-->
+				<!-- 33-35 reserved -->
+				<StdVariableRef id="V_DeviceStatus"/>        <!--36-->
+				<StdVariableRef id="V_DetailedDeviceStatus" fixedLengthRestriction="6"/><!--37-->
+				<StdVariableRef id="V_ProcessDataInput"/>    <!--40-->
+				<!-- 48: offset time (unused), 42-57 reserved -->
+				<Variable accessRights="rw" id="V_FunctionTag" index="25" defaultValue="***">
+					<Datatype xsi:type="StringT" fixedLength="32" encoding="UTF-8" />
+					<Name textId="TN_V_FunctionTag" />
+				</Variable>
+				<Variable accessRights="rw" id="V_LocationTag" index="26" defaultValue="***">
+					<Datatype xsi:type="StringT" fixedLength="32" encoding="UTF-8" />
+					<Name textId="TN_V_LocationTag" />
+				</Variable>
+				
+				<!-- Extended Identification : Function Class 0x8100 -->
+				
+				<!-- ==================================================================== -->
+				<!-- Profile specific  0x4000 ... 0x4FFF           -->
+				<!-- Extended          0x0100 ... 0x3FFF           -->
+				<!-- Preferred         0x0040 ... 0x00FE           -->
+				<!-- ==================================================================== -->
+        
+				<!-- 64.. 69 Device specific variables -->
+				
+				<Variable accessRights="rw" id="V_Value" index="64" defaultValue="0">
+					<Datatype xsi:type="UIntegerT" bitLength="8">
+					</Datatype>
+					<Name textId="TN_V_Value"></Name> 
+				</Variable>
+				<Variable accessRights="rw" id="V_PDI_TempMode" index="66" defaultValue="0">
+					<Datatype xsi:type="UIntegerT" bitLength="8">
+            <SingleValue value="0"/>
+						<SingleValue value="1"/>
+					</Datatype>
+					<Name textId="TN_V_PDI_TempMode"></Name> 
+				</Variable>
+        
+        
+				<!-- 70..79 Device specific variables -->
+        
+				<Variable accessRights="ro" id="V_OperatingHours" index="75" dynamic="true">
+					<Datatype xsi:type="IntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_OperatingHours"></Name>
+				</Variable>
+				<Variable accessRights="ro" id="V_PowerOnCounter" index="76" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_PowerOnCounter"></Name>
+				</Variable>  
+
+        
+				<!-- 80..89 Device specific variables -->
+        
+				<Variable accessRights="ro" id="V_Temp_Alarm_high_count" index="80" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Alarm_high_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Temp_Range_high_count" index="81" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Range_high_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Temp_Range_low_count" index="82" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Range_low_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Temp_Alarm_low_count" index="83" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Alarm_low_count"></Name>
+				</Variable>        
+        
+				<Variable accessRights="ro" id="V_Hum_Alarm_high_count" index="85" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Alarm_high_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Hum_Range_high_count" index="86" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Range_high_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Hum_Range_low_count" index="87" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Range_low_count"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Hum_Alarm_low_count" index="88" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="32"></Datatype>
+					<Name textId="TN_V_Alarm_low_count"></Name>
+				</Variable>        
+        
+				<!-- 90..99 Device specific variables -->
+
+				<Variable accessRights="ro" id="V_Temperature_max" index="90" dynamic="true">
+					<Datatype xsi:type="IntegerT" bitLength="16"></Datatype>
+					<Name textId="TN_V_Temperature_max"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Temperature_min" index="91" dynamic="true">
+					<Datatype xsi:type="IntegerT" bitLength="16"></Datatype>
+					<Name textId="TN_V_Temperature_min"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Humidity_max" index="92" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="16"></Datatype>
+					<Name textId="TN_V_Humidity_max"></Name>
+				</Variable>        
+				<Variable accessRights="ro" id="V_Humidity_min" index="93" dynamic="true">
+					<Datatype xsi:type="UIntegerT" bitLength="16"></Datatype>
+					<Name textId="TN_V_Humidity_min"></Name>
+				</Variable>        
+
+				<!-- 100..109 Device specific variables -->
+        
+				<Variable accessRights="rw" id="V_TV_T11" index="100" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>  <!--  -40°C/-40°F bis +80°C/+176°F  , *10 -->
+          </Datatype>
+					<Name textId="TN_V_TV_11"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_TV_T10" index="101" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_10"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_TV_T21" index="102" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_21"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_TV_T20" index="103" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_20"></Name>
+				</Variable>    
+				<Variable accessRights="rw" id="V_TV_T30" index="104" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_30"></Name>
+				</Variable>           
+				<Variable accessRights="rw" id="V_TV_T31" index="105" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_31"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_TV_T40" index="106" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_40"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_TV_T41" index="107" dynamic="false">
+					<Datatype xsi:type="IntegerT" bitLength="16">
+						<ValueRange upperValue="1760" lowerValue="-400"/>
+          </Datatype>
+					<Name textId="TN_V_TV_41"></Name>
+				</Variable>          
+
+				<!-- 110..119 Device specific variables  -->
+        
+				<Variable accessRights="rw" id="V_HV_H11" index="110" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_11"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H10" index="111" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_10"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H21" index="112" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_21"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H20" index="113" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_20"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H30" index="114" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_30"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H31" index="115" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_31"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H40" index="116" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_40"></Name>
+				</Variable>          
+				<Variable accessRights="rw" id="V_HV_H41" index="117" dynamic="false">
+					<Datatype xsi:type="UIntegerT" bitLength="16">
+						<ValueRange upperValue="970" lowerValue="0"/>          
+          </Datatype>
+					<Name textId="TN_V_HV_41"></Name>
+				</Variable>          
+        
+				<!-- 120..1xx Device specific variables  -->
+        
+				<!-- 120 als RecordT -->
+				<Variable accessRights="ro" id="V_Humidity_Histogram" index="120" dynamic="true">
+						<Datatype xsi:type="RecordT" bitLength="480" subindexAccessSupported="false">
+							<RecordItem subindex="1" bitOffset="456">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_0" /> 
+							</RecordItem>            
+							<RecordItem subindex="2" bitOffset="432">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_1" /> 
+							</RecordItem>            
+							<RecordItem subindex="3" bitOffset="408">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_2" /> 
+							</RecordItem>            
+							<RecordItem subindex="4" bitOffset="384">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_3" /> 
+							</RecordItem>            
+							<RecordItem subindex="5" bitOffset="360">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_4" /> 
+							</RecordItem>            
+							<RecordItem subindex="6" bitOffset="336">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_5" /> 
+							</RecordItem>            
+							<RecordItem subindex="7" bitOffset="312">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_6" /> 
+							</RecordItem>            
+							<RecordItem subindex="8" bitOffset="288">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_7" /> 
+							</RecordItem>            
+							<RecordItem subindex="9" bitOffset="264">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_8" /> 
+							</RecordItem>            
+							<RecordItem subindex="10" bitOffset="240">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_9" /> 
+							</RecordItem>            
+              
+							<RecordItem subindex="11" bitOffset="216">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_10" /> 
+							</RecordItem>            
+							<RecordItem subindex="12" bitOffset="192">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_11" /> 
+							</RecordItem>            
+							<RecordItem subindex="13" bitOffset="168">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_12" /> 
+							</RecordItem>            
+							<RecordItem subindex="14" bitOffset="144">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_13" /> 
+							</RecordItem>            
+							<RecordItem subindex="15" bitOffset="120">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_14" /> 
+							</RecordItem>            
+							<RecordItem subindex="16" bitOffset="96">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_15" /> 
+							</RecordItem>            
+							<RecordItem subindex="17" bitOffset="72">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_16" /> 
+							</RecordItem>            
+							<RecordItem subindex="18" bitOffset="48">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_17" /> 
+							</RecordItem>            
+							<RecordItem subindex="19" bitOffset="24">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_18" /> 
+							</RecordItem>            
+							<RecordItem subindex="20" bitOffset="0">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_hum_histo_19" /> 
+							</RecordItem>
+						</Datatype>
+					  <Name textId="TN_V_Humidity_Histogram"/>        
+				</Variable>                
+        
+        
+				<!-- 121 als RecordT -->
+				<Variable accessRights="ro" id="V_Temperature_Histogram" index="121" dynamic="true">
+						<Datatype xsi:type="RecordT" bitLength="576" subindexAccessSupported="false">
+            
+							<RecordItem subindex="1" bitOffset="552">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_0" /> 
+							</RecordItem>            
+							<RecordItem subindex="2" bitOffset="528">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_1" /> 
+							</RecordItem>            
+							<RecordItem subindex="3" bitOffset="504">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_2" /> 
+							</RecordItem>            
+							<RecordItem subindex="4" bitOffset="480">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_3" /> 
+							</RecordItem>          
+							<RecordItem subindex="5" bitOffset="456">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_4" /> 
+							</RecordItem>            
+							<RecordItem subindex="6" bitOffset="432">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_5" /> 
+							</RecordItem>            
+							<RecordItem subindex="7" bitOffset="408">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_6" /> 
+							</RecordItem>            
+							<RecordItem subindex="8" bitOffset="384">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_7" /> 
+							</RecordItem>            
+							<RecordItem subindex="9" bitOffset="360">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_8" /> 
+							</RecordItem>            
+							<RecordItem subindex="10" bitOffset="336">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_9" /> 
+							</RecordItem>   
+              
+							<RecordItem subindex="11" bitOffset="312">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_10" /> 
+							</RecordItem>            
+							<RecordItem subindex="12" bitOffset="288">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_11" /> 
+							</RecordItem>            
+							<RecordItem subindex="13" bitOffset="264">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_12" /> 
+							</RecordItem>            
+							<RecordItem subindex="14" bitOffset="240">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_13" /> 
+							</RecordItem>        
+							<RecordItem subindex="15" bitOffset="216">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_14" /> 
+							</RecordItem>            
+							<RecordItem subindex="16" bitOffset="192">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_15" /> 
+							</RecordItem>            
+							<RecordItem subindex="17" bitOffset="168">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_16" /> 
+							</RecordItem>            
+							<RecordItem subindex="18" bitOffset="144">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_17" /> 
+							</RecordItem>            
+							<RecordItem subindex="19" bitOffset="120">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_18" /> 
+							</RecordItem>            
+							<RecordItem subindex="20" bitOffset="96">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_19" /> 
+							</RecordItem>            
+              
+							<RecordItem subindex="21" bitOffset="72">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_20" /> 
+							</RecordItem>            
+							<RecordItem subindex="22" bitOffset="48">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_21" /> 
+							</RecordItem>            
+							<RecordItem subindex="23" bitOffset="24">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_22" /> 
+							</RecordItem>            
+							<RecordItem subindex="24" bitOffset="0">
+								<SimpleDatatype xsi:type="UIntegerT" bitLength="24"/>
+								<Name textId="TN_V_temp_histo_23" /> 
+							</RecordItem>
+              
+						</Datatype>
+					  <Name textId="TN_V_Temperature_Histogram"/>        
+				</Variable>                
+        
+				<!-- Preferred Index 200 ... 239  -->
+
+				<!-- Preferred Index 240 ... 254 : nur testhalber belegen  -->
+        
+				<!-- 4000 ...   -->
+        
+				<Variable id="V_Production_Password" index="4000" accessRights="wo">
+					<Datatype xsi:type="StringT" fixedLength="16" encoding="UTF-8"/>
+					<Name textId="TN_V_Production_Password"/>
+				</Variable>
+				<Variable id="V_Production_Command" index="4001" accessRights="wo">
+					<Datatype xsi:type="UIntegerT" bitLength="8">
+						<SingleValue value="1"><Name textId="TN_V_Production_Command_StoreProductionSettings"/></SingleValue>
+						<SingleValue value="2"><Name textId="TN_V_Production_Command_ResetProductionSettings"/></SingleValue>
+						<SingleValue value="3"><Name textId="TN_V_Production_Command_ResetParSetOperate"/></SingleValue>
+						<SingleValue value="4"><Name textId="TN_V_Production_Command_ResetParSetOperate_Counters"/></SingleValue>
+						<SingleValue value="5"><Name textId="TN_V_Production_Command_ResetParSetOperate_Temp_Counters"/></SingleValue>
+						<SingleValue value="6"><Name textId="TN_V_Production_Command_ResetParSetOperate_Hum_Counters"/></SingleValue>
+					</Datatype>
+					<Name textId="TN_V_Production_Command"/>
+				</Variable>
+        
+				<!-- Profile specific Index: 0x4000 ...  0x4FFF  -->
+        
+        
+			</VariableCollection>
+      
+      <!-- ========================================================================== -->
+      <!-- ProcessDataCollection -->
+      
+			<ProcessDataCollection>
+      
+        <!-- ProcessData 1 -->
+
+				<ProcessData id="PD_1">
+          <Condition variableId="V_PDI_TempMode" value="0"/>
+          
+					<ProcessDataIn id="PDI_1" bitLength="48">
+						<Datatype xsi:type="RecordT" bitLength="48" subindexAccessSupported="false">
+
+              <!-- PDIn[] für temperature -->
+
+							<RecordItem subindex="1" bitOffset="32">
+								<SimpleDatatype xsi:type="IntegerT" bitLength="16"/>
+								<Name textId="TN_PDI_Temperature" /> 
+							</RecordItem>
+
+							<RecordItem subindex="2" bitOffset="24">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Alarm_High" /> 
+							</RecordItem>
+							<RecordItem subindex="3" bitOffset="25">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Range_High" /> 
+							</RecordItem>
+							<RecordItem subindex="4" bitOffset="26">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Range_Low" /> 
+							</RecordItem>              
+							<RecordItem subindex="5" bitOffset="27">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Alarm_Low" /> 
+							</RecordItem>
+
+              
+     					<!-- PDIn[] für humidity -->
+
+							<RecordItem subindex="10" bitOffset="8">
+								<SimpleDatatype xsi:type="IntegerT" bitLength="16"/>
+								<Name textId="TN_PDI_Feuchte" /> 
+							</RecordItem>              
+							<RecordItem subindex="11" bitOffset="0">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Alarm_High" /> 
+							</RecordItem>              
+							<RecordItem subindex="12" bitOffset="1">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Range_High" /> 
+							</RecordItem>              
+							<RecordItem subindex="13" bitOffset="2">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Range_Low" /> 
+							</RecordItem>              
+							<RecordItem subindex="14" bitOffset="3">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Alarm_Low" /> 
+							</RecordItem>         
+              
+						</Datatype>
+						<Name textId="TN_PDI" /> 
+					</ProcessDataIn>
+
+          <!-- PDOut[] -->
+          
+				</ProcessData>				
+
+        
+        <!-- ProcessData 2 -->
+        
+				<ProcessData id="PD_2">
+          <Condition variableId="V_PDI_TempMode" value="1"/>
+          
+					<ProcessDataIn id="PDI_2" bitLength="48">
+						<Datatype xsi:type="RecordT" bitLength="48" subindexAccessSupported="false">
+
+              <!-- PDIn[] für temperature -->
+
+							<RecordItem subindex="1" bitOffset="32">
+								<SimpleDatatype xsi:type="IntegerT" bitLength="16"/>
+								<Name textId="TN_PDI_Temperature" /> 
+							</RecordItem>
+
+							<RecordItem subindex="2" bitOffset="24">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Alarm_High" /> 
+							</RecordItem>
+							<RecordItem subindex="3" bitOffset="25">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Range_High" /> 
+							</RecordItem>
+							<RecordItem subindex="4" bitOffset="26">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Range_Low" /> 
+							</RecordItem>              
+							<RecordItem subindex="5" bitOffset="27">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_TV_Alarm_Low" /> 
+							</RecordItem>
+
+              
+     					<!-- PDIn[] für humidity -->
+
+							<RecordItem subindex="10" bitOffset="8">
+								<SimpleDatatype xsi:type="IntegerT" bitLength="16"/>
+								<Name textId="TN_PDI_Feuchte" /> 
+							</RecordItem>              
+							<RecordItem subindex="11" bitOffset="0">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Alarm_High" /> 
+							</RecordItem>              
+							<RecordItem subindex="12" bitOffset="1">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Range_High" /> 
+							</RecordItem>              
+							<RecordItem subindex="13" bitOffset="2">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Range_Low" /> 
+							</RecordItem>              
+							<RecordItem subindex="14" bitOffset="3">
+								<SimpleDatatype xsi:type="BooleanT"/>
+								<Name textId="TN_V_HV_Alarm_Low" /> 
+							</RecordItem>         
+              
+						</Datatype>
+						<Name textId="TN_PDI" /> 
+					</ProcessDataIn>
+
+          <!-- PDOut[] -->
+          
+				</ProcessData>				
+                
+			</ProcessDataCollection>
+      
+      <!-- ========================================================================== -->
+      <!-- EventCollection -->
+      
+			<EventCollection>
+				<Event code="6200" type="Error">
+					<Name textId="TN_Event1"></Name>
+				</Event>
+				<Event code="6201" type="Error">
+					<Name textId="TN_Event2"></Name>
+				</Event>
+        
+				<Event code="6202" type="Warning">
+					<Name textId="TN_Event_6202"></Name>
+				</Event>        
+				<Event code="6203" type="Warning">
+					<Name textId="TN_Event_6203"></Name>
+				</Event>        
+				<Event code="6204" type="Warning">
+					<Name textId="TN_Event_6204"></Name>
+				</Event>        
+				<Event code="6205" type="Warning">
+					<Name textId="TN_Event_6205"></Name>
+				</Event>        
+				<Event code="6206" type="Warning">
+					<Name textId="TN_Event_6206"></Name>
+				</Event>        
+				<Event code="6207" type="Warning">
+					<Name textId="TN_Event_6207"></Name>
+				</Event>        
+				<Event code="6208" type="Warning">
+					<Name textId="TN_Event_6208"></Name>
+				</Event>        
+
+				<Event code="6210" type="Warning">
+					<Name textId="TN_Event_6210"></Name>
+				</Event>        
+				<Event code="6211" type="Warning">
+					<Name textId="TN_Event_6211"></Name>
+				</Event>        
+				<Event code="6212" type="Warning">
+					<Name textId="TN_Event_6212"></Name>
+				</Event>        
+				<Event code="6213" type="Warning">
+					<Name textId="TN_Event_6213"></Name>
+				</Event>                
+				<Event code="6214" type="Error">
+					<Name textId="TN_Event_6214"></Name>
+					<Description textId="TN_Event_6214_Desc"></Description>
+				</Event>                
+				<Event code="6215" type="Error">
+					<Name textId="TN_Event_6215"></Name>
+					<Description textId="TN_Event_6215_Desc"></Description>
+				</Event>          
+        
+				<Event code="6220" type="Notification">
+					<Name textId="TN_Event_6220"></Name>
+          <!--
+					<Description textId="TN_Event_6220_Desc"></Description>
+          -->
+				</Event>                
+        
+			</EventCollection>			
+      
+      <!-- ========================================================================== -->
+      <!-- UserInterface -->
+      
+			<UserInterface>
+				<ProcessDataRefCollection>
+        
+					<ProcessDataRef processDataId="PDI_1">
+						<ProcessDataRecordItemInfo subindex="1" displayFormat="Dec.1"  gradient="0.1" unitCode="1001"/>
+						<ProcessDataRecordItemInfo subindex="10" displayFormat="Dec.1"  gradient="0.1" unitCode="1342"/>
+					</ProcessDataRef>
+					<ProcessDataRef processDataId="PDI_2">
+						<ProcessDataRecordItemInfo subindex="1" displayFormat="Dec.1"  gradient="0.1" unitCode="1002"/>
+						<ProcessDataRecordItemInfo subindex="10" displayFormat="Dec.1"  gradient="0.1" unitCode="1342"/>
+					</ProcessDataRef>
+				</ProcessDataRefCollection>
+        
+        
+        <!-- ========================================================================== -->
+        <!-- MenuCollection -->
+        
+				<MenuCollection>
+        
+					<!-- Specialist Role -->
+
+					<!-- Menu Identification -->          
+          
+					<Menu id="ME_Ident">
+						<VariableRef variableId="V_VendorName"/>
+						<VariableRef variableId="V_VendorText"/>
+						<VariableRef variableId="V_ProductName"/>
+						<VariableRef variableId="V_ProductID"/>
+						<VariableRef variableId="V_ProductText"/>
+						<VariableRef variableId="V_SerialNumber"/>
+						<VariableRef variableId="V_HardwareRevision"/>
+						<VariableRef variableId="V_FirmwareRevision"/>
+						<VariableRef variableId="V_FunctionTag"/>
+						<VariableRef variableId="V_LocationTag"/>
+						<VariableRef variableId="V_ApplicationSpecificTag"/>
+					</Menu>
+          
+					<!-- Menu Observation -->          
+          
+					<Menu id="ME_Observe">
+            <MenuRef menuId="ME_Observe_Params" />
+            <MenuRef menuId="ME_Observe_TemperaturValues_0" >
+              <Condition variableId="V_PDI_TempMode" value="0"/>
+						</MenuRef>       
+            <MenuRef menuId="ME_Observe_TemperaturValues_1" >
+              <Condition variableId="V_PDI_TempMode" value="1"/>
+						</MenuRef>       
+            <MenuRef menuId="ME_Observe_HumidityValues" />
+					</Menu>					
+          
+          <Menu id="ME_Observe_TemperaturValues_0">
+            <Name textId="TN_ME_Observe_TemperaturValues" /> 
+						  <RecordItemRef variableId="V_ProcessDataInput" subindex="1" displayFormat="Dec.1"  gradient="0.1"  unitCode="1001"/>
+					    <RecordItemRef variableId="V_ProcessDataInput" subindex="2" displayFormat="Dec" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="3" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="4" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="5" />
+					</Menu>					
+          <Menu id="ME_Observe_TemperaturValues_1">
+            <Name textId="TN_ME_Observe_TemperaturValues" /> 
+						  <RecordItemRef variableId="V_ProcessDataInput" subindex="1" displayFormat="Dec.1"  gradient="0.1"  unitCode="1002"/>
+					    <RecordItemRef variableId="V_ProcessDataInput" subindex="2" displayFormat="Dec" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="3" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="4" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="5" />
+					</Menu>					
+
+          <Menu id="ME_Observe_HumidityValues">
+            <Name textId="TN_ME_Observe_HumidityValues" /> 
+						  <RecordItemRef variableId="V_ProcessDataInput" subindex="10" displayFormat="Dec.1"  gradient="0.1"  unitCode="1342"/>
+					    <RecordItemRef variableId="V_ProcessDataInput" subindex="11" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="12" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="13" />
+              <RecordItemRef variableId="V_ProcessDataInput" subindex="14" />
+					</Menu>					
+
+          <Menu id="ME_Observe_Params">
+            <Name textId="TN_ME_Observe_Params" /> 
+						  <VariableRef variableId="V_PDI_TempMode" accessRightRestriction="ro" /> 
+					</Menu>					
+          
+					<!-- Menu Parameter -->          
+          
+					<Menu id="ME_Param">
+						<VariableRef variableId="V_SystemCommand">
+							<Button buttonValue="130"/>
+						</VariableRef>
+						<VariableRef variableId="V_Value" displayFormat="Dec"  gradient="1" />
+						<VariableRef variableId="V_PDI_TempMode" displayFormat="Dec"  gradient="1" />
+						<VariableRef variableId="V_DeviceAccessLocks" />
+            <MenuRef menuId="ME_Param_TemperaturValues_0" >
+   							<Condition variableId="V_PDI_TempMode" value="0"/>
+						</MenuRef>
+            <MenuRef menuId="ME_Param_TemperaturValues_1" >
+   							<Condition variableId="V_PDI_TempMode" value="1"/>
+						</MenuRef>
+            <MenuRef menuId="ME_Param_HumidityValues" />
+					</Menu>
+          
+          <Menu id="ME_Param_TemperaturValues_0">
+            <Name textId="TN_ME_Param_TemperaturValues_0" /> 
+              <VariableRef variableId="V_TV_T11" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T10" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T21" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T20" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T30" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T31" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T40" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_TV_T41" displayFormat="Dec.1" gradient="0.1" unitCode="1001" /> 
+              <VariableRef variableId="V_SystemCommand">
+						  	<Button buttonValue="160"/>
+				      </VariableRef>  
+              <MenuRef menuId="ME_Param_TemperaturValues_Presets" />            
+          </Menu>          
+
+          <Menu id="ME_Param_TemperaturValues_1">
+            <Name textId="TN_ME_Param_TemperaturValues_1" /> 
+              <VariableRef variableId="V_TV_T11" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T10" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T21" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T20" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T30" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T31" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T40" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_TV_T41" displayFormat="Dec.1" gradient="0.1" unitCode="1002" /> 
+              <VariableRef variableId="V_SystemCommand">
+						  	<Button buttonValue="160"/>
+				      </VariableRef>  
+              <MenuRef menuId="ME_Param_TemperaturValues_Presets" />            
+          </Menu>          
+          
+          
+          <Menu id="ME_Param_TemperaturValues_Presets">
+            <Name textId="TN_ME_Param_TemperaturValues_Presets" /> 
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="161"/>
+				      </VariableRef>          
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="162"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="163"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="164"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="165"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="166"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="167"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="168"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="169"/>
+				      </VariableRef>                
+          </Menu>    
+          
+          <Menu id="ME_Param_HumidityValues">
+            <Name textId="TN_ME_Param_HumidityValues" /> 
+              <VariableRef variableId="V_HV_H11" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H10" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H21" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H20" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H30" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H31" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H40" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_HV_H41" displayFormat="Dec.1" gradient="0.1" unitCode="1342" /> 
+              <VariableRef variableId="V_SystemCommand">
+						  	<Button buttonValue="170"/>
+				      </VariableRef>  
+              <MenuRef menuId="ME_Param_HumidityValues_Presets" />            
+          </Menu>          
+              
+          <Menu id="ME_Param_HumidityValues_Presets">
+            <Name textId="TN_ME_Param_HumidityValues_Presets" /> 
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="171"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="172"/>
+				      </VariableRef>                
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="173"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="174"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="175"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="176"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="177"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="178"/>
+				      </VariableRef>                              
+              <VariableRef variableId="V_SystemCommand">
+							  <Button buttonValue="179"/>
+				      </VariableRef>                              
+          </Menu>          
+          
+					<!-- Menu Diagnosis -->          
+          
+					<Menu id="ME_Diagnosis">
+						<VariableRef variableId="V_DeviceStatus"></VariableRef>
+						<VariableRef variableId="V_DetailedDeviceStatus"></VariableRef>
+						<VariableRef variableId="V_ErrorCount"></VariableRef>
+						<VariableRef variableId="V_OperatingHours" displayFormat="Dec.3" gradient="0.001" unitCode="1059" />					
+						<VariableRef variableId="V_PowerOnCounter" displayFormat="Dec" gradient="1.0" />	            
+            <MenuRef menuId="ME_Diagnosis_TemperaturValues_0" >   
+              <Condition variableId="V_PDI_TempMode" value="0"/>
+						</MenuRef>            
+            <MenuRef menuId="ME_Diagnosis_TemperaturValues_1" >   
+              <Condition variableId="V_PDI_TempMode" value="1"/>
+						</MenuRef>                        
+            <MenuRef menuId="ME_Diagnosis_HumidityValues" />   
+            <MenuRef menuId="ME_Diagnosis_Reset" />      
+					</Menu>
+
+          <Menu id="ME_Diagnosis_TemperaturValues_0">
+            <Name textId="TN_ME_Diagnosis_TemperaturValues" /> 
+						<VariableRef variableId="V_Temperature_max" displayFormat="Dec.1" gradient="0.1" unitCode="1001" />	
+						<VariableRef variableId="V_Temperature_min" displayFormat="Dec.1" gradient="0.1" unitCode="1001" />	
+						<VariableRef variableId="V_Temp_Alarm_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Range_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Range_low_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Alarm_low_count" displayFormat="Dec" />	
+            <MenuRef menuId="ME_Diagnosis_Temperature_Histogram" />            
+          </Menu>          
+
+          <Menu id="ME_Diagnosis_TemperaturValues_1">
+            <Name textId="TN_ME_Diagnosis_TemperaturValues" /> 
+						<VariableRef variableId="V_Temperature_max" displayFormat="Dec.1" gradient="0.1" unitCode="1002" />	
+						<VariableRef variableId="V_Temperature_min" displayFormat="Dec.1" gradient="0.1" unitCode="1002" />	
+						<VariableRef variableId="V_Temp_Alarm_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Range_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Range_low_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Temp_Alarm_low_count" displayFormat="Dec" />	
+            <MenuRef menuId="ME_Diagnosis_Temperature_Histogram" />            
+          </Menu>          
+          
+          <Menu id="ME_Diagnosis_HumidityValues">
+            <Name textId="TN_ME_Diagnosis_HumidityValues" /> 
+						<VariableRef variableId="V_Humidity_max" displayFormat="Dec.1" gradient="0.1" unitCode="1342" />	
+						<VariableRef variableId="V_Humidity_min" displayFormat="Dec.1" gradient="0.1" unitCode="1342" />	
+						<VariableRef variableId="V_Hum_Alarm_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Hum_Range_high_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Hum_Range_low_count" displayFormat="Dec" />	
+						<VariableRef variableId="V_Hum_Alarm_low_count" displayFormat="Dec" />	 
+            <MenuRef menuId="ME_Diagnosis_Humidity_Histogram" />            
+          </Menu>          
+          
+          <Menu id="ME_Diagnosis_Humidity_Histogram">
+            <Name textId="TN_V_Humidity_Histogram" /> 
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="20" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="19" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="18" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="17" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="16" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="15" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="14" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="13" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="12" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="11" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="10" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="9"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="8"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="7"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="6"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="5"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="4"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="3"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="2"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Humidity_Histogram" subindex="1"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+          </Menu>                    
+
+          <Menu id="ME_Diagnosis_Temperature_Histogram">
+            <Name textId="TN_V_Temperature_Histogram" /> 
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="24" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="23" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="22" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="21" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="20" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="19" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="18" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="17" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="16" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="15" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="14" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="13" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="12" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="11" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="10" displayFormat="Dec.2" gradient="0.01" unitCode="1059" />
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="9"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="8"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="7"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="6"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="5"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="4"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="3"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="2"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+            <RecordItemRef variableId="V_Temperature_Histogram" subindex="1"  displayFormat="Dec.2" gradient="0.01" unitCode="1059" />            
+          </Menu>                    
+          
+          <Menu id="ME_Diagnosis_Reset">
+            <Name textId="TN_ME_Diagnosis_Reset" /> 
+ 						<VariableRef variableId="V_Production_Password"/>   
+						<VariableRef variableId="V_Production_Command"><Button buttonValue="5"/></VariableRef>    
+						<VariableRef variableId="V_Production_Command"><Button buttonValue="6"/></VariableRef>    
+						<VariableRef variableId="V_Production_Command"><Button buttonValue="4"/></VariableRef>    
+						<VariableRef variableId="V_Production_Command"><Button buttonValue="3"/></VariableRef>    
+          </Menu>          
+
+          
+					<!-- Observer Role -->
+
+					<Menu id="ME_obs_Ident">
+						<VariableRef variableId="V_VendorName"/>
+						<VariableRef variableId="V_VendorText"/>
+						<VariableRef variableId="V_ProductName"/>
+						<VariableRef variableId="V_ProductID"/>
+						<VariableRef variableId="V_ProductText"/>
+						<VariableRef variableId="V_SerialNumber"/>
+						<VariableRef variableId="V_HardwareRevision"/>
+						<VariableRef variableId="V_FirmwareRevision"/>
+						<VariableRef variableId="V_FunctionTag" accessRightRestriction="ro"/>
+						<VariableRef variableId="V_LocationTag" accessRightRestriction="ro"/>
+						<VariableRef variableId="V_ApplicationSpecificTag" accessRightRestriction="ro"/>
+					</Menu>
+          
+					<Menu id="ME_obs_Param">
+            <MenuRef menuId="ME_obs_Param_Params" />
+            <MenuRef menuId="ME_obs_Param_TemperaturValues_0" >
+              <Condition variableId="V_PDI_TempMode" value="0"/>
+            </MenuRef>
+            <MenuRef menuId="ME_obs_Param_TemperaturValues_1" >
+              <Condition variableId="V_PDI_TempMode" value="1"/>
+            </MenuRef>
+            <MenuRef menuId="ME_obs_Param_HumidityValues" />
+					</Menu>
+
+          <Menu id="ME_obs_Param_TemperaturValues_0">
+            <Name textId="TN_ME_Param_TemperaturValues" /> 
+              <VariableRef variableId="V_TV_T11" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T10" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T21" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T20" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T30" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T31" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T40" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T41" displayFormat="Dec.1" gradient="0.1" unitCode="1001" accessRightRestriction="ro"/> 
+          </Menu>          
+
+          <Menu id="ME_obs_Param_TemperaturValues_1">
+            <Name textId="TN_ME_Param_TemperaturValues" /> 
+              <VariableRef variableId="V_TV_T11" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T10" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T21" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T20" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T30" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T31" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T40" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_TV_T41" displayFormat="Dec.1" gradient="0.1" unitCode="1002" accessRightRestriction="ro"/> 
+          </Menu>          
+          
+          <Menu id="ME_obs_Param_HumidityValues">
+            <Name textId="TN_ME_Param_HumidityValues" /> 
+              <VariableRef variableId="V_HV_H11" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H10" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H21" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H20" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H30" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H31" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H40" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+              <VariableRef variableId="V_HV_H41" displayFormat="Dec.1" gradient="0.1" unitCode="1342" accessRightRestriction="ro"/> 
+          </Menu>          
+
+          <Menu id="ME_obs_Param_Params">
+            <Name textId="TN_ME_Observe_Params" /> 
+					  <VariableRef variableId="V_PDI_TempMode" accessRightRestriction="ro" /> 
+          </Menu>                    
+          
+					<Menu id="ME_obs_Diagnosis">
+						<VariableRef variableId="V_DeviceStatus"></VariableRef>
+						<VariableRef variableId="V_DetailedDeviceStatus"></VariableRef>
+						<VariableRef variableId="V_ErrorCount"></VariableRef>
+						<VariableRef variableId="V_OperatingHours" displayFormat="Dec.3" gradient="0.001" unitCode="1059" />					
+						<VariableRef variableId="V_PowerOnCounter" displayFormat="Dec" gradient="1.0" />	
+            <MenuRef menuId="ME_Diagnosis_TemperaturValues_0" >            
+              <Condition variableId="V_PDI_TempMode" value="0"/>
+						</MenuRef>            
+            <MenuRef menuId="ME_Diagnosis_TemperaturValues_1" >            
+              <Condition variableId="V_PDI_TempMode" value="1"/>
+						</MenuRef>            
+            <MenuRef menuId="ME_Diagnosis_HumidityValues" />   
+					</Menu>
+          
+          
+				</MenuCollection>
+        
+        <!-- ========================================================================== -->
+        <!-- ..RoleMenuSet´s -->
+        <!-- Zusammenstellung der einzelnen Menüs zu einem Set je nach Role Reihenfolge darf nicht geändert werden
+        -->
+
+				<ObserverRoleMenuSet>
+					<IdentificationMenu menuId="ME_obs_Ident"/>
+					<ParameterMenu menuId="ME_obs_Param"/>
+					<ObservationMenu menuId="ME_Observe"/>
+					<DiagnosisMenu menuId="ME_obs_Diagnosis"/>
+				</ObserverRoleMenuSet>
+        
+				<MaintenanceRoleMenuSet>
+					<IdentificationMenu menuId="ME_Ident"/>
+					<ParameterMenu menuId="ME_Param"/>
+					<ObservationMenu menuId="ME_Observe"/>
+					<DiagnosisMenu menuId="ME_Diagnosis"/>
+				</MaintenanceRoleMenuSet>
+        
+				<SpecialistRoleMenuSet>
+					<IdentificationMenu menuId="ME_Ident"/>
+					<ParameterMenu menuId="ME_Param"/>
+					<ObservationMenu menuId="ME_Observe"/>
+					<DiagnosisMenu menuId="ME_Diagnosis"/>
+				</SpecialistRoleMenuSet>        
+        
+			</UserInterface>
+		</DeviceFunction>
+	</ProfileBody>
+  
+  <!-- ========================================================================== -->
+  <!-- CommNetworkProfile -->
+
+	<CommNetworkProfile xsi:type="IOLinkCommNetworkProfileT" iolinkRevision="V1.1">
+		<TransportLayers>
+			<PhysicalLayer minCycleTime="10000" sioSupported="false" bitrate="COM2" mSequenceCapability="45">
+				<Connection xsi:type="M12-4ConnectionT" connectionSymbol="STEGO-SmartSensor-CSS014-08-con-pic.png">
+					<ProductRef productId="CSS 01411.2-xx"/>
+					<Wire1 function="L+"/>
+					<Wire2 function="NC">
+  					<Name textId="TN_Wire2"/>
+					</Wire2>
+					<Wire3 function="L-"/>
+					<Wire4 function="C/Q"/>
+				</Connection>
+			</PhysicalLayer>
+		</TransportLayers>
+    <Test>
+		<Config1 index="200" testValue="0x00,0x00"></Config1>
+		<Config2 index="1000" testValue="0x00"></Config2>
+		<Config3 index="24" testValue="0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00"></Config3>
+		<Config7 index="201">
+			<EventTrigger disappearValue="2" appearValue="1"></EventTrigger>
+			<EventTrigger disappearValue="4" appearValue="3"></EventTrigger>
+		</Config7>
+    </Test>
+	</CommNetworkProfile>
+  
+  <!-- ========================================================================== -->
+  <!-- Texte -->
+  
+	<ExternalTextCollection>
+		<PrimaryLanguage xml:lang="en">
+			<Text id="T_VendorText" value="STEGO Elektrotechnik GmbH"/>
+			<Text id="T_VendorUrl" value="http://www.stego.de"/> 
+      <!-- Catalog:
+         Vendor
+          T_DeviceFamily
+            T_DeviceName
+              TN_ProductName
+      -->
+			<Text id="T_DeviceFamily" value="Monitoring"/>
+			<Text id="T_DeviceName" value="CSS 014"/>
+			<Text id="TN_ProductName" value="CSS 01411.2-xx"/>
+			<Text id="TD_ProductText" value="Smart Sensor for temperature and humidity"/>
+			
+			<Text id="TN_V_FunctionTag" value="Function Tag"/>
+			<Text id="TN_V_LocationTag" value="Location Tag"/>
+      
+			<Text id="TN_PDI" value="Process Data Inputs"/>
+			<Text id="TN_PDI_Temperature" value="Temperature"/>
+
+			<Text id="TN_PDI_Feuchte" value="Humidity"/>
+      
+			<Text id="TN_SystemCommand_160" value="Temperature Points: Reset/Disable"/>
+			<Text id="TN_SystemCommand_161" value="Temperature Points: Preset 1"/>
+			<Text id="TN_SystemCommand_162" value="Temperature Points: Preset 2"/>
+			<Text id="TN_SystemCommand_163" value="Temperature Points: Preset 3"/>
+			<Text id="TN_SystemCommand_164" value="Temperature Points: Preset 4"/>
+			<Text id="TN_SystemCommand_165" value="Temperature Points: Preset 5"/>
+			<Text id="TN_SystemCommand_166" value="Temperature Points: Preset 6"/>
+			<Text id="TN_SystemCommand_167" value="Temperature Points: Preset 7"/>
+			<Text id="TN_SystemCommand_168" value="Temperature Points: Preset 8"/>
+			<Text id="TN_SystemCommand_169" value="Temperature Points: Preset 9"/>
+      
+			<Text id="TN_SystemCommand_170" value="Humidity Points: Reset/Disable"/>
+			<Text id="TN_SystemCommand_171" value="Humidity Points: Preset 1"/>
+			<Text id="TN_SystemCommand_172" value="Humidity Points: Preset 2"/>
+			<Text id="TN_SystemCommand_173" value="Humidity Points: Preset 3"/>
+			<Text id="TN_SystemCommand_174" value="Humidity Points: Preset 4"/>
+			<Text id="TN_SystemCommand_175" value="Humidity Points: Preset 5"/>
+			<Text id="TN_SystemCommand_176" value="Humidity Points: Preset 6"/>
+			<Text id="TN_SystemCommand_177" value="Humidity Points: Preset 7"/>
+			<Text id="TN_SystemCommand_178" value="Humidity Points: Preset 8"/>
+			<Text id="TN_SystemCommand_179" value="Humidity Points: Preset 9"/>
+
+			<Text id="TN_V_OperatingHours" value="Operating Hours"/>
+			<Text id="TN_V_PowerOnCounter" value="Power-On Counter"/>
+			<Text id="TN_V_Alarm_high_count" value="Alarm High Count"/>
+			<Text id="TN_V_Range_high_count" value="Range High Count"/>
+			<Text id="TN_V_Range_low_count" value="Range Low Count"/>
+			<Text id="TN_V_Alarm_low_count" value="Alarm Low Count"/>
+			<Text id="TN_V_Production_Password" value="Password"/>
+			<Text id="TN_V_Production_Command" value="Command"/>
+			<Text id="TN_V_Production_Command_StoreProductionSettings" value="Store Production Settings"/>
+			<Text id="TN_V_Production_Command_ResetProductionSettings" value="Reset Production Settings"/>
+			<Text id="TN_V_Production_Command_ResetParSetOperate" value="Reset all, including Histogram data"/>
+			<Text id="TN_V_Production_Command_ResetParSetOperate_Counters" value="Reset all Alarm/Range Counters"/>
+			<Text id="TN_V_Production_Command_ResetParSetOperate_Temp_Counters" value="Reset Temperature Alarm/Range Counters"/>
+			<Text id="TN_V_Production_Command_ResetParSetOperate_Hum_Counters" value="Reset Humidity Alarm/Range Counters"/>
+      
+      <Text id="TN_V_Value" value="V_Value (unused)"/>
+      <Text id="TN_V_PDI_TempMode" value="Unit for Temperature ( 0==°C / 1==°F )"/>
+          
+			<Text id="TN_Event1" value="Event 1"/>
+			<Text id="TN_Event2" value="Event 2"/>
+
+			<Text id="TN_Event_6202" value="T 1.x  Temperature Alarm High   reached"/>
+			<Text id="TN_Event_6203" value="T 2.x  Temperature Range High   reached"/>
+			<Text id="TN_Event_6204" value="T 3.x  Temperature Range Low    reached"/>
+			<Text id="TN_Event_6205" value="T 4.x  Temperature Alarm Low    reached"/>
+			<Text id="TN_Event_6206" value="Temperature out of range"/>
+			<Text id="TN_Event_6207" value="Temperature too low"/>
+			<Text id="TN_Event_6208" value="Temperature too high"/>
+			
+			<Text id="TN_Event_6210" value="H 1.x  Humidity Alarm High   reached"/>
+			<Text id="TN_Event_6211" value="H 2.x  Humidity Range High   reached"/>
+			<Text id="TN_Event_6212" value="H 3.x  Humidity Range Low    reached"/>
+			<Text id="TN_Event_6213" value="H 4.x  Humidity Alarm Low    reached"/>
+			<Text id="TN_Event_6214" value="Sensor Humidity raw data too low"/>
+			<Text id="TN_Event_6214_Desc" value="raw data below value for calculating 0,0%"/> 
+			<Text id="TN_Event_6215" value="Sensor Humidity raw data too high"/>
+			<Text id="TN_Event_6215_Desc" value="raw data above value for calculating 100,0%"/>
+			<Text id="TN_Event_6220" value="histogramm data max time reached"/>
+      
+      <Text id="TN_ME_Observe_TemperaturValues" value="Temperature Values" />
+      <Text id="TN_ME_Observe_HumidityValues" value="Humidity Values" />
+      <Text id="TN_ME_Observe_Params" value="Parameter" />
+
+      <Text id="TN_ME_Param_TemperaturValues" value="Temperature SET/RESET Points" />
+      <Text id="TN_ME_Param_TemperaturValues_0" value="Temperature SET/RESET Points (-40..+80 °C)" />
+      <Text id="TN_ME_Param_TemperaturValues_1" value="Temperature SET/RESET Points (-40..+176°F)" />
+      <Text id="TN_ME_Param_TemperaturValues_Presets" value="SET/RESET Points Presets" />
+      <Text id="TN_ME_Param_HumidityValues" value="Humidity SET/RESET Points" />
+      <Text id="TN_ME_Param_HumidityValues_Presets" value="SET/RESET Points Presets" />
+      
+      <Text id="TN_ME_Diagnosis_TemperaturValues" value="Temperature Diagnosis" />
+      <Text id="TN_ME_Diagnosis_HumidityValues" value="Humidity Diagnosis" />
+      <Text id="TN_ME_Diagnosis_Reset" value="Reset" />
+      
+      <Text id="TN_V_TV_11" value="T 1.1  Alarm High SET  " /> 
+      <Text id="TN_V_TV_10" value="T 1.0  Alarm High RESET" /> 
+      <Text id="TN_V_TV_21" value="T 2.1  Range High SET  " /> 
+      <Text id="TN_V_TV_20" value="T 2.0  Range High RESET" /> 
+      <Text id="TN_V_TV_30" value="T 3.0  Range Low  RESET" /> 
+      <Text id="TN_V_TV_31" value="T 3.1  Range Low  SET" /> 
+      <Text id="TN_V_TV_40" value="T 4.0  Alarm Low  RESET" /> 
+      <Text id="TN_V_TV_41" value="T 4.1  Alarm Low  SET" /> 
+      
+      <Text id="TN_V_HV_11" value="H 1.1  Alarm High SET  " /> 
+      <Text id="TN_V_HV_10" value="H 1.0  Alarm High RESET" /> 
+      <Text id="TN_V_HV_21" value="H 2.1  Range High SET  " /> 
+      <Text id="TN_V_HV_20" value="H 2.0  Range High RESET" /> 
+      <Text id="TN_V_HV_30" value="H 3.0  Range Low  RESET" /> 
+      <Text id="TN_V_HV_31" value="H 3.1  Range Low  SET" /> 
+      <Text id="TN_V_HV_40" value="H 4.0  Alarm Low  RESET" /> 
+      <Text id="TN_V_HV_41" value="H 4.1  Alarm Low  SET" /> 
+            
+      <Text id="TN_V_TV_Alarm_High" value="Temperature Alarm High" /> 
+      <Text id="TN_V_TV_Range_High" value="Temperature Range High" /> 
+      <Text id="TN_V_TV_Range_Low" value="Temperature Range Low" /> 
+      <Text id="TN_V_TV_Alarm_Low" value="Temperature Alarm Low" /> 
+
+      <Text id="TN_V_HV_Alarm_High" value="Humidity Alarm High" /> 
+      <Text id="TN_V_HV_Range_High" value="Humidity Range High" /> 
+      <Text id="TN_V_HV_Range_Low" value="Humidity Range Low" /> 
+      <Text id="TN_V_HV_Alarm_Low" value="Humidity Alarm Low" /> 
+
+      <Text id="TN_V_Temperature_max" value="Temperature Maximum" /> 
+      <Text id="TN_V_Temperature_min" value="Temperature Minimum" /> 
+      <Text id="TN_V_Humidity_max" value="Humidity Maximum" /> 
+      <Text id="TN_V_Humidity_min" value="Humidity Minimum" /> 
+      
+      <Text id="TN_V_Humidity_Histogram" value="Humidity Histogram " /> 
+      <Text id="TN_V_hum_histo_0"  value="  0,0....4,9 %" /> 
+      <Text id="TN_V_hum_histo_1"  value="  5,0....9,9 %" /> 
+      <Text id="TN_V_hum_histo_2"  value=" 10,0...14,9 %" /> 
+      <Text id="TN_V_hum_histo_3"  value=" 15,0...19,9 %" /> 
+      <Text id="TN_V_hum_histo_4"  value=" 20,0...24,9 %" /> 
+      <Text id="TN_V_hum_histo_5"  value=" 25,0...29,9 %" /> 
+      <Text id="TN_V_hum_histo_6"  value=" 30,0...34,9 %" /> 
+      <Text id="TN_V_hum_histo_7"  value=" 35,0...39,9 %" /> 
+      <Text id="TN_V_hum_histo_8"  value=" 40,0...44,9 %" /> 
+      <Text id="TN_V_hum_histo_9"  value=" 45,0...49,9 %" /> 
+      <Text id="TN_V_hum_histo_10" value=" 50,0...54,9 %" /> 
+      <Text id="TN_V_hum_histo_11" value=" 55,0...59,9 %" /> 
+      <Text id="TN_V_hum_histo_12" value=" 60,0...64,9 %" /> 
+      <Text id="TN_V_hum_histo_13" value=" 65,0...69,9 %" /> 
+      <Text id="TN_V_hum_histo_14" value=" 70,0...74,9 %" /> 
+      <Text id="TN_V_hum_histo_15" value=" 75,0...79,9 %" /> 
+      <Text id="TN_V_hum_histo_16" value=" 80,0...84,9 %" /> 
+      <Text id="TN_V_hum_histo_17" value=" 85,0...89,9 %" /> 
+      <Text id="TN_V_hum_histo_18" value=" 90,0...94,9 %" /> 
+      <Text id="TN_V_hum_histo_19" value=" 95,0..100,0 %" /> 
+      <!--
+      -->      
+      <Text id="TN_V_Temperature_Histogram" value="Temperature Histogram " /> 
+      <Text id="TN_V_temp_histo_0"   value=" -40,0..-35,1 °C /  -40,0..-31,1 °F" />       
+      <Text id="TN_V_temp_histo_1"   value=" -35,0..-30,1 °C /  -31,0..-22,1 °F" />       
+      <Text id="TN_V_temp_histo_2"   value=" -30,0..-25,1 °C /  -22,0..-13,1 °F" />       
+      <Text id="TN_V_temp_histo_3"   value=" -25,0..-20,1 °C /  -13,0....-4,1 °F" />       
+      <Text id="TN_V_temp_histo_4"   value=" -20,0..-15,1 °C /    -4,0.....4,9 °F" />       
+      <Text id="TN_V_temp_histo_5"   value=" -15,0..-10,1 °C /     5,0...13,9 °F" />       
+      <Text id="TN_V_temp_histo_6"   value=" -10,0....-5,1 °C /   14,0...22,9 °F" />       
+      <Text id="TN_V_temp_histo_7"   value="   -5,0....-0,1 °C /   23,0...31,9 °F" />       
+      <Text id="TN_V_temp_histo_8"   value="    0,0.... 4,9 °C /   32,0...40,9 °F" />       
+      <Text id="TN_V_temp_histo_9"   value="    5,0.... 9,9 °C /   41,0...49,9 °F" />   
+                                                          
+      <Text id="TN_V_temp_histo_10"  value="  10,0...14,9 °C /   50,0...58,9 °F" />       
+      <Text id="TN_V_temp_histo_11"  value="  15,0...19,9 °C /   59,0...67,9 °F" />       
+      <Text id="TN_V_temp_histo_12"  value="  20,0...24,9 °C /   68,0...76,9 °F" />       
+      <Text id="TN_V_temp_histo_13"  value="  25,0...29,9 °C /   77,0...85,9 °F" />       
+      <Text id="TN_V_temp_histo_14"  value="  30,0...34,9 °C /   86,0...94,9 °F" />       
+      <Text id="TN_V_temp_histo_15"  value="  35,0...39,9 °C /   95,0..103,9 °F" />       
+      <Text id="TN_V_temp_histo_16"  value="  40,0...44,9 °C / 104,0..112,9 °F" />       
+      <Text id="TN_V_temp_histo_17"  value="  45,0...49,9 °C / 113,0..121,9 °F" />       
+      <Text id="TN_V_temp_histo_18"  value="  50,0...54,9 °C / 122,0..130,9 °F" />       
+      <Text id="TN_V_temp_histo_19"  value="  55,0...59,9 °C / 131,0..139,9 °F" />             
+                                                          
+      <Text id="TN_V_temp_histo_20"  value="  60,0...64,9 °C / 140,0..148,9 °F" />             
+      <Text id="TN_V_temp_histo_21"  value="  65,0...69,9 °C / 149,0..157,9 °F" />             
+      <Text id="TN_V_temp_histo_22"  value="  70,0...74,9 °C / 158,0..166,9 °F" />             
+      <Text id="TN_V_temp_histo_23"  value="  75,0...80,0 °C / 167,0..176,0 °F" />             
+      
+ 			<Text id="TN_Wire2" value="n.c."/>
+      
+		</PrimaryLanguage>
+	</ExternalTextCollection>
+	<Stamp crc="3822827089"><Checker name="IODD-Checker V1.1.4" version="V1.1.4.0"/></Stamp>
+</IODevice>
