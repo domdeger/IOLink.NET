@@ -7,9 +7,11 @@ using IOLinkNET.Device.Contract;
 using IOLinkNET.Integration;
 using IOLinkNET.IODD;
 using IOLinkNET.IODD.Provider;
+using IOLinkNET.IODD.Resolution;
+using IOLinkNET.IODD.Resolution.Contracts;
+using IOLinkNET.IODD.Structure;
 
 using NSubstitute;
-using NSubstitute.ExceptionExtensions;
 
 namespace Integration.Tests;
 
@@ -33,7 +35,7 @@ public class IODDPortReaderTests
     public async Task ShouldThrowIfUninitializedParameterReadAsync()
     {
         var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
-        Func<Task> readParamTask = () => portReader.ReadConvertedParameterAsync(58, 0);
+        var readParamTask = () => portReader.ReadConvertedParameterAsync(58, 0);
 
         await readParamTask.Should().ThrowAsync<InvalidOperationException>();
     }
@@ -42,17 +44,16 @@ public class IODDPortReaderTests
     public async Task ShouldThrowIfUninitializedProcessDataInReadAsync()
     {
         var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
-        Func<Task> readParamTask = () => portReader.ReadConvertedProcessDataInAsync();
+        var readParamTask = portReader.ReadConvertedProcessDataInAsync;
 
         await readParamTask.Should().ThrowAsync<InvalidOperationException>();
     }
-
 
     [Fact]
     public async Task ShouldThrowIfUninitializedProcessDataOutReadAsync()
     {
         var (portReader, _, _) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
-        Func<Task> readParamTask = () => portReader.ReadConvertedProcessDataOutAsync();
+        var readParamTask = portReader.ReadConvertedProcessDataOutAsync;
 
         await readParamTask.Should().ThrowAsync<InvalidOperationException>();
     }
@@ -78,8 +79,11 @@ public class IODDPortReaderTests
             .Returns(device);
 
         var masterConnection = GetMasterConnectionMock(vendorId, deviceId, productId, vendorName);
+        var typeResolverFactory = Substitute.For<ITypeResolverFactory>();
+        typeResolverFactory.CreateParameterTypeResolver(Arg.Any<IODevice>()).Returns(d => new ParameterTypeResolver(d.Arg<IODevice>()));
+        typeResolverFactory.CreateProcessDataTypeResolver(Arg.Any<IODevice>()).Returns(d => new ProcessDataTypeResolver(d.Arg<IODevice>()));
 
-        var portReader = new IODDPortReader(masterConnection, ioddProvider, new IoddConverter());
+        var portReader = new IODDPortReader(masterConnection, ioddProvider, new IoddConverter(), typeResolverFactory);
 
         return (portReader, ioddProvider, masterConnection);
     }
