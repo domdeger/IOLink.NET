@@ -1,5 +1,3 @@
-using IODD.Provider;
-
 using IOLinkNET.IODD.Provider;
 
 namespace IODD.Provider.Tests;
