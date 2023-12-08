@@ -1,8 +1,5 @@
 using System.Xml.Linq;
 
-using FluentAssertions;
-
-
 using IOLinkNET.IODD;
 using IOLinkNET.IODD.Resolution;
 using IOLinkNET.IODD.Structure;
