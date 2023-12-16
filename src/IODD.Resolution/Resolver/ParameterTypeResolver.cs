@@ -1,9 +1,10 @@
+using IOLinkNET.IODD.Resolution.Contracts;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IOLinkNET.IODD.Resolution;
 
-public class ParameterTypeResolver
+public class ParameterTypeResolver : IParameterTypeResolver
 {
     private readonly IODevice _device;
 
@@ -23,7 +24,7 @@ public class ParameterTypeResolver
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
 
-        if (subIndex is not null)
+        if (subIndex is not null && subIndex > 0)
         {
             var type = _datatypeResolver.Resolve(variable);
             var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)

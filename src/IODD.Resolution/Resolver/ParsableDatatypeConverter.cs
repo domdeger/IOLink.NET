@@ -71,7 +71,8 @@ internal class ParsableDatatypeConverter
         => complexType switch
         {
             RecordT recordT => ConvertRecord(recordT, name),
-            _ => throw new InvalidOperationException()
+            ArrayT arrayT => ConvertArray(arrayT, name),
+            _ => throw new InvalidOperationException($"{complexType.GetType().Name} cannot be converted to a parsable datatype.")
         };
 
     private ParsableRecord ConvertRecord(RecordT recordType, string? name = null)
@@ -81,6 +82,14 @@ internal class ParsableDatatypeConverter
                             rItem.Name.TextId, rItem.BitOffset, rItem.Subindex));
         var recordName = recordType.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
 
-        return new ParsableRecord(recordName, recordType.BitLength, parsableRecordItems);
+        return new ParsableRecord(recordName, recordType.BitLength, recordType.SubindexAccessSupported, parsableRecordItems);
+    }
+
+    private ParsableArray ConvertArray(ArrayT arrayType, string? name = null)
+    {
+        var arrayName = arrayType.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
+        var arrayParsableUnderlyingType = ConvertScalar(_datatypeResolver.Resolve(arrayType) as SimpleDatatypeT ?? throw new InvalidOperationException("Array did not contain simple type."));
+
+        return new ParsableArray(arrayName, arrayParsableUnderlyingType, arrayType.SubindexAccessSupported, arrayType.Count);
     }
 }

@@ -10,5 +10,7 @@ public interface IMasterConnection
 
     Task<ReadOnlyMemory<byte>> ReadIndexAsync(byte portNumber, ushort index, byte subIindex = 0, CancellationToken cancellationToken = default);
 
-    Task<ReadOnlyMemory<byte>> ReadProcessDataAsync(byte portNumber, CancellationToken cancellationToken = default);
+    Task<ReadOnlyMemory<byte>> ReadProcessDataInAsync(byte portNumber, CancellationToken cancellationToken = default);
+
+    Task<ReadOnlyMemory<byte>> ReadProcessDataOutAsync(byte portNumber, CancellationToken cancellationToken = default);
 }

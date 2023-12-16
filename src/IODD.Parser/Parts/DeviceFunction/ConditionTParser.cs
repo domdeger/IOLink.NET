@@ -16,7 +16,7 @@ internal class ConditionTParser : IParserPart<ConditionT>
     public ConditionT Parse(XElement element)
     {
         string variableId = element.ReadMandatoryAttribute("variableId");
-        byte subIndex = element.ReadMandatoryAttribute<byte>("subIndex");
+        byte subIndex = element.ReadOptionalAttribute<byte>("subIndex");
         int value = element.ReadMandatoryAttribute<int>("value");
         return new ConditionT(variableId, subIndex, value);
     }

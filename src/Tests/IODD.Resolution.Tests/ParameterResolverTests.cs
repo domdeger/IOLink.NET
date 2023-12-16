@@ -1,8 +1,5 @@
 using System.Xml.Linq;
 
-using FluentAssertions;
-
-
 using IOLinkNET.IODD;
 using IOLinkNET.IODD.Resolution;
 using IOLinkNET.IODD.Structure;
@@ -20,7 +17,7 @@ public class ParameterResolverTests
     }
 
     [Fact]
-    public void Can_Resolve_Record_Type()
+    public void CanResolveRecordType()
     {
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
@@ -36,7 +33,7 @@ public class ParameterResolverTests
     }
 
     [Fact]
-    public void Can_Resolve_Scalar_Via_Subindex()
+    public void CanResolveScalarViaSubindex()
     {
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
@@ -49,7 +46,7 @@ public class ParameterResolverTests
     }
 
     [Fact]
-    public void Can_Resolve_Scalar()
+    public void CanResolveScalar()
     {
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
@@ -59,5 +56,22 @@ public class ParameterResolverTests
         var simpleDatatype = param as ParsableSimpleDatatypeDef;
         simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.UInteger);
         simpleDatatype!.Name.Should().Be("V_Diag_Level_Config");
+    }
+
+    [Fact]
+    public void CanResolveArray()
+    {
+        var parameterResolver = new ParameterTypeResolver(_iodd);
+
+        var param = parameterResolver.GetParameter(113);
+        param.Should().NotBeNull().And.BeOfType<ParsableArray>().And.NotBeNull();
+
+        var arrayParam = param as ParsableArray ?? throw new InvalidOperationException("Did not receive an array.");
+        arrayParam.Name.Should().Be("V_EventCodeSupp");
+        arrayParam.Length.Should().Be(5);
+        arrayParam.Type.Should().BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        arrayParam.Type.Datatype.Should().Be(KindOfSimpleType.UInteger);
+        arrayParam!.Type.Should().BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+
     }
 }

@@ -2,8 +2,11 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
-    branches: [$default-branch]
+    branches:
+      - main
 
 jobs:
   build:
@@ -12,7 +15,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
@@ -24,60 +27,81 @@ jobs:
         run: dotnet build ./src --no-restore
 
       - name: Test
-        run: dotnet test ./src --no-build --verbosity normal
+        run: dotnet test ./src --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: coverage/**/coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '60 80'
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
 
   pack:
-    name: Build Nuget Packages 
+    name: Build Nuget Packages
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     needs: build
     steps:
-        - uses: actions/checkout@v3
-          with:
-            fetch-depth: 0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-        - run: mkdir -p $PWD/npks
+      - run: mkdir -p $PWD/npks
 
-        - uses: ./.github/actions/build_nuget
-          name: Build Nuget Package for Conversion
-          with:
-            projectPath: ./src/Conversion
-            outputDirectory: ../../npks
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Conversion
+        with:
+          projectPath: ./src/Conversion
+          outputDirectory: ../../npks
 
-        - uses: ./.github/actions/build_nuget
-          with:
-            projectPath: ./src/Device
-            outputDirectory: ../../npkgs
-        - uses: ./.github/actions/build_nuget
-          name: Build Nuget Package for IODD.Parser
-          with:
-            projectPath: ./src/IODD.Parser
-            outputDirectory: ../npkgs
+      - uses: ./.github/actions/build_nuget
+        with:
+          projectPath: ./src/Device
+          outputDirectory: ../../npkgs
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Parser
+        with:
+          projectPath: ./src/IODD.Parser
+          outputDirectory: ../npkgs
 
-        - uses: ./.github/actions/build_nuget
-          name: Build Nuget Package for IODD.Provider
-          with:
-            projectPath: ./src/IODD.Provider
-            outputDirectory: ../../npkgs
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Provider
+        with:
+          projectPath: ./src/IODD.Provider
+          outputDirectory: ../../npkgs
 
-        - uses: ./.github/actions/build_nuget
-          name: Build Nuget Package for IODD.Resolution
-          with:
-            projectPath: ./src/IODD.Resolution
-            outputDirectory: ../../npkgs
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Resolution
+        with:
+          projectPath: ./src/IODD.Resolution
+          outputDirectory: ../../npkgs
 
-        - uses: ./.github/actions/build_nuget
-          name: Build Nuget Package for IODD.Structure
-          with:
-            projectPath: ./src/IODD.Structure
-            outputDirectory: ../../npkgs
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Structure
+        with:
+          projectPath: ./src/IODD.Structure
+          outputDirectory: ../../npkgs
 
-        - run: echo $PWD
-        - run: ls -la $PWD/npkgs
-        - name: Publish Nuget Package for ${{ inputs.projectPath }}
-          uses: actions/upload-artifact@v2
-          with:
-            name: packages
-            path: ./npkgs
+      - run: echo $PWD
+      - run: ls -la $PWD/npkgs
+      - name: Publish Nuget Package for ${{ inputs.projectPath }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: packages
+          path: ./npkgs
 
   publish:
     name: Publish Nuget Packages

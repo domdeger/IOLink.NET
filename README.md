@@ -6,8 +6,10 @@ IOLink.NET aims to be a comprehensive yet lean library for interacting with [IO-
 
 IOLink.NET comes with everything needed to convert IO-Link data into human-readable data and vice versa. The following IO-Link data will be supported:
 
-- Process Data
-- ~~Parameter~~ (future)
-- ~~Events~~ (future)
+|              | Read | Write |
+| ------------ | :--: | :---: |
+| Process Data |  ✅  |  🕒   |
+| Parameter    |  ✅  |  🕒   |
+| Events       |  🕒  |  ❌   |
 
 IOLink.NET also provides a parser for the IO Device Description or short [IODD](https://io-link.com/share/Downloads/Spec-IODD/IO-Device-Desc-Spec_10012_V113_Mar22.zip) format that allows you to automatically extract all the data types a given IO-Link device uses.
