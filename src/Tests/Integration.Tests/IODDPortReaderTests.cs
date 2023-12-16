@@ -17,7 +17,6 @@ namespace Integration.Tests;
 
 public class IODDPortReaderTests
 {
-
     [Theory]
     [InlineData(888, 328205, "BNI IOL-727-S51-P012", "Balluff", "TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml")]
     [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
@@ -29,6 +28,34 @@ public class IODDPortReaderTests
 
         await ioddProvider.Received().GetDeviceDefinitionAsync(vendorId, deviceId, productId, Arg.Any<CancellationToken>());
         await masterConnection.Received().GetPortInformationAsync(1, Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task ShouldThrowIfPortIsNotInIOLinkModeAsync()
+    {
+        var (portReader, _, masterConnection) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
+        var portInfo = Substitute.For<IPortInformation>();
+        portInfo.Status.Returns(PortStatus.Connected);
+        masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>()).Returns(portInfo);
+
+        var initTask = () => portReader.InitializeForPortAsync(1);
+
+        await initTask.Should().ThrowAsync<InvalidOperationException>();
+    }
+
+    [Fact]
+    public async Task ShouldThrowIfNoDeviceInfoAsync()
+    {
+        var (portReader, _, masterConnection) = PreparePortReader(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml");
+        var portInfo = Substitute.For<IPortInformation>();
+        portInfo.Status.Returns(PortStatus.Connected | PortStatus.IOLink);
+        portInfo.DeviceInformation.Returns(null as IDeviceInformation);
+
+        masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>()).Returns(portInfo);
+
+        var initTask = () => portReader.InitializeForPortAsync(1);
+
+        await initTask.Should().ThrowAsync<InvalidOperationException>();
     }
 
     [Fact]
