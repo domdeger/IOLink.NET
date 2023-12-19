@@ -12,4 +12,8 @@ record IfmIoTGetIdentityRequest() : IfmIoTCoreServiceRequestBase("GetIdentity");
 
 public record IfmIoTReadAcyclicRequest(int port, int index, int? subindex) : IfmIoTCoreServiceParameterizedRequest<IfmIoTAcyclicParameters>($"iolinkmaster/port[{port}]/iolinkdevice/iolreadacyclic", new(index, subindex));
 
+public record IfmIoTReadPdInRequest(int port) : IfmIoTCoreServiceRequestBase($"iolinkmaster/port[{port}]/iolinkdevice/pdin/getdata");
+
+public record IfmIoTReadPdOutRequest(int port) : IfmIoTCoreServiceRequestBase($"iolinkmaster/port[{port}]/iolinkdevice/pdout/getdata");
+
 public record IfmIoTAcyclicParameters(int index, int? subindex);
