@@ -3,6 +3,8 @@ namespace Vendors.Ifm;
 using IOLinkNET.Vendors.Ifm;
 using FluentAssertions;
 using IOLinkNET.Vendors.Ifm.Data;
+
+[Trait("Category", "IntegrationTest")]
 public class IoTCoreMasterInformationTests
 {
     private readonly string _baseUrl = "http://192.168.2.227/";

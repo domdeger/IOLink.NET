@@ -2,6 +2,7 @@ using FluentAssertions;
 
 using IOLinkNET.Vendors.Ifm;
 
+[Trait("Category", "IntegrationTest")]
 public class IfmIotCoreMasterConnectionTests
 {
 
