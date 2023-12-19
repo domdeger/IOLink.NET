@@ -16,4 +16,8 @@ public record IfmIoTReadPdInRequest(int port) : IfmIoTCoreServiceRequestBase($"i
 
 public record IfmIoTReadPdOutRequest(int port) : IfmIoTCoreServiceRequestBase($"iolinkmaster/port[{port}]/iolinkdevice/pdout/getdata");
 
+public record IfmIoTGetDataMultiRequest(IEnumerable<string> Paths) : IfmIoTCoreServiceParameterizedRequest<IfmIoTGetDataMultiParameters>("GetDataMulti", new(Paths));
+
+public record IfmIoTGetDataMultiParameters(IEnumerable<string> Datatosend);
+
 public record IfmIoTAcyclicParameters(int index, int? subindex);

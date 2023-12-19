@@ -10,12 +10,15 @@ public interface IIfmIoTCoreClient
     Task<IfmIoTCoreScalarResponse<string>> GetMasterDeviceTagAsync(CancellationToken cancellationToken);
 
     [Post("")]
-    Task<IfmIoTCoreScalarResponse<string>> GetDeviceAcyclicData(IfmIoTReadAcyclicRequest request, CancellationToken cancellationToken);
+    Task<IfmIoTCoreScalarResponse<string>> GetDeviceAcyclicDataAsync(IfmIoTReadAcyclicRequest request, CancellationToken cancellationToken);
 
     [Post("")]
-    Task<IfmIoTCoreScalarResponse<string>> GetDevicePdinData(IfmIoTReadPdInRequest request, CancellationToken cancellationToken);
+    Task<IfmIoTCoreScalarResponse<string>> GetDevicePdinDataAsync(IfmIoTReadPdInRequest request, CancellationToken cancellationToken);
 
     [Post("")]
-    Task<IfmIoTCoreScalarResponse<string>> GetDevicePdoutData(IfmIoTReadPdOutRequest request, CancellationToken cancellationToken);
+    Task<IfmIoTCoreScalarResponse<string>> GetDevicePdoutDataAsync(IfmIoTReadPdOutRequest request, CancellationToken cancellationToken);
+
+    [Post("")]
+    Task<IfmIoTCoreComplexResponse<Dictionary<string, IfmIoTCoreGetDataMultiEntry>>> GetDataMultiAsync(IfmIoTGetDataMultiRequest request, CancellationToken cancellationToken);
 
 }
