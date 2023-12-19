@@ -2,4 +2,7 @@
     <ItemGroup>
     <PackageReference Include="Refit" />
     </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\Device\Device.csproj" />
+    </ItemGroup>
 </Project>

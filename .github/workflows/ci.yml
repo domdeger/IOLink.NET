@@ -27,7 +27,7 @@ jobs:
         run: dotnet build ./src --no-restore
 
       - name: Test
-        run: dotnet test ./src --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
+        run: dotnet test ./src --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --filter 'FullyQualifiedName!~Vendor'
 
       - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
