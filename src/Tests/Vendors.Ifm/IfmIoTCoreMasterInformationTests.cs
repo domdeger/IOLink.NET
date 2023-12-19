@@ -1,11 +1,13 @@
-namespace Vendors.Ifm;
-
 using IOLinkNET.Vendors.Ifm;
 using FluentAssertions;
 using IOLinkNET.Vendors.Ifm.Data;
 
+namespace Vendors.Ifm;
+
 [Trait("Category", "IntegrationTest")]
-public class IoTCoreMasterInformationTests
+[Collection("IfmIoTCoreIntegrationTest")]
+[CollectionDefinition("IfmIoTCoreIntegrationTest", DisableParallelization = true)]
+public class IfmIoTCoreMasterInformationTests
 {
     private readonly string _baseUrl = "http://192.168.2.227/";
     [Fact]
@@ -40,7 +42,7 @@ public class IoTCoreMasterInformationTests
         result.Data.Value.Should().NotBeNull();
     }
 
-    [Fact]
+    [Fact(Skip = "Devices not always have PDOut data")]
     public async Task CanGetDevicePdoutDataAsync()
     {
         var client = IfmIoTCoreClientFactory.Create(_baseUrl);

@@ -26,9 +26,9 @@ internal static class RecordTParser
         byte subIndex = elem.ReadMandatoryAttribute<byte>("subindex");
         ushort bitOffset = elem.ReadMandatoryAttribute<ushort>("bitOffset");
 
-        TextRefT name = parserLocator.ParseMandatory<TextRefT>(elem.Descendants(IODDTextRefNames.Name).First());
-        TextRefT? description = parserLocator.ParseOptional<TextRefT>(elem.Descendants(IODDTextRefNames.DescriptionName).FirstOrDefault());
-        DatatypeRefT? typeRef = parserLocator.ParseOptional<DatatypeRefT>(elem.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
+        TextRefT name = parserLocator.ParseMandatory<TextRefT>(elem.Elements(IODDTextRefNames.Name).First());
+        TextRefT? description = parserLocator.ParseOptional<TextRefT>(elem.Elements(IODDTextRefNames.DescriptionName).FirstOrDefault());
+        DatatypeRefT? typeRef = parserLocator.ParseOptional<DatatypeRefT>(elem.Elements(IODDParserConstants.DatatypeRefName).FirstOrDefault());
 
         return new RecordItemT(subIndex, bitOffset, name, description, SimpleTypeParser.Parse(elem.Descendants(IODDParserConstants.SimpleDatatypeName).FirstOrDefault()), typeRef);
     }
