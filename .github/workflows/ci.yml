@@ -110,7 +110,7 @@ jobs:
         name: Build Nuget Package for Vendors.Ifm
         with:
           projectPath: ./src/Vendors/Ifm
-          outputDirectory: ../../npkgs
+          outputDirectory: ../../../npkgs
 
       - run: echo $PWD
       - run: ls -la $PWD/npkgs
@@ -138,7 +138,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - uses: ./.github/actions/publish_nuget
-        name: Publish Nuget Package for Conversion
+        name: Publish Nuget Packages
         with:
           nugetApiKey: ${{ secrets.NUGET_API_KEY }}
           nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
