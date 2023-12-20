@@ -6,6 +6,7 @@ using IOLinkNET.IODD.Parts.DeviceFunction;
 using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Profile;
+using IODD.Parser.Parts.Menu;
 
 namespace IOLinkNET.IODD;
 
@@ -23,7 +24,10 @@ public class IODDParser
         _partLocator.AddPart(new ConditionTParser());
         _partLocator.AddPart(new DeviceFunctionTParser(_partLocator));
         _partLocator.AddPart(new VariableTParser(_partLocator));
-        _partLocator.AddPart(new DatatypeCollectionTParser(_partLocator));
+        _partLocator.AddPart(new MenuCollectionTParser(_partLocator));
+        _partLocator.AddPart(new MenuElementParser(_partLocator));
+        _partLocator.AddPart(new UIMenuRefTParser(_partLocator));
+        _partLocator.AddPart(new UserInterfaceParser(_partLocator));
     }
 
     public static bool IsIODDFile(XDocument xml)

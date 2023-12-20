@@ -8,6 +8,7 @@ using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.ProcessData;
 using IOLinkNET.IODD.Structure.Profile;
+using IODD.Structure.Structure.Menu;
 
 namespace IOLinkNET.IODD.Parts.DeviceFunction;
 
@@ -30,7 +31,8 @@ internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
                         .Select(_parserLocator.ParseMandatory<VariableT>).ToArray();
         IEnumerable<ProcessDataT> pdCollection = element.Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName).Descendants(IODDDeviceFunctionNames.ProcessDataName)
                         .Select(_parserLocator.ParseMandatory<ProcessDataT>).ToArray();
+        UserInterfaceT userInterface = element.Descendants(IODDDeviceFunctionNames.UserInterfaceName).Select(_parserLocator.ParseMandatory<UserInterfaceT>).FirstOrDefault() ?? new UserInterfaceT(null);
 
-        return new DeviceFunctionT(dataTypeCollection, variableCollection, pdCollection);
+        return new DeviceFunctionT(dataTypeCollection, variableCollection, pdCollection, userInterface);
     }
 }
