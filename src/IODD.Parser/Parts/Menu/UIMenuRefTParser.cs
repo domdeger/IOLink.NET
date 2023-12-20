@@ -22,7 +22,7 @@ internal class UIMenuRefTParser : IParserPart<UIMenuRefT>
     {
         string menuId = element.ReadMandatoryAttribute("menuId");
 
-        XElement? condition = element.Descendants(IODDDeviceFunctionNames.ConditionName).FirstOrDefault();
+        XElement? condition = element.Elements(IODDDeviceFunctionNames.ConditionName).FirstOrDefault();
         ConditionT? conditionT = _parserLocator.ParseOptional<ConditionT>(condition);
 
         return new UIMenuRefT(menuId, conditionT);

@@ -19,7 +19,7 @@ internal class UserInterfaceParser : IParserPart<UserInterfaceT>
 
     public UserInterfaceT Parse(XElement element)
     {
-        IEnumerable<XElement> menuElements = element.Descendants(IODDDeviceFunctionNames.MenuCollectionName).Descendants(IODDDeviceFunctionNames.MenuName);
+        IEnumerable<XElement> menuElements = element.Elements(IODDDeviceFunctionNames.MenuCollectionName).Elements(IODDDeviceFunctionNames.MenuName);
         List<MenuCollectionT> menuCollections = new();
 
         foreach (var menuElement in menuElements)

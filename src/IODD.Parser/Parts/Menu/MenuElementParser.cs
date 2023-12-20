@@ -20,11 +20,11 @@ internal class MenuElementParser: IParserPart<MenuT>
     public MenuT Parse(XElement element)
     {
         string menuId = element.ReadMandatoryAttribute("id");
-        string name = element.Descendants(IODDDeviceFunctionNames.MenuItemName).FirstOrDefault()?.ReadMandatoryAttribute("textId") ?? string.Empty;
+        string name = element.Elements(IODDDeviceFunctionNames.MenuItemName).FirstOrDefault()?.ReadMandatoryAttribute("textId") ?? string.Empty;
 
-        IEnumerable<XElement> variableRefElements = element.Descendants(IODDDeviceFunctionNames.VariableRefName);
-        IEnumerable<XElement> menuRefElements = element.Descendants(IODDDeviceFunctionNames.MenuRefName);
-        IEnumerable<XElement> recordItemRefElements = element.Descendants(IODDDeviceFunctionNames.RecordItemRefName);
+        IEnumerable<XElement> variableRefElements = element.Elements(IODDDeviceFunctionNames.VariableRefName);
+        IEnumerable<XElement> menuRefElements = element.Elements(IODDDeviceFunctionNames.MenuRefName);
+        IEnumerable<XElement> recordItemRefElements = element.Elements(IODDDeviceFunctionNames.RecordItemRefName);
 
         List<UIVariableRefT> uiVariableRefs = new();
         List<UIMenuRefT> uiMenuRefs = new();
