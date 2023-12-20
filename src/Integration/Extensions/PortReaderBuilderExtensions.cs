@@ -6,6 +6,14 @@ namespace IOLinkNET.Integration;
 
 public static class PortReaderBuilderExtensions
 {
+
+    public static PortReaderBuilder WithConverterDefaults(this PortReaderBuilder builder)
+    {
+        return PortReaderBuilder.NewPortReader()
+            .WithDefaultIoddConverter()
+            .WithDefaultTypeResolverFactory();
+    }
+
     public static PortReaderBuilder WithDefaultTypeResolverFactory(this PortReaderBuilder builder)
     {
         if (builder is null)
