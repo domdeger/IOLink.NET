@@ -25,4 +25,18 @@ public static class IODDDeviceFunctionNames
     public static readonly XName ProcessDataOutName = IODDParserConstants.IODDXmlNamespace.GetName("ProcessDataOut");
 
     public static readonly XName ProcessDataCollectionName = IODDParserConstants.IODDXmlNamespace.GetName("ProcessDataCollection");
+
+    public static readonly XName UserInterfaceName = IODDParserConstants.IODDXmlNamespace.GetName("UserInterface");
+
+    public static readonly XName MenuCollectionName = IODDParserConstants.IODDXmlNamespace.GetName("MenuCollection");
+
+    public static readonly XName MenuName = IODDParserConstants.IODDXmlNamespace.GetName("Menu");
+
+    public static readonly XName MenuItemName = IODDParserConstants.IODDXmlNamespace.GetName("Name");
+
+    public static readonly XName VariableRefName = IODDParserConstants.IODDXmlNamespace.GetName("VariableRef");
+
+    public static readonly XName MenuRefName = IODDParserConstants.IODDXmlNamespace.GetName("MenuRef");
+
+    public static readonly XName RecordItemRefName = IODDParserConstants.IODDXmlNamespace.GetName("RecordItemRef");
 }
