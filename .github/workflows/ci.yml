@@ -95,6 +95,12 @@ jobs:
           projectPath: ./src/IODD.Structure
           outputDirectory: ../../npkgs
 
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Vendors.Ifm
+        with:
+          projectPath: ./src/Vendors/Ifm
+          outputDirectory: ../../npkgs
+
       - run: echo $PWD
       - run: ls -la $PWD/npkgs
       - name: Publish Nuget Package for ${{ inputs.projectPath }}
