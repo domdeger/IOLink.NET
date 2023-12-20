@@ -20,9 +20,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Conversion\Conversion.csproj" />
-    <ProjectReference Include="..\..\IODD.Resolution\IODD.Resolution.csproj" />
-    <ProjectReference Include="..\..\IODD.Parser\IODD.Parser.csproj" />
+    <ProjectReference Include="..\..\Conversion\IOLinkNET.Conversion.csproj" />
+    <ProjectReference Include="..\..\IODD.Resolution\IOLinkNET.IODD.Resolution.csproj" />
+    <ProjectReference Include="..\..\IODD.Parser\IOLinkNET.IODD.Parser.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\TestData\**">

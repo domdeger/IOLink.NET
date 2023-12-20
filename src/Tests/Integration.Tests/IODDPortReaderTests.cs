@@ -134,7 +134,6 @@ public class IODDPortReaderTests
         deviceInfo.VendorId.Returns(vendorId);
         deviceInfo.DeviceId.Returns(deviceId);
         deviceInfo.ProductId.Returns(productId);
-        deviceInfo.VendorName.Returns(vendorName);
 
         portInfo.PortNumber.Returns((byte)1);
         portInfo.Status.Returns(PortStatus.Connected | PortStatus.IOLink);

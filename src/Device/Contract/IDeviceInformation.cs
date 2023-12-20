@@ -6,8 +6,6 @@ public interface IDeviceInformation
 
     public uint DeviceId { get; }
 
-    public string VendorName { get; }
-
     public string ProductId { get; }
 
 }

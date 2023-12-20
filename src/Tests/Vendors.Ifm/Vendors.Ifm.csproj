@@ -1,14 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <AssemblyVersion>0.1.0.0</AssemblyVersion>
-    <FileVersion>0.1.0.0</FileVersion>
-    <InformationalVersion>0.1.0+15.Branch.main.Sha.d6058282db27fe28bc9c33e5aed16016287219d5</InformationalVersion>
-    <Version>0.1.0</Version>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="FluentAssertions" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,7 +18,11 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
   <ItemGroup>
+    <ProjectReference Include="..\..\Vendors\Ifm\Ifm.csproj" />
+    <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
     <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
   </ItemGroup>
+
 </Project>

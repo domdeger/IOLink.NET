@@ -3,6 +3,8 @@ using System.Xml.Linq;
 using IOLinkNET.IODD;
 using IOLinkNET.IODD.Resolution;
 
+namespace IODD.Resolution.Tests;
+
 public class ProcessDataResolverTests
 {
     [Theory]

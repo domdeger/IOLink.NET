@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IODD.Parser\IODD.Parser.csproj" />
-    <ProjectReference Include="..\..\src\Conversion\Conversion.csproj" />
-    <ProjectReference Include="..\..\src\IODD.Provider\IODD.Provider.csproj" />
-    <ProjectReference Include="..\..\src\IODD.Resolution\IODD.Resolution.csproj" />
+    <ProjectReference Include="..\..\src\IODD.Parser\IOLinkNET.IODD.Parser.csproj" />
+    <ProjectReference Include="..\..\src\Conversion\IOLinkNET.Conversion.csproj" />
+    <ProjectReference Include="..\..\src\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
+    <ProjectReference Include="..\..\src\IODD.Resolution\IOLinkNET.IODD.Resolution.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

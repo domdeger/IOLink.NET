@@ -20,8 +20,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IODD.Parser\IODD.Parser.csproj" />
-    <ProjectReference Include="..\..\IODD.Structure\IODD.Structure.csproj" />
+    <ProjectReference Include="..\..\IODD.Parser\IOLinkNET.IODD.Parser.csproj" />
+    <ProjectReference Include="..\..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\TestData\**">
