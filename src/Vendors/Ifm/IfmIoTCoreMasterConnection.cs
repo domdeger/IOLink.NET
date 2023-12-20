@@ -42,8 +42,13 @@ public class IfmIotCoreMasterConnection : IMasterConnection
                                         masterCycleTimeActualPath, modePath, comSpeedPath }), cancellationToken);
 
         var mode = resp.Data[modePath].Data.Deserialize<IfmIotCorePortMode>();
-        var comSpeed = resp.Data[comSpeedPath].Data.Deserialize<IfmIotCorePortComSpeed>();
         var status = resp.Data[statusPath].Data.Deserialize<IfmIoTCorePortStatus>();
+        if (status == IfmIoTCorePortStatus.NotConnected)
+        {
+            return new PortInformation(portNumber, PortStatus.Disconnected, null);
+        }
+
+        var comSpeed = resp.Data[comSpeedPath].Data.Deserialize<IfmIotCorePortComSpeed>();
 
         var deviceInfo = new DeviceInformation(resp.Data[vendorIdPath].Data.Deserialize<ushort>(),
                                                resp.Data[deviceIdPath].Data.Deserialize<uint>(),
@@ -63,7 +68,7 @@ public class IfmIotCoreMasterConnection : IMasterConnection
     public async Task<IPortInformation[]> GetPortInformationsAsync(CancellationToken cancellationToken = default)
     {
         var tasks = new List<Task<IPortInformation>>();
-        for (byte i = 1; i < await GetPortCountAsync(); i++)
+        for (byte i = 1; i <= await GetPortCountAsync(); i++)
         {
             tasks.Add(GetPortInformationAsync(i, cancellationToken));
         }

@@ -30,4 +30,15 @@ public class IfmIotCoreMasterConnectionTests
         var result = await masterConnection.GetPortInformationAsync(3);
         result.Should().NotBeNull();
     }
+
+    [Fact]
+    public async Task CanGetPortInformationsAsync()
+    {
+        var masterClient = IfmIoTCoreClientFactory.Create(_baseUrl);
+        var masterConnection = new IfmIotCoreMasterConnection(masterClient);
+
+        var result = await masterConnection.GetPortInformationsAsync();
+        result.Should().NotBeNull();
+        result.Length.Should().Be(4);
+    }
 }
