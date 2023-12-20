@@ -21,8 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Vendors\Ifm\Ifm.csproj" />
-    <ProjectReference Include="..\..\Integration\Integration.csproj" />
-    <ProjectReference Include="..\..\IODD.Provider\IODD.Provider.csproj" />
+    <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
+    <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\IODD.Structure\IODD.Structure.csproj" />
+    <ProjectReference Include="..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <PackageId>IOLinkNET.IODD.Resolution</PackageId>

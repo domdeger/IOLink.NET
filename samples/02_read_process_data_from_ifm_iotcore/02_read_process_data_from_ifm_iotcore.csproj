@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Vendors\Ifm\Ifm.csproj" />
-    <ProjectReference Include="..\..\src\Integration\Integration.csproj" />
+    <ProjectReference Include="..\..\src\Integration\IOLinkNET.Integration.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

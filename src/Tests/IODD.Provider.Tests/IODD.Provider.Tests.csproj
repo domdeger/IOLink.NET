@@ -20,6 +20,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IODD.Provider\IODD.Provider.csproj" />
+    <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
   </ItemGroup>
 </Project>
