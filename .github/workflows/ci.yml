@@ -59,6 +59,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          updateAssemblyInfo: true
+
       - run: mkdir -p $PWD/npks
 
       - uses: ./.github/actions/build_nuget
