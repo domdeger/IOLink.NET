@@ -68,6 +68,7 @@ jobs:
         uses: gittools/actions/gitversion/execute@v0
         with:
           updateAssemblyInfo: true
+          useConfigFile: true
 
       - run: mkdir -p $PWD/npks
 
