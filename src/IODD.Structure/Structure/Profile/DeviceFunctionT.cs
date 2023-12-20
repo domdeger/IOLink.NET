@@ -1,4 +1,4 @@
-using IODD.Structure.Structure.Menu;
+using IOLinkNET.IODD.Structure.Structure.Menu;
 
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;

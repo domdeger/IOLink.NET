@@ -1,2 +1,2 @@
-﻿namespace IODD.Structure.Structure.Menu;
+﻿namespace IOLinkNET.IODD.Structure.Structure.Menu;
 public record MenuT(string Id, string? Name, IEnumerable<UIVariableRefT>? VariableRefs, IEnumerable<UIMenuRefT>? MenuRefs, IEnumerable<UIRecordItemRefT>? RecordItemRefs);

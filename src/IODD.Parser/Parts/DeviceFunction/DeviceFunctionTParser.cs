@@ -8,7 +8,7 @@ using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.ProcessData;
 using IOLinkNET.IODD.Structure.Profile;
-using IODD.Structure.Structure.Menu;
+using IOLinkNET.IODD.Structure.Structure.Menu;
 
 namespace IOLinkNET.IODD.Parts.DeviceFunction;
 

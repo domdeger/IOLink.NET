@@ -1,12 +1,11 @@
 ﻿using System.Xml.Linq;
 
+using IOLinkNET.IODD.Parser;
+using IOLinkNET.IODD.Parser.Parts.Menu;
 using IOLinkNET.IODD.Parts;
 using IOLinkNET.IODD.Parts.DeviceFunction;
-
-using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Profile;
-using IODD.Parser.Parts.Menu;
 
 namespace IOLinkNET.IODD;
 

@@ -1,4 +1,4 @@
-﻿namespace IODD.Structure.Structure.Datatypes;
+﻿namespace IOLinkNET.IODD.Structure.Structure.Datatypes;
 public enum DisplayFormat
 {
     Bin,

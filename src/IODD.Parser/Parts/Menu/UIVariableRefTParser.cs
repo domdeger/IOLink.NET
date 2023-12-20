@@ -1,12 +1,11 @@
 ﻿using System.Xml.Linq;
 
-using IODD.Structure.Structure.Datatypes;
-using IODD.Structure.Structure.Menu;
-
 using IOLinkNET.IODD.Helpers;
 using IOLinkNET.IODD.Structure.Datatypes;
+using IOLinkNET.IODD.Structure.Structure.Datatypes;
+using IOLinkNET.IODD.Structure.Structure.Menu;
 
-namespace IODD.Parser.Parts.Menu;
+namespace IOLinkNET.IODD.Parser.Parts.Menu;
 internal static class UIVariableRefTParser
 {
     public static UIVariableRefT Parse(XElement element)

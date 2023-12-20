@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
-using IODD.Structure.Structure.Menu;
-
-using IOLinkNET.IODD.Helpers;
-using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Parts.Constants;
-using IOLinkNET.IODD.Parts.Datatypes;
-using IOLinkNET.IODD.Structure.Datatypes;
-using IOLinkNET.IODD.Structure.ProcessData;
+using IOLinkNET.IODD.Structure.Structure.Menu;
 
-namespace IODD.Parser.Parts.Menu;
+namespace IOLinkNET.IODD.Parser.Parts.Menu;
 internal class UserInterfaceParser : IParserPart<UserInterfaceT>
 {
     private readonly IParserPartLocator _parserLocator;

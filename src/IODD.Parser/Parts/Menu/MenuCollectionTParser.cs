@@ -1,11 +1,9 @@
 ﻿using System.Xml.Linq;
 
-using IODD.Structure.Structure.Menu;
-
-using IOLinkNET.IODD.Parser;
 using IOLinkNET.IODD.Parts.Constants;
+using IOLinkNET.IODD.Structure.Structure.Menu;
 
-namespace IODD.Parser.Parts.Menu;
+namespace IOLinkNET.IODD.Parser.Parts.Menu;
 internal class MenuCollectionTParser : IParserPart<MenuCollectionT>
 {
     private readonly IParserPartLocator _parserLocator;
