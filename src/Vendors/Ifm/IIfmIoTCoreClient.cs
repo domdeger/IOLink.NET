@@ -21,4 +21,7 @@ public interface IIfmIoTCoreClient
     [Post("")]
     Task<IfmIoTCoreComplexResponse<Dictionary<string, IfmIoTCoreGetDataMultiEntry>>> GetDataMultiAsync(IfmIoTGetDataMultiRequest request, CancellationToken cancellationToken);
 
+
+    [Post("")]
+    Task<IfmIoTCorePortTreeResponse> GetPortTreeAsync(IfmIoTGetPortTreeRequest request, CancellationToken cancellationToken);
 }

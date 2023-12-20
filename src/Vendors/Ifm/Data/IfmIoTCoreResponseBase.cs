@@ -12,3 +12,7 @@ public record IfmIoTCoreScalarResponse<T>(IfmIoTCoreValueWrapper<T> Data, int Ci
 public record IfmIoTCoreComplexResponse<T>(T Data, int Cid, int Code) : IfmIoTCoreResponseBase<T>(Data, Cid, Code);
 
 public record IfmIoTCoreGetDataMultiEntry(int Code, JsonValue Data);
+
+public record IfmIoTCorePortTreeResponse(IfmIoTCoreTreeStructure Data, int Cid, int Code) : IfmIoTCoreComplexResponse<IfmIoTCoreTreeStructure>(Data, Cid, Code);
+
+public record IfmIoTCoreTreeStructure(IEnumerable<IfmIoTCoreTreeStructure>? Subs, string Identifier);

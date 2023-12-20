@@ -20,4 +20,8 @@ public record IfmIoTGetDataMultiRequest(IEnumerable<string> Paths) : IfmIoTCoreS
 
 public record IfmIoTGetDataMultiParameters(IEnumerable<string> Datatosend);
 
+public record IfmIoTGetPortTreeRequest() : IfmIoTCoreServiceParameterizedRequest<IfmIoTGetTreeParameters>("gettree", new("iolinkmaster/", 1));
+
+public record IfmIoTGetTreeParameters(string? Adr, int? Level);
+
 public record IfmIoTAcyclicParameters(int index, int? subindex);

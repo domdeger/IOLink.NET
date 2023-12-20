@@ -60,6 +60,15 @@ public class IfmIoTCoreMasterInformationTests
         var result = await client.GetDataMultiAsync(req, default);
 
         result.Should().NotBeNull();
+    }
 
+    [Fact]
+    public async Task CanGetPortTreeAsync()
+    {
+        var client = IfmIoTCoreClientFactory.Create(_baseUrl);
+        var req = new IfmIoTGetPortTreeRequest();
+        var result = await client.GetPortTreeAsync(req, default);
+
+        result.Should().NotBeNull();
     }
 }

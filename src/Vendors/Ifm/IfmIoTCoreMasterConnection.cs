@@ -15,7 +15,17 @@ public class IfmIotCoreMasterConnection : IMasterConnection
         _client = client;
     }
 
-    public Task<byte> GetPortCountAsync(CancellationToken cancellationToken = default) => Task.FromResult((byte)4);
+    public async Task<byte> GetPortCountAsync(CancellationToken cancellationToken = default)
+    {
+        var portTree = await _client.GetPortTreeAsync(new IfmIoTGetPortTreeRequest(), cancellationToken);
+
+        if (portTree.Data.Subs == null)
+        {
+            throw new Exception("PortTree is null");
+        }
+
+        return (byte)portTree.Data.Subs.Count();
+    }
     public async Task<IPortInformation> GetPortInformationAsync(byte portNumber, CancellationToken cancellationToken = default)
     {
         var statusPath = IfmIoTCoreServicePathBuilder.PortDeviceStatusPath(portNumber);
