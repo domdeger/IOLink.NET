@@ -76,13 +76,13 @@ jobs:
         name: Build Nuget Package for Conversion
         with:
           projectPath: ./src/Conversion
-          outputDirectory: ../../npks
+          outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for Integration
         with:
           projectPath: ./src/Integration
-          outputDirectory: ../../npks
+          outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
         with:
