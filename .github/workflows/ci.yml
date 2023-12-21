@@ -138,8 +138,16 @@ jobs:
           dotnet-version: 8.0.x
 
       - uses: ./.github/actions/publish_nuget
-        name: Publish Nuget Packages
+        name: Publish Nuget Packages to GitHub
         with:
           nugetApiKey: ${{ secrets.NUGET_API_KEY }}
           nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
           nugetPackageDirectory: $PWD/packages
+
+      - uses: ./.github/actions/publish_nuget
+        name: Publish Nuget Packages to Nuget.org
+        with:
+          nugetApiKey: ${{ secrets.NUGETORG_API_KEY }}
+          nugetPackageSource: ${{ vars.NUGETORG_PACKAGE_SOURCE }}
+          nugetPackageDirectory: $PWD/packages
+

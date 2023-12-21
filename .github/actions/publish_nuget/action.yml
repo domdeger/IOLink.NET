@@ -16,7 +16,7 @@ runs:
   using: "composite"
   steps:
 
-  - name: Publish Nuget Packages
+  - name: Publish Nuget Packages 
     shell: bash
     working-directory: ${{ inputs.projectPath }}
     run: |
