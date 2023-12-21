@@ -26,6 +26,17 @@ Decoding IO-Link data requires us to complete different workloads before hands. 
 
 Based on the preprocessed IODD structure we are able to select the correct data types and decode/encode the given payloads. As you notice there is plenty of work to do for IOLinkNET. In this section we describe the functionality of the different projects.
 
+| Package                   | Purpose                                                                                                                                    |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| IOLinkNET.IODD.Structure  | Contains model to represent the XML structure of an IODD.                                                                                  |
+| IOLinkNET.IODD.Provider   | Functionality to retrieve IODD packages from e.g. the IODDFinderAPI                                                                        |
+| IOLinkNET.IODD.Parser     | Parser components to transform XML IODD to IOLinkNET.IODD.Structure format                                                                 |
+| IOLinkNET.IODD.Resolution | Defines favorable and self-contained format for data type representation and utility to create those from IOLinkNET.IODD.Structure format. |
+| IOLinkNET.Conversion      | Defines functionality to convert from and to iolink data.                                                                                  |
+| IOLinkNET.Device          | Defines contracts how communication with io link masters.                                                                                  |
+| IOLinkNET.Vendors.\*      | Provides vendor specific implementation of the Device interfaces.                                                                          |
+| IOLinkNET.Integration     | Orchestrates the modules to functionality that can read process data or parameter data from a device implementation.                       |
+
 ## Supporters
 
 As every project that requires hardware components to be integrated we need devices to test our vendor specific implemen very much for supporting our community project.
