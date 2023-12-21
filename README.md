@@ -18,7 +18,13 @@ IOLink.NET also provides a parser for the IO Device Description or short [IODD](
 
 IOLinkNET offers a modular toolset to work with IOLink data and device descriptions. Since we do not know the requirements specific to your project we have provide you with different components that you are free to orchestrate in order to achieve your goals. Otherwise we also maintain a default implementation.
 
-Usage samples are provided in the samples/ folder. It is still work in progress but growing steadily.
+Different Usage samples are provided in the samples/ folder. It is still work in progress but growing steadily.
+
+## Overview
+
+Decoding IO-Link data requires us to complete different workloads before hands. First of all we need to source the IODD package for the device we are working with. Then the IODD package has to be searched for the correct description file which in turn has be to parsed. The raw IODD format has some shortcomings when it comes to automatic processing so it needs to be preprocessed.
+
+Based on the preprocessed IODD structure we are able to select the correct data types and decode/encode the given payloads. As you notice there is plenty of work to do for IOLinkNET. In this section we describe the functionality of the different projects.
 
 ## Supporters
 
