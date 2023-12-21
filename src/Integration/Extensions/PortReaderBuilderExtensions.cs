@@ -9,7 +9,7 @@ public static class PortReaderBuilderExtensions
 
     public static PortReaderBuilder WithConverterDefaults(this PortReaderBuilder builder)
     {
-        return PortReaderBuilder.NewPortReader()
+        return builder
             .WithDefaultIoddConverter()
             .WithDefaultTypeResolverFactory();
     }
