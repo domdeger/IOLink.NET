@@ -93,7 +93,7 @@ jobs:
         name: Build Nuget Package for IODD.Parser
         with:
           projectPath: ./src/IODD.Parser
-          outputDirectory: ../npkgs
+          outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for IODD.Provider
