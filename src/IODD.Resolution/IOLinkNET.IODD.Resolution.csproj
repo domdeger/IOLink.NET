@@ -11,12 +11,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <Description>IOLinkNET is a library allows you to rapidly integrate and interact with devices that are using the IO-Link technology.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+      <Description>IOLinkNET is a library allows you to rapidly integrate and interact with devices that are using the IO-Link technology.</Description>
      <PackageProjectUrl>https://github.com/domdeger/IOLink.NET/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/domdeger/IOLink.NET/</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
       <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 </Project>
