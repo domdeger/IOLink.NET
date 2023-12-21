@@ -1,0 +1,123 @@
+name: Release
+on:
+  release:
+    types: [published]
+  
+
+
+jobs:
+  pack:
+    name: Build Nuget Packages
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0
+        with:
+          versionSpec: '5.x'
+
+      - name: Determine Version
+        uses: gittools/actions/gitversion/execute@v0
+        with:
+          updateAssemblyInfo: true
+          useConfigFile: true
+
+      - run: mkdir -p $PWD/npks
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Conversion
+        with:
+          projectPath: ./src/Conversion
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Integration
+        with:
+          projectPath: ./src/Integration
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        with:
+          projectPath: ./src/Device
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Parser
+        with:
+          projectPath: ./src/IODD.Parser
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Provider
+        with:
+          projectPath: ./src/IODD.Provider
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Resolution
+        with:
+          projectPath: ./src/IODD.Resolution
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Structure
+        with:
+          projectPath: ./src/IODD.Structure
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Vendors.Ifm
+        with:
+          projectPath: ./src/Vendors/Ifm
+          outputDirectory: ../../../npkgs
+
+      - run: echo $PWD
+      - run: ls -la $PWD/npkgs
+      - name: Publish Nuget Package for ${{ inputs.projectPath }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: packages
+          path: ./npkgs
+
+  publish:
+    name: Publish Nuget Packages
+    runs-on: ubuntu-latest
+    needs: pack
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v2
+        with:
+          name: packages
+          path: ./packages
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - run: echo "$GITHUB_CONTEXT"
+      - name: Upload Packages to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          for file in $PWD/packages/*.nupkg; do
+            gh release upload ${{ github.event.release.tag_name }} $file
+          done
+
+      - uses: ./.github/actions/publish_nuget
+        name: Publish Nuget Packages to GitHub
+        with:
+          nugetApiKey: ${{ secrets.NUGET_API_KEY }}
+          nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
+          nugetPackageDirectory: $PWD/packages
+
+      - uses: ./.github/actions/publish_nuget
+        name: Publish Nuget Packages to Nuget.org
+        with:
+          nugetApiKey: ${{ secrets.NUGETORG_API_KEY }}
+          nugetPackageSource: ${{ vars.NUGETORG_PACKAGE_SOURCE }}
+          nugetPackageDirectory: $PWD/packages
