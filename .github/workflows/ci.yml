@@ -79,9 +79,16 @@ jobs:
           outputDirectory: ../../npks
 
       - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for Integration
+        with:
+          projectPath: ./src/Integration
+          outputDirectory: ../../npks
+
+      - uses: ./.github/actions/build_nuget
         with:
           projectPath: ./src/Device
           outputDirectory: ../../npkgs
+
       - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for IODD.Parser
         with:
