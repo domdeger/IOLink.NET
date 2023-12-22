@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Vendors\Ifm\Ifm.csproj" />
-    <ProjectReference Include="..\..\src\Integration\IOLinkNET.Integration.csproj" />
+    <PackageReference Include="IOLinkNET.Integration" Version="0.2.5" />
+    <PackageReference Include="IOLinkNET.Vendors.Ifm" Version="0.2.5" />
   </ItemGroup>
 
   <PropertyGroup>
