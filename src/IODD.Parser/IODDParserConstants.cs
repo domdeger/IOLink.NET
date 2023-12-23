@@ -11,6 +11,8 @@ internal class IODDParserConstants
 
     public static readonly XName DeviceFunctionName = IODDXmlNamespace.GetName("DeviceFunction");
 
+    public static readonly XName ExternalTextCollectionName = IODDXmlNamespace.GetName("ExternalTextCollection");
+
     public static readonly XName DatatypeCollectionName = IODDXmlNamespace.GetName("DatatypeCollection");
 
     public static readonly XName DatatypeName = IODDXmlNamespace.GetName("Datatype");

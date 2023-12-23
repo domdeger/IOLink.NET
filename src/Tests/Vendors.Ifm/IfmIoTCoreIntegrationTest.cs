@@ -12,7 +12,7 @@ namespace Vendors.Ifm;
 [Collection("IfmIoTCoreIntegrationTest")]
 public class IoTCoreIntegrationTest
 {
-    private readonly string _baseUrl = "http://192.168.2.227/";
+    private readonly string _baseUrl = "http://192.168.2.207/";
 
     [Fact]
     public async Task ShouldConvertProcessDataAsync()
