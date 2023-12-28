@@ -26,7 +26,6 @@ public class IODDParser
         _partLocator.AddPart(new DeviceFunctionTParser(_partLocator));
         _partLocator.AddPart(new VariableTParser(_partLocator));
         _partLocator.AddPart(new MenuCollectionTParser(_partLocator));
-        _partLocator.AddPart(new MenuElementParser(_partLocator));
         _partLocator.AddPart(new UIMenuRefTParser(_partLocator));
         _partLocator.AddPart(new UserInterfaceParser(_partLocator));
         _partLocator.AddPart(new ExternalTextCollectionTParser());
@@ -39,9 +38,10 @@ public class IODDParser
 
     public IODevice Parse(XElement iodd)
     {
+        ExternalTextCollectionT externalTextCollection = _partLocator.Parse<ExternalTextCollectionT>(iodd.Descendants(IODDParserConstants.ExternalTextCollectionName).First());
+        _partLocator.AddPart(new MenuElementParser(_partLocator, externalTextCollection));
         DeviceIdentityT deviceIdentity = _partLocator.Parse<DeviceIdentityT>(iodd.Descendants(IODDParserConstants.DeviceIdentityName).First());
         DeviceFunctionT deviceFunction = _partLocator.Parse<DeviceFunctionT>(iodd.Descendants(IODDParserConstants.DeviceFunctionName).First());
-        ExternalTextCollectionT externalTextCollection = _partLocator.Parse<ExternalTextCollectionT>(iodd.Descendants(IODDParserConstants.ExternalTextCollectionName).First());
 
         return new IODevice(new ProfileBodyT(deviceIdentity, deviceFunction), externalTextCollection);
     }

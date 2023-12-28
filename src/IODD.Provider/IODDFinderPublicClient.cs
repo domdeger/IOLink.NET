@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Net.Http.Json;
 
 using IOLinkNET.IODD.Provider.Data;
@@ -10,7 +11,15 @@ public class IODDFinderPublicClient : IIODDProvider
 
     public IODDFinderPublicClient(Uri baseUrl)
     {
-        _httpClient = new() { BaseAddress = baseUrl };
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+            {
+                Console.WriteLine("SSL error skipped");
+                return true;
+            }
+        };
+        _httpClient = new(handler) { BaseAddress = baseUrl };
     }
 
     public IODDFinderPublicClient() : this(new Uri("https://ioddfinder.io-link.com/"))

@@ -2,7 +2,7 @@ using FluentAssertions;
 
 using IOLinkNET.Vendors.Ifm;
 
-using static System.Net.WebRequestMethods;
+using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
 
@@ -11,7 +11,7 @@ namespace Vendors.Ifm;
 public class IfmIotCoreMasterConnectionTests
 {
 
-    private readonly string _baseUrl = "http://192.168.2.194/";
+    private readonly string _baseUrl = $"http://{MasterConfiguration.IP}/";
 
     [Fact]
     public async Task CanGetPortCountAsync()
