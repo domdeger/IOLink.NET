@@ -17,13 +17,13 @@ internal static class MenuSetTParser
         var identificationMenuId = element.Elements(IODDDeviceFunctionNames.IdentificationMenuName).Single().ReadMandatoryAttribute("menuId");
         var identificationMenu = menuCollections.Where(x => x.Menu.Id.Equals(identificationMenuId)).Single();
 
-        var parameterMenuId = element.Elements(IODDDeviceFunctionNames.ParameterMenuName).Single().ReadMandatoryAttribute("menuId");
+        var parameterMenuId = element.Elements(IODDDeviceFunctionNames.ParameterMenuName).SingleOrDefault()?.ReadMandatoryAttribute("menuId");
         var parameterMenu = menuCollections.Where(x => x.Menu.Id.Equals(parameterMenuId)).SingleOrDefault();
 
-        var observationMenuId = element.Elements(IODDDeviceFunctionNames.ObservationMenuName).Single().ReadMandatoryAttribute("menuId");
+        var observationMenuId = element.Elements(IODDDeviceFunctionNames.ObservationMenuName).SingleOrDefault()?.ReadMandatoryAttribute("menuId");
         var observationMenu = menuCollections.Where(x => x.Menu.Id.Equals(observationMenuId)).SingleOrDefault();
 
-        var diagnosisMenuId = element.Elements(IODDDeviceFunctionNames.DiagnosisMenuName).Single().ReadMandatoryAttribute("menuId");
+        var diagnosisMenuId = element.Elements(IODDDeviceFunctionNames.DiagnosisMenuName).SingleOrDefault()?.ReadMandatoryAttribute("menuId");
         var diagnosisMenu = menuCollections.Where(x => x.Menu.Id.Equals(diagnosisMenuId)).SingleOrDefault();
 
         return new MenuSetT(new UIMenuRefSimpleT(identificationMenu.Menu.Id, identificationMenu.Menu), 
