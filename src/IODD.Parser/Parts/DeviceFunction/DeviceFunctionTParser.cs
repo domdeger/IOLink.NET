@@ -31,7 +31,7 @@ internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
                         .Select(_parserLocator.ParseMandatory<VariableT>).ToArray();
         IEnumerable<ProcessDataT> pdCollection = element.Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName).Descendants(IODDDeviceFunctionNames.ProcessDataName)
                         .Select(_parserLocator.ParseMandatory<ProcessDataT>).ToArray();
-        UserInterfaceT userInterface = element.Descendants(IODDDeviceFunctionNames.UserInterfaceName).Select(_parserLocator.ParseMandatory<UserInterfaceT>).FirstOrDefault() ?? new UserInterfaceT(null);
+        UserInterfaceT userInterface = element.Descendants(IODDDeviceFunctionNames.UserInterfaceName).Select(_parserLocator.ParseMandatory<UserInterfaceT>).First();
 
         return new DeviceFunctionT(dataTypeCollection, variableCollection, pdCollection, userInterface);
     }

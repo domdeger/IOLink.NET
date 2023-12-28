@@ -30,6 +30,20 @@ public static class IODDDeviceFunctionNames
 
     public static readonly XName MenuCollectionName = IODDParserConstants.IODDXmlNamespace.GetName("MenuCollection");
 
+    public static readonly XName IdentificationMenuName = IODDParserConstants.IODDXmlNamespace.GetName("IdentificationMenu");
+
+    public static readonly XName ParameterMenuName = IODDParserConstants.IODDXmlNamespace.GetName("ParameterMenu");
+
+    public static readonly XName ObservationMenuName = IODDParserConstants.IODDXmlNamespace.GetName("ObservationMenu");
+
+    public static readonly XName DiagnosisMenuName = IODDParserConstants.IODDXmlNamespace.GetName("DiagnosisMenu");
+
+    public static readonly XName ObserverRoleMenuSetName = IODDParserConstants.IODDXmlNamespace.GetName("ObserverRoleMenuSet");
+
+    public static readonly XName MaintenanceRoleMenuSetName = IODDParserConstants.IODDXmlNamespace.GetName("MaintenanceRoleMenuSet");
+
+    public static readonly XName SpecialistRoleMenuSetName = IODDParserConstants.IODDXmlNamespace.GetName("SpecialistRoleMenuSet");
+
     public static readonly XName MenuName = IODDParserConstants.IODDXmlNamespace.GetName("Menu");
 
     public static readonly XName MenuItemName = IODDParserConstants.IODDXmlNamespace.GetName("Name");

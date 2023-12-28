@@ -9,7 +9,7 @@ namespace Vendors.Ifm;
 [CollectionDefinition("IfmIoTCoreIntegrationTest", DisableParallelization = true)]
 public class IfmIoTCoreMasterInformationTests
 {
-    private readonly string _baseUrl = "http://192.168.2.207/";
+    private readonly string _baseUrl = "http://192.168.2.194/";
     [Fact]
     public async Task CanGetMasterDeviceTagAsync()
     {
