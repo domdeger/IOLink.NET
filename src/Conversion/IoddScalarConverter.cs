@@ -25,6 +25,7 @@ public class IoddScalarConverter
     private static object GetUint(ReadOnlySpan<byte> data)
         => data.Length switch
         {
+            0 => 0,
             1 => data[0],
             2 => BinaryPrimitives.ReadUInt16BigEndian(data),
             > 2 and <= 4 => BinaryPrimitives.ReadUInt32BigEndian(PadToIfNeeded(4, data)),
@@ -35,6 +36,7 @@ public class IoddScalarConverter
     private static object GetInt(ReadOnlySpan<byte> data, ushort bitLength)
         => (object)data.Length switch
         {
+            0 => 0,
             1 => BinaryPrimitives.ReadInt16BigEndian(PadToComplementaryIntIfNeeded(2, bitLength, data)),
             2 => BinaryPrimitives.ReadInt16BigEndian(PadToComplementaryIntIfNeeded(2, bitLength, data)),
             > 2 and <= 4 => BinaryPrimitives.ReadInt32BigEndian(PadToComplementaryIntIfNeeded(4, bitLength, data)),

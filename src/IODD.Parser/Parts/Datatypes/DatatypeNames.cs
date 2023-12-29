@@ -15,4 +15,8 @@ internal static class DatatypeNames
     public const string RecordT = "RecordT";
 
     public const string ArrayT = "ArrayT";
+
+    public const string ProcessDataInUnionT = "ProcessDataInUnionT";
+
+    public const string ProcessDataOutUnionT = "ProcessDataOutUnionT";
 }

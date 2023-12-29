@@ -1,6 +1,6 @@
 ﻿using System.Xml.Serialization;
 
-namespace IOLinkNET.Visualization.Structure.Structure.XML;
+namespace IOLinkNET.IODD.Standard.Definition.IODDMenuUserRoleDefinitions;
 
 [XmlRoot(ElementName = "DocumentInfo")]
 public class DocumentInfo

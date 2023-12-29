@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\IOLinkNET.Visualization\IOLinkNET.Visualization.csproj" />
     <ProjectReference Include="..\..\Vendors\Ifm\Ifm.csproj" />
     <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
     <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />

@@ -1,11 +1,16 @@
 ﻿using System.Xml.Linq;
 
+using IOLinkNET.IODD.Helpers;
 using IOLinkNET.IODD.Parser;
+using IOLinkNET.IODD.Parser.Parts.Datatypes;
 using IOLinkNET.IODD.Parser.Parts.ExternalTextCollection;
 using IOLinkNET.IODD.Parser.Parts.Menu;
 using IOLinkNET.IODD.Parts;
+using IOLinkNET.IODD.Parts.Constants;
 using IOLinkNET.IODD.Parts.DeviceFunction;
+using IOLinkNET.IODD.Standard.Structure;
 using IOLinkNET.IODD.Structure;
+using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.Profile;
 using IOLinkNET.IODD.Structure.Structure.ExternalTextCollection;
 
@@ -40,9 +45,12 @@ public class IODDParser
     {
         ExternalTextCollectionT externalTextCollection = _partLocator.Parse<ExternalTextCollectionT>(iodd.Descendants(IODDParserConstants.ExternalTextCollectionName).First());
         _partLocator.AddPart(new MenuElementParser(_partLocator, externalTextCollection));
+        IEnumerable<DatatypeT> standardDataTypeCollection = _partLocator.ParseOptional<IEnumerable<DatatypeT>>(StandardDefinitionReader.GetDatatypeCollection())?
+            .ToArray() ?? Array.Empty<DatatypeT>();
+
         DeviceIdentityT deviceIdentity = _partLocator.Parse<DeviceIdentityT>(iodd.Descendants(IODDParserConstants.DeviceIdentityName).First());
         DeviceFunctionT deviceFunction = _partLocator.Parse<DeviceFunctionT>(iodd.Descendants(IODDParserConstants.DeviceFunctionName).First());
 
-        return new IODevice(new ProfileBodyT(deviceIdentity, deviceFunction), externalTextCollection);
+        return new IODevice(new ProfileBodyT(deviceIdentity, deviceFunction), externalTextCollection, standardDataTypeCollection);
     }
 }

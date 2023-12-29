@@ -22,15 +22,15 @@ namespace IOLinkNET.Visualization.Menu
         {
             await _ioddPortReader.InitializeForPortAsync(port);
             _initilizationState = _ioddPortReader.InitilizationState;
-            _iODDUserInterfaceConverter = new(GetIODDRawMenuStructure());
+            _iODDUserInterfaceConverter = new(_initilizationState.DeviceDefinition, _ioddPortReader);
         }
 
         public UserInterfaceT GetIODDRawMenuStructure()
         {
-            return _initilizationState?.DeviceDefinition.ProfileBody.DeviceFunction.UserInterface ?? throw new InvalidOperationException("PortReader is not initialized");
+            return _initilizationState?.DeviceDefinition.ProfileBody.DeviceFunction.UserInterface ?? throw new InvalidOperationException("MenuDataReader is not initialized");
         }
 
-        public UIInterface GetUIInterface()
+        public UIInterface GetReadableMenus()
         {
             if(_iODDUserInterfaceConverter == null)
             {

@@ -14,7 +14,7 @@ public class ParameterTypeResolver : IParameterTypeResolver
     public ParameterTypeResolver(IODevice device)
     {
         _device = device;
-        _datatypeResolver = new(_device.ProfileBody.DeviceFunction.DatatypeCollection);
+        _datatypeResolver = new(_device.ProfileBody.DeviceFunction.DatatypeCollection, _device.StandardDatatypeCollection);
         _converter = new(_datatypeResolver);
     }
 

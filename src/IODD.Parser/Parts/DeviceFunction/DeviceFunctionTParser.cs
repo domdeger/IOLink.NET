@@ -15,10 +15,12 @@ namespace IOLinkNET.IODD.Parts.DeviceFunction;
 internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
 {
     private readonly IParserPartLocator _parserLocator;
+    private readonly StandardVariableRefTParser _standardVariableRefTParser;
 
     public DeviceFunctionTParser(IParserPartLocator parserLocator)
     {
         _parserLocator = parserLocator;
+        _standardVariableRefTParser = new(parserLocator);
     }
     public bool CanParse(XName name)
         => name == IODDParserConstants.DeviceFunctionName;
@@ -26,12 +28,31 @@ internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
     public DeviceFunctionT Parse(XElement element)
     {
         IEnumerable<DatatypeT> dataTypeCollection = _parserLocator
-                        .ParseOptional<IEnumerable<DatatypeT>>(element.Descendants(IODDDeviceFunctionNames.DatatypeCollectionName).FirstOrDefault())?.ToArray() ?? Array.Empty<DatatypeT>();
-        IEnumerable<VariableT> variableCollection = element.Descendants(IODDDeviceFunctionNames.VariableName)
-                        .Select(_parserLocator.ParseMandatory<VariableT>).ToArray();
-        IEnumerable<ProcessDataT> pdCollection = element.Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName).Descendants(IODDDeviceFunctionNames.ProcessDataName)
-                        .Select(_parserLocator.ParseMandatory<ProcessDataT>).ToArray();
-        UserInterfaceT userInterface = element.Descendants(IODDDeviceFunctionNames.UserInterfaceName).Select(_parserLocator.ParseMandatory<UserInterfaceT>).First();
+            .ParseOptional<IEnumerable<DatatypeT>>(element
+                .Descendants(IODDDeviceFunctionNames.DatatypeCollectionName)
+                .FirstOrDefault()
+            )?
+            .ToArray() ?? Array.Empty<DatatypeT>();
+        
+        List<VariableT> variableCollection = element
+            .Descendants(IODDDeviceFunctionNames.VariableName)
+            .Select(_parserLocator.ParseMandatory<VariableT>)
+            .ToList();
+        variableCollection.AddRange(element
+            .Descendants(IODDDeviceFunctionNames.StandardVariableRefName)
+            .Select(_standardVariableRefTParser.Parse)
+            .ToList());
+
+        IEnumerable<ProcessDataT> pdCollection = element
+            .Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName)
+            .Descendants(IODDDeviceFunctionNames.ProcessDataName)
+            .Select(_parserLocator.ParseMandatory<ProcessDataT>)
+            .ToArray();
+
+        UserInterfaceT userInterface = element
+            .Descendants(IODDDeviceFunctionNames.UserInterfaceName)
+            .Select(_parserLocator.ParseMandatory<UserInterfaceT>)
+            .First();
 
         return new DeviceFunctionT(dataTypeCollection, variableCollection, pdCollection, userInterface);
     }

@@ -48,10 +48,13 @@ internal static class IoddComplexConverter
     {
         var result = new byte[length / 8 + (length % 8 != 0 ? 1 : 0)];
 
-        for (var i = 0; i < length; i++)
+        if (bits.Count > 0)
         {
-            var bit = bits[offset + i];
-            result[i / 8] |= (byte)(bit ? 1 << (i % 8) : 0);
+            for (var i = 0; i < length; i++)
+            {
+                var bit = bits[offset + i];
+                result[i / 8] |= (byte)(bit ? 1 << (i % 8) : 0);
+            }
         }
 
         return result;

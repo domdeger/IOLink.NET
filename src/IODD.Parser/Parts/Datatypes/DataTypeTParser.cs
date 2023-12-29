@@ -12,7 +12,7 @@ internal static class DatatypeTParser
     public static DatatypeT Parse(XElement elem, IParserPartLocator partLocator)
     {
         string typeName = elem.ReadMandatoryAttribute("type", IODDParserConstants.XSIXmlNamespace);
-        return (DatatypeT?)SimpleTypeParser.Parse(typeName, elem) ?? ComplexTypeParser.Parse(typeName, elem, partLocator)
+        return (DatatypeT?)SimpleTypeParser.Parse(typeName, elem) ?? ComplexTypeParser.Parse(typeName, elem, partLocator) ?? DataTypeParser.Parse(elem)
                     ?? throw new NotSupportedException($"Could not parse data type with name {typeName}.");
     }
 

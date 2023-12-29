@@ -17,12 +17,35 @@ public class MenuDataReaderTests
 {
     [Theory]
     [InlineData(310, 733, "TV7105", "ifm electronic gmbh ", "TestData/ifm-0002DD-20230324-IODD1.1.xml")]
+    [InlineData(888, 328205, "BNI IOL-727-S51-P012", "Balluff", "TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml")]
+    [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml")]
+    /*[InlineData(1222, 18, "CSS 01411.2-xx", "STEGO Elektrotechnik GmbH", "TestData/STEGO-SmartSensor-CSS014-08-20190726-IODD1.1.xml")]*/
     public async Task CanReadMenus(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
     {
         var (_, _, _, menuDataReader) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
         await menuDataReader.InitializeForPortAsync(1);
-        var menus = menuDataReader.GetUIInterface();
-        menus.Should().NotBeNull();
+        var readableMenus = menuDataReader.GetReadableMenus();
+        await readableMenus.ReadAsync();
+        readableMenus.Should().NotBeNull();
+    }
+
+    [Theory]
+    [InlineData(310, 733, "TV7105", "ifm electronic gmbh ", "TestData/ifm-0002DD-20230324-IODD1.1.xml", 46)]
+    [InlineData(888, 328205, "BNI IOL-727-S51-P012", "Balluff", "TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml", 84)]
+    [InlineData(888, 459267, "BCS012N", "Balluff", "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml", 8)]
+    public async Task ProvidesRawIoddMenuStructure(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath, int menuCollectionCount)
+    {
+        var (_, _, _, menuDataReader) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
+        await menuDataReader.InitializeForPortAsync(1);
+        var rawMenuStructure = menuDataReader.GetIODDRawMenuStructure();
+        
+        rawMenuStructure.Should().NotBeNull();
+
+        rawMenuStructure.MaintenanceRoleMenuSet.IdentificationMenu.Should().NotBeNull();
+        rawMenuStructure.ObserverRoleMenuSet.IdentificationMenu.Should().NotBeNull();
+        rawMenuStructure.SpecialistRoleMenuSet.IdentificationMenu.Should().NotBeNull();
+
+        rawMenuStructure.MenuCollection.Count().Should().Be(menuCollectionCount);
     }
 
     private (IODDPortReader, IDeviceDefinitionProvider, IMasterConnection, MenuDataReader) PreparePortReader(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)

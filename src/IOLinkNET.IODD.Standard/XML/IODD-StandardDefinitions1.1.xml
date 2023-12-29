@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<IODDStandardDefinitions xmlns="http://www.io-link.com/IODD/2010/10" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.io-link.com/IODD/2010/10 IODD-StandardDefinitions1.1.xsd">
+	<DocumentInfo version="V1.1.3" releaseDate="2021-01-21" copyright="IO-Link Community"/>
+	<DatatypeCollection>
+		<Datatype id="STD_D_SystemCommand" xsi:type="UIntegerT" bitLength="8">
+			<!-- 0 = reserved, 1-6 = parameter server, 7-63 = reserved -->
+			<ValueRange lowerValue="0" upperValue="63">
+				<Name textId="STD_TN_Reserved"/>
+			</ValueRange>
+			<!-- 64-127 = reserved for profiles -->
+			<SingleValue value="128">
+				<Name textId="STD_TN_SystemCommand_DeviceReset"/>
+			</SingleValue>
+			<SingleValue value="129">
+				<Name textId="STD_TN_SystemCommand_ApplicationReset"/>
+			</SingleValue>
+			<SingleValue value="130">
+				<Name textId="STD_TN_SystemCommand_RestoreFactorySettings"/>
+			</SingleValue>
+			<SingleValue value="131">
+				<Name textId="STD_TN_SystemCommand_BackToBox"/>
+			</SingleValue>
+			<!-- 132-159 = reserved -->
+			<ValueRange lowerValue="132" upperValue="159">
+				<Name textId="STD_TN_Reserved"/>
+			</ValueRange>
+			<!-- 160-255 = vendor specific -->
+		</Datatype>
+		<Datatype id="STD_D_LockUnlock" xsi:type="BooleanT">
+			<SingleValue value="true">
+				<Name textId="STD_TN_locked"/>
+			</SingleValue>
+			<SingleValue value="false">
+				<Name textId="STD_TN_unlocked"/>
+			</SingleValue>
+		</Datatype>
+	</DatatypeCollection>
+	<VariableCollection>
+		<Variable id="V_DirectParameters_1" index="0" accessRights="rw" mandatory="true">
+			<Datatype xsi:type="RecordT" bitLength="128">
+				<!-- Master Command, actually write-only, but only master may write -->
+				<RecordItem subindex="1" bitOffset="120" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_Reserved"/>
+				</RecordItem>
+				<!-- Master Cycle Time, Bit 7-6: Time Base, Bit 5-0: Multiplier, actually read/write, but only master may write -->
+				<RecordItem subindex="2" bitOffset="112" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_MasterCycleTime"/>
+					<Description textId="STD_TD_MasterCycleTime"/>
+				</RecordItem>
+				<!-- Min Cycle Time, Bit 7-6: Time Base, Bit 5-0: Multiplier -->
+				<RecordItem subindex="3" bitOffset="104" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_MinCycleTime"/>
+					<Description textId="STD_TD_MinCycleTime"/>
+				</RecordItem>
+				<!-- M-Sequence Capability, Bit 7-6: Reserved, Bit 5-4: PREOPERATE M-sequence type, Bit 3-1: OPERATE M-sequence type, Bit 0: ISDU -->
+				<RecordItem subindex="4" bitOffset="96" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_M-SequenceCapability"/>
+					<Description textId="STD_TD_M-SequenceCapability"/>
+				</RecordItem>
+				<!-- Revision ID, Bit 7-4: MajorRev, Bit 3-0: MinorRev, actually read/write, but only master may write -->
+				<RecordItem subindex="5" bitOffset="88" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_RevisionID"/>
+					<Description textId="STD_TD_RevisionID"/>
+				</RecordItem>
+				<!-- Process Data In, Bit 7: BYTE, Bit 6: SIO, Bit 5: Reserved, Bit 4-0: Length -->
+				<RecordItem subindex="6" bitOffset="80" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_ProcessDataIn"/>
+					<Description textId="STD_TD_ProcessDataIn"/>
+				</RecordItem>
+				<!-- Process Data Out, Bit 7: BYTE, Bit 6-5: Reserved, Bit 4-0: Length -->
+				<RecordItem subindex="7" bitOffset="72" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_ProcessDataOut"/>
+					<Description textId="STD_TD_ProcessDataOut"/>
+				</RecordItem>
+				<!-- Vendor ID 1 (MSB) -->
+				<RecordItem subindex="8" bitOffset="64" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_VendorID1"/>
+					<Description textId="STD_TD_VendorID1"/>
+				</RecordItem>
+				<!-- Vendor ID 2 (LSB) -->
+				<RecordItem subindex="9" bitOffset="56" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_VendorID2"/>
+					<Description textId="STD_TD_VendorID2"/>
+				</RecordItem>
+				<!-- Device ID 1 (MSB), actually read/write, but only master may write -->
+				<RecordItem subindex="10" bitOffset="48" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceID1"/>
+					<Description textId="STD_TD_DeviceID1"/>
+				</RecordItem>
+				<!-- Device ID 2, actually read/write, but only master may write -->
+				<RecordItem subindex="11" bitOffset="40" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceID2"/>
+					<Description textId="STD_TD_DeviceID2"/>
+				</RecordItem>
+				<!-- Device ID 3 (LSB), actually read/write, but only master may write -->
+				<RecordItem subindex="12" bitOffset="32" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceID3"/>
+					<Description textId="STD_TD_DeviceID3"/>
+				</RecordItem>
+				<!-- Function ID 1 (MSB) -->
+				<RecordItem subindex="13" bitOffset="24" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_Reserved"/>
+				</RecordItem>
+				<!-- Function ID 2 (LSB) -->
+				<RecordItem subindex="14" bitOffset="16" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_Reserved"/>
+				</RecordItem>
+				<!-- reserved -->
+				<RecordItem subindex="15" bitOffset="8" accessRightRestriction="ro">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_Reserved"/>
+				</RecordItem>
+				<!-- System Command for Devices without ISDU support -->
+				<RecordItem subindex="16" bitOffset="0" accessRightRestriction="wo">
+					<DatatypeRef datatypeId="STD_D_SystemCommand"/>
+					<Name textId="STD_TN_SystemCommand_Sub16"/>
+					<Description textId="STD_TD_SystemCommand_Sub16"/>
+				</RecordItem>
+			</Datatype>
+			<!-- Revision ID = 0x11 = V1.1 -->
+			<RecordItemInfo subindex="5" defaultValue="17"/>
+			<RecordItemInfo subindex="16" modifiesOtherVariables="true"/>
+			<Name textId="STD_TN_V_DirectParameters_1"/>
+			<Description textId="STD_TD_V_DirectParameters_1"/>
+		</Variable>
+		<Variable id="V_DirectParameters_2" index="1" accessRights="rw">
+			<Datatype xsi:type="RecordT" bitLength="128">
+				<RecordItem subindex="1" bitOffset="120">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_1"/>
+				</RecordItem>
+				<RecordItem subindex="2" bitOffset="112">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_2"/>
+				</RecordItem>
+				<RecordItem subindex="3" bitOffset="104">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_3"/>
+				</RecordItem>
+				<RecordItem subindex="4" bitOffset="96">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_4"/>
+				</RecordItem>
+				<RecordItem subindex="5" bitOffset="88">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_5"/>
+				</RecordItem>
+				<RecordItem subindex="6" bitOffset="80">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_6"/>
+				</RecordItem>
+				<RecordItem subindex="7" bitOffset="72">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_7"/>
+				</RecordItem>
+				<RecordItem subindex="8" bitOffset="64">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_8"/>
+				</RecordItem>
+				<RecordItem subindex="9" bitOffset="56">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_9"/>
+				</RecordItem>
+				<RecordItem subindex="10" bitOffset="48">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_10"/>
+				</RecordItem>
+				<RecordItem subindex="11" bitOffset="40">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_11"/>
+				</RecordItem>
+				<RecordItem subindex="12" bitOffset="32">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_12"/>
+				</RecordItem>
+				<RecordItem subindex="13" bitOffset="24">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_13"/>
+				</RecordItem>
+				<RecordItem subindex="14" bitOffset="16">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_14"/>
+				</RecordItem>
+				<RecordItem subindex="15" bitOffset="8">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_15"/>
+				</RecordItem>
+				<RecordItem subindex="16" bitOffset="0">
+					<SimpleDatatype xsi:type="UIntegerT" bitLength="8"/>
+					<Name textId="STD_TN_DeviceSpecific_16"/>
+				</RecordItem>
+			</Datatype>
+			<Name textId="STD_TN_V_DirectParameters_2"/>
+			<Description textId="STD_TD_V_DirectParameters_2"/>
+		</Variable>
+		<!-- System Command for Devices with ISDU support -->
+		<Variable id="V_SystemCommand" index="2" accessRights="wo" modifiesOtherVariables="true">
+			<DatatypeRef datatypeId="STD_D_SystemCommand"/>
+			<Name textId="STD_TN_V_SystemCommand"/>
+			<Description textId="STD_TD_V_SystemCommand"/>
+		</Variable>
+		<!-- index 3: Data Storage -->
+		<!-- index 4-11: Reserved -->
+		<Variable id="V_DeviceAccessLocks" index="12" accessRights="rw">
+			<!-- Bit 15-4: Reserved, Bit 3: Local user interface, Bit 2: Local parameterization, Bit 1: Data storage, Bit 0: Parameter access -->
+			<Datatype xsi:type="RecordT" bitLength="16" subindexAccessSupported="false">
+				<RecordItem subindex="1" bitOffset="0">
+					<DatatypeRef datatypeId="STD_D_LockUnlock"/>
+					<Name textId="STD_TN_ParameterAccess"/>
+					<Description textId="STD_TD_ParameterAccess"/>
+				</RecordItem>
+				<RecordItem subindex="2" bitOffset="1">
+					<DatatypeRef datatypeId="STD_D_LockUnlock"/>
+					<Name textId="STD_TN_DataStorage"/>
+					<Description textId="STD_TD_DataStorage"/>
+				</RecordItem>
+				<RecordItem subindex="3" bitOffset="2">
+					<DatatypeRef datatypeId="STD_D_LockUnlock"/>
+					<Name textId="STD_TN_LocalParameterization"/>
+					<Description textId="STD_TD_LocalParameterization"/>
+				</RecordItem>
+				<RecordItem subindex="4" bitOffset="3">
+					<DatatypeRef datatypeId="STD_D_LockUnlock"/>
+					<Name textId="STD_TN_LocalUserInterface"/>
+					<Description textId="STD_TD_LocalUserInterface"/>
+				</RecordItem>
+			</Datatype>
+			<Name textId="STD_TN_V_DeviceAccessLocks"/>
+			<Description textId="STD_TD_V_DeviceAccessLocks"/>
+		</Variable>
+		<!-- index 13: V_ProfileCharacteristic - Reserved for Common Profile -->
+		<!-- index 14: V_PDInputDescriptor - Reserved for Common Profile -->
+		<!-- index 15: V_PDOutputDescriptor - Reserved for Common Profile -->
+		<Variable id="V_VendorName" index="16" accessRights="ro" mandatory="true">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_VendorName"/>
+			<Description textId="STD_TD_V_VendorName"/>
+		</Variable>
+		<Variable id="V_VendorText" index="17" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_VendorText"/>
+			<Description textId="STD_TD_V_VendorText"/>
+		</Variable>
+		<Variable id="V_ProductName" index="18" accessRights="ro" mandatory="true">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_ProductName"/>
+			<Description textId="STD_TD_V_ProductName"/>
+		</Variable>
+		<Variable id="V_ProductID" index="19" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_ProductID"/>
+			<Description textId="STD_TD_V_ProductID"/>
+		</Variable>
+		<Variable id="V_ProductText" index="20" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_ProductText"/>
+			<Description textId="STD_TD_V_ProductText"/>
+		</Variable>
+		<Variable id="V_SerialNumber" index="21" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="16" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_SerialNumber"/>
+			<Description textId="STD_TD_V_SerialNumber"/>
+		</Variable>
+		<Variable id="V_HardwareRevision" index="22" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_HardwareRevision"/>
+			<Description textId="STD_TD_V_HardwareRevision"/>
+		</Variable>
+		<Variable id="V_FirmwareRevision" index="23" accessRights="ro">
+			<Datatype xsi:type="StringT" fixedLength="64" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_FirmwareRevision"/>
+			<Description textId="STD_TD_V_FirmwareRevision"/>
+		</Variable>
+		<Variable id="V_ApplicationSpecificTag" index="24" accessRights="rw">
+			<Datatype xsi:type="StringT" fixedLength="32" encoding="UTF-8"/>
+			<Name textId="STD_TN_V_ApplicationSpecificTag"/>
+			<Description textId="STD_TD_V_ApplicationSpecificTag"/>
+		</Variable>
+		<!-- index 25: FunctionTag - Reserved for Common Profile -->
+		<!-- index 26: LocationTag - Reserved for Common Profile -->
+		<!-- index 27: ProductURI - Reserved for Common Profile -->
+		<!-- index 28-31: Reserved -->
+		<Variable id="V_ErrorCount" index="32" accessRights="ro" dynamic="true">
+			<Datatype xsi:type="UIntegerT" bitLength="16"/>
+			<Name textId="STD_TN_V_ErrorCount"/>
+			<Description textId="STD_TD_V_ErrorCount"/>
+		</Variable>
+		<!-- index 33-35: Reserved -->
+		<Variable id="V_DeviceStatus" index="36" accessRights="ro" dynamic="true">
+			<Datatype xsi:type="UIntegerT" bitLength="8">
+				<SingleValue value="0">
+					<Name textId="STD_TN_DeviceStatus_OK"/>
+				</SingleValue>
+				<SingleValue value="1">
+					<Name textId="STD_TN_DeviceStatus_MaintenanceRequired"/>
+				</SingleValue>
+				<SingleValue value="2">
+					<Name textId="STD_TN_DeviceStatus_OutOfSpecification"/>
+				</SingleValue>
+				<SingleValue value="3">
+					<Name textId="STD_TN_DeviceStatus_FunctionalCheck"/>
+				</SingleValue>
+				<SingleValue value="4">
+					<Name textId="STD_TN_DeviceStatus_Failure"/>
+				</SingleValue>
+				<!-- 5-255 = reserved -->
+			</Datatype>
+			<Name textId="STD_TN_V_DeviceStatus"/>
+			<Description textId="STD_TD_V_DeviceStatus"/>
+		</Variable>
+		<Variable id="V_DetailedDeviceStatus" index="37" accessRights="ro" dynamic="true">
+			<Datatype xsi:type="ArrayT" count="64" subindexAccessSupported="false">
+				<SimpleDatatype xsi:type="OctetStringT" fixedLength="3"/>
+			</Datatype>
+			<Name textId="STD_TN_V_DetailedDeviceStatus"/>
+			<Description textId="STD_TD_V_DetailedDeviceStatus"/>
+		</Variable>
+		<!-- index 38-39: Reserved -->
+		<Variable id="V_ProcessDataInput" index="40" accessRights="ro" dynamic="true">
+			<Datatype xsi:type="ProcessDataInUnionT"/>
+			<Name textId="STD_TN_V_ProcessDataInput"/>
+			<Description textId="STD_TD_V_ProcessDataInput"/>
+		</Variable>
+		<Variable id="V_ProcessDataOutput" index="41" accessRights="ro" dynamic="true">
+			<Datatype xsi:type="ProcessDataOutUnionT"/>
+			<Name textId="STD_TN_V_ProcessDataOutput"/>
+			<Description textId="STD_TD_V_ProcessDataOutput"/>
+		</Variable>
+		<!-- index 42-47: Reserved -->
+		<!-- Offset Time, Bit 7-6: Time Base, Bit 5-0: Multiplier -->
+		<Variable id="V_OffsetTime" index="48" accessRights="rw">
+			<Datatype xsi:type="UIntegerT" bitLength="8"/>
+			<Name textId="STD_TN_V_OffsetTime"/>
+			<Description textId="STD_TD_V_OffsetTime"/>
+		</Variable>
+		<!-- index 49-63: Reserved for profiles -->
+		<!-- index 64-254: Preferred index -->
+		<!-- index 255: Reserved -->
+		<!-- index 256-16383: Extended index -->
+		<!-- index 16384-16895: Profile specific index -->
+		<!-- index 16896-17151: Safety specific index -->
+		<!-- index 17152-20479: Profile specific index -->
+		<!-- index 20480-20735: Wireless specific index -->
+		<!-- index 20736-65535: Reserved -->
+	</VariableCollection>
+	<ErrorTypeCollection>
+		<ErrorType code="128" additionalCode="0">
+			<Name textId="STD_TN_0x8000"/>
+			<Description textId="STD_TD_0x8000"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="17">
+			<Name textId="STD_TN_0x8011"/>
+			<Description textId="STD_TD_0x8011"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="18">
+			<Name textId="STD_TN_0x8012"/>
+			<Description textId="STD_TD_0x8012"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="32">
+			<Name textId="STD_TN_0x8020"/>
+			<Description textId="STD_TD_0x8020"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="33">
+			<Name textId="STD_TN_0x8021"/>
+			<Description textId="STD_TD_0x8021"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="34">
+			<Name textId="STD_TN_0x8022"/>
+			<Description textId="STD_TD_0x8022"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="35">
+			<Name textId="STD_TN_0x8023"/>
+			<Description textId="STD_TD_0x8023"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="48">
+			<Name textId="STD_TN_0x8030"/>
+			<Description textId="STD_TD_0x8030"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="49">
+			<Name textId="STD_TN_0x8031"/>
+			<Description textId="STD_TD_0x8031"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="50">
+			<Name textId="STD_TN_0x8032"/>
+			<Description textId="STD_TD_0x8032"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="51">
+			<Name textId="STD_TN_0x8033"/>
+			<Description textId="STD_TD_0x8033"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="52">
+			<Name textId="STD_TN_0x8034"/>
+			<Description textId="STD_TD_0x8034"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="53">
+			<Name textId="STD_TN_0x8035"/>
+			<Description textId="STD_TD_0x8035"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="54">
+			<Name textId="STD_TN_0x8036"/>
+			<Description textId="STD_TD_0x8036"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="64">
+			<Name textId="STD_TN_0x8040"/>
+			<Description textId="STD_TD_0x8040"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="65">
+			<Name textId="STD_TN_0x8041"/>
+			<Description textId="STD_TD_0x8041"/>
+		</ErrorType>
+		<ErrorType code="128" additionalCode="130">
+			<Name textId="STD_TN_0x8082"/>
+			<Description textId="STD_TD_0x8082"/>
+		</ErrorType>
+		<!-- 0x81/0x00 vendor specific "unspecific" -->
+		<!-- 0x81/0x01-0xFF vendor specific -->
+	</ErrorTypeCollection>
+	<EventCollection>
+		<Event code="0" type="Notification">
+			<Name textId="STD_TN_0x0000"/>
+		</Event>
+		<Event code="4096" type="Error">
+			<Name textId="STD_TN_0x1000"/>
+			<Description textId="STD_TD_0x1000"/>
+		</Event>
+		<!-- 0x1001-0x17FF reserved -->
+		<!-- 0x1800-0x18FF manufacturer / vendor specific -->
+		<!-- 0x1900-0x3FFF reserved -->
+		<Event code="16384" type="Error">
+			<Name textId="STD_TN_0x4000"/>
+			<Description textId="STD_TD_0x4000"/>
+		</Event>
+		<!-- 0x4001-0x420F reserved -->
+		<Event code="16912" type="Warning">
+			<Name textId="STD_TN_0x4210"/>
+			<Description textId="STD_TD_0x4210"/>
+		</Event>
+		<!-- 0x4211-0x421F reserved -->
+		<Event code="16928" type="Warning">
+			<Name textId="STD_TN_0x4220"/>
+			<Description textId="STD_TD_0x4220"/>
+		</Event>
+		<!-- 0x4221-0x4FFF reserved -->
+		<Event code="20480" type="Error">
+			<Name textId="STD_TN_0x5000"/>
+			<Description textId="STD_TD_0x5000"/>
+		</Event>
+		<!-- 0x5001-0x500F reserved -->
+		<Event code="20496" type="Error">
+			<Name textId="STD_TN_0x5010"/>
+			<Description textId="STD_TD_0x5010"/>
+		</Event>
+		<Event code="20497" type="Error">
+			<Name textId="STD_TN_0x5011"/>
+			<Description textId="STD_TD_0x5011"/>
+		</Event>
+		<Event code="20498" type="Warning">
+			<Name textId="STD_TN_0x5012"/>
+			<Description textId="STD_TD_0x5012"/>
+		</Event>
+		<!-- 0x5013-0x50FF reserved -->
+		<Event code="20736" type="Error">
+			<Name textId="STD_TN_0x5100"/>
+			<Description textId="STD_TD_0x5100"/>
+		</Event>
+		<Event code="20737" type="Error">
+			<Name textId="STD_TN_0x5101"/>
+			<Description textId="STD_TD_0x5101"/>
+		</Event>
+		<!-- 0x5102-0x510F reserved -->
+		<Event code="20752" type="Warning">
+			<Name textId="STD_TN_0x5110"/>
+			<Description textId="STD_TD_0x5110"/>
+		</Event>
+		<Event code="20753" type="Warning">
+			<Name textId="STD_TN_0x5111"/>
+			<Description textId="STD_TD_0x5111"/>
+		</Event>
+		<Event code="20754" type="Warning">
+			<Name textId="STD_TN_0x5112"/>
+			<Description textId="STD_TD_0x5112"/>
+		</Event>
+		<!-- 0x5113-0x5FFF reserved -->
+		<Event code="24576" type="Error">
+			<Name textId="STD_TN_0x6000"/>
+			<Description textId="STD_TD_0x6000"/>
+		</Event>
+		<!-- 0x6001-0x631F reserved -->
+		<Event code="25376" type="Error">
+			<Name textId="STD_TN_0x6320"/>
+			<Description textId="STD_TD_0x6320"/>
+		</Event>
+		<Event code="25377" type="Error">
+			<Name textId="STD_TN_0x6321"/>
+			<Description textId="STD_TD_0x6321"/>
+		</Event>
+		<!-- 0x6322-0x634F reserved -->
+		<!-- 0x6350 reserved in IO-Link specification V1.1.3
+		<Event code="25424" type="Error">
+			<Name textId="STD_TN_0x6350"/>
+			<Description textId="STD_TD_0x6350"/>
+		</Event> -->
+		<!-- 0x6351-0x76FF reserved -->
+		<Event code="30464" type="Error">
+			<Name textId="STD_TN_0x7700"/>
+			<Description textId="STD_TD_0x7700"/>
+		</Event>
+		<Event code="30465" type="Error">
+			<Name textId="STD_TN_0x7701"/>
+			<Description textId="STD_TD_0x7701"/>
+		</Event>
+		<Event code="30466" type="Error">
+			<Name textId="STD_TN_0x7702"/>
+			<Description textId="STD_TD_0x7702"/>
+		</Event>
+		<Event code="30467" type="Error">
+			<Name textId="STD_TN_0x7703"/>
+			<Description textId="STD_TD_0x7703"/>
+		</Event>
+		<Event code="30468" type="Error">
+			<Name textId="STD_TN_0x7704"/>
+			<Description textId="STD_TD_0x7704"/>
+		</Event>
+		<Event code="30469" type="Error">
+			<Name textId="STD_TN_0x7705"/>
+			<Description textId="STD_TD_0x7705"/>
+		</Event>
+		<Event code="30470" type="Error">
+			<Name textId="STD_TN_0x7706"/>
+			<Description textId="STD_TD_0x7706"/>
+		</Event>
+		<Event code="30471" type="Error">
+			<Name textId="STD_TN_0x7707"/>
+			<Description textId="STD_TD_0x7707"/>
+		</Event>
+		<Event code="30472" type="Error">
+			<Name textId="STD_TN_0x7708"/>
+			<Description textId="STD_TD_0x7708"/>
+		</Event>
+		<Event code="30473" type="Error">
+			<Name textId="STD_TN_0x7709"/>
+			<Description textId="STD_TD_0x7709"/>
+		</Event>
+		<Event code="30474" type="Error">
+			<Name textId="STD_TN_0x770A"/>
+			<Description textId="STD_TD_0x770A"/>
+		</Event>
+		<Event code="30475" type="Error">
+			<Name textId="STD_TN_0x770B"/>
+			<Description textId="STD_TD_0x770B"/>
+		</Event>
+		<Event code="30476" type="Error">
+			<Name textId="STD_TN_0x770C"/>
+			<Description textId="STD_TD_0x770C"/>
+		</Event>
+		<Event code="30477" type="Error">
+			<Name textId="STD_TN_0x770D"/>
+			<Description textId="STD_TD_0x770D"/>
+		</Event>
+		<Event code="30478" type="Error">
+			<Name textId="STD_TN_0x770E"/>
+			<Description textId="STD_TD_0x770E"/>
+		</Event>
+		<Event code="30479" type="Error">
+			<Name textId="STD_TN_0x770F"/>
+			<Description textId="STD_TD_0x770F"/>
+		</Event>
+		<Event code="30480" type="Error">
+			<Name textId="STD_TN_0x7710"/>
+			<Description textId="STD_TD_0x7710"/>
+		</Event>
+		<Event code="30481" type="Error">
+			<Name textId="STD_TN_0x7711"/>
+			<Description textId="STD_TD_0x7711"/>
+		</Event>
+		<!-- 0x7712-0x8BFF reserved -->
+		<Event code="35840" type="Error">
+			<Name textId="STD_TN_0x8C00"/>
+			<Description textId="STD_TD_0x8C00"/>
+		</Event>
+		<Event code="35841" type="Warning">
+			<Name textId="STD_TN_0x8C01"/>
+			<Description textId="STD_TD_0x8C01"/>
+		</Event>
+		<!-- 0x8C02-0x8C0F reserved -->
+		<Event code="35856" type="Warning">
+			<Name textId="STD_TN_0x8C10"/>
+			<Description textId="STD_TD_0x8C10"/>
+		</Event>
+		<!-- 0x8C11-0x8C1F reserved -->
+		<Event code="35872" type="Error">
+			<Name textId="STD_TN_0x8C20"/>
+			<Description textId="STD_TD_0x8C20"/>
+		</Event>
+		<!-- 0x8C21-0x8C2F reserved -->
+		<Event code="35888" type="Warning">
+			<Name textId="STD_TN_0x8C30"/>
+			<Description textId="STD_TD_0x8C30"/>
+		</Event>
+		<!-- 0x8C31-0x8C3F reserved -->
+		<Event code="35904" type="Warning">
+			<Name textId="STD_TN_0x8C40"/>
+			<Description textId="STD_TD_0x8C40"/>
+		</Event>
+		<Event code="35905" type="Warning">
+			<Name textId="STD_TN_0x8C41"/>
+			<Description textId="STD_TD_0x8C41"/>
+		</Event>
+		<Event code="35906" type="Warning">
+			<Name textId="STD_TN_0x8C42"/>
+			<Description textId="STD_TD_0x8C42"/>
+		</Event>
+		<!-- 0x8C43-0x8C9F reserved -->
+		<!-- 0x8CA0-0x8DFF manufacturer / vendor specific -->
+		<!-- 0x8E00-0xAFFF reserved -->
+		<!-- 0xB000-0xB0FF reserved for safety extensions -->
+		<!-- 0xB100-0xBFFF reserved for profiles -->
+		<!-- 0xC000-0xFF90 reserved -->
+		<!-- 0xFF91 SDCI specific event - Data Storage upload request -->
+		<!-- 0xFF92-0xFFAF reserved -->
+		<!-- 0xFFB0-0xFFB7 reserved for wireless extensions -->
+		<!-- 0xFFB8-0xFFFF reserved -->
+	</EventCollection>
+	<ExternalTextCollection>
+		<PrimaryLanguage xml:lang="en">
+			<Text id="STD_TN_Reserved" value="Reserved"/>
+			<!-- Variables -->
+			<Text id="STD_TN_V_DirectParameters_1" value="Direct Parameters - Page 1"/>
+			<Text id="STD_TD_V_DirectParameters_1" value="Comprises the required parameters defining the communication characteristics and identifiers for device validation."/>
+			<Text id="STD_TN_MasterCycleTime" value="Master Cycle Time"/>
+			<Text id="STD_TD_MasterCycleTime" value="Communication: Current communication cycle duration used by the master. This value defines the process data cycle."/>
+			<Text id="STD_TN_MinCycleTime" value="Min Cycle Time"/>
+			<Text id="STD_TD_MinCycleTime" value="Communication: Minimum communication cycle duration supported by the device. This value defines the lowest possible process data cycle."/>
+			<Text id="STD_TN_M-SequenceCapability" value="M-Sequence Capability"/>
+			<Text id="STD_TD_M-SequenceCapability" value="Communication: Information on the structure and the supported features of the communication messages."/>
+			<Text id="STD_TN_RevisionID" value="IO-Link Revision ID"/>
+			<Text id="STD_TD_RevisionID" value="Communication: Identifier for the currently used communication protocol revision."/>
+			<Text id="STD_TN_ProcessDataIn" value="Process Data Input Length"/>
+			<Text id="STD_TD_ProcessDataIn" value="Communication: Information on width and features of the process input data (Process Data from Device to Master)."/>
+			<Text id="STD_TN_ProcessDataOut" value="Process Data Output Length"/>
+			<Text id="STD_TD_ProcessDataOut" value="Communication: Information on width of the process output data (Process Data from Master to Device)."/>
+			<Text id="STD_TN_VendorID1" value="Vendor ID 1"/>
+			<Text id="STD_TD_VendorID1" value="Identification: Highest octet of the Vendor ID. Combined with the parameter Vendor ID 2, this parameter defines the 16-bit value of the unique Vendor ID as assigned by the IO-Link Community."/>
+			<Text id="STD_TN_VendorID2" value="Vendor ID 2"/>
+			<Text id="STD_TD_VendorID2" value="Identification: Lowest octet of the Vendor ID. Combined with the parameter Vendor ID 1, this parameter defines the 16-bit value of the unique Vendor ID as assigned by the IO-Link Community."/>
+			<Text id="STD_TN_DeviceID1" value="Device ID 1"/>
+			<Text id="STD_TD_DeviceID1" value="Identification: Highest octet of the Device ID. Combined with the parameters Device ID 2 and 3, this parameter defines the 24-bit value of the vendor-specific Device ID."/>
+			<Text id="STD_TN_DeviceID2" value="Device ID 2"/>
+			<Text id="STD_TD_DeviceID2" value="Identification: Middle octet of the Device ID. Combined with the parameters Device ID 1 and 3, this parameter defines the 24-bit value of the vendor-specific Device ID."/>
+			<Text id="STD_TN_DeviceID3" value="Device ID 3"/>
+			<Text id="STD_TD_DeviceID3" value="Identification: Lowest octet of the Device ID. Combined with the parameters Device ID 1 and 2, this parameter defines the 24-bit value of the vendor-specific Device ID."/>
+			<Text id="STD_TN_SystemCommand_Sub16" value="System Command"/>
+			<Text id="STD_TD_SystemCommand_Sub16" value="Application: Command interface for devices without ISDU support. Validity and execution of commands are not confirmed."/>
+			<Text id="STD_TN_V_DirectParameters_2" value="Direct Parameters - Page 2"/>
+			<Text id="STD_TD_V_DirectParameters_2" value="A set of parameters for devices without ISDU support."/>
+			<Text id="STD_TN_DeviceSpecific_1" value="Device-specific Parameter 1"/>
+			<Text id="STD_TN_DeviceSpecific_2" value="Device-specific Parameter 2"/>
+			<Text id="STD_TN_DeviceSpecific_3" value="Device-specific Parameter 3"/>
+			<Text id="STD_TN_DeviceSpecific_4" value="Device-specific Parameter 4"/>
+			<Text id="STD_TN_DeviceSpecific_5" value="Device-specific Parameter 5"/>
+			<Text id="STD_TN_DeviceSpecific_6" value="Device-specific Parameter 6"/>
+			<Text id="STD_TN_DeviceSpecific_7" value="Device-specific Parameter 7"/>
+			<Text id="STD_TN_DeviceSpecific_8" value="Device-specific Parameter 8"/>
+			<Text id="STD_TN_DeviceSpecific_9" value="Device-specific Parameter 9"/>
+			<Text id="STD_TN_DeviceSpecific_10" value="Device-specific Parameter 10"/>
+			<Text id="STD_TN_DeviceSpecific_11" value="Device-specific Parameter 11"/>
+			<Text id="STD_TN_DeviceSpecific_12" value="Device-specific Parameter 12"/>
+			<Text id="STD_TN_DeviceSpecific_13" value="Device-specific Parameter 13"/>
+			<Text id="STD_TN_DeviceSpecific_14" value="Device-specific Parameter 14"/>
+			<Text id="STD_TN_DeviceSpecific_15" value="Device-specific Parameter 15"/>
+			<Text id="STD_TN_DeviceSpecific_16" value="Device-specific Parameter 16"/>
+			<Text id="STD_TN_V_SystemCommand" value="System Command"/>
+			<Text id="STD_TD_V_SystemCommand" value="Command interface for applications. A positive acknowledge indicates the complete and correct finalization of the requested function."/>
+			<Text id="STD_TN_SystemCommand_DeviceReset" value="Device Reset"/>
+			<Text id="STD_TN_SystemCommand_ApplicationReset" value="Application Reset"/>
+			<Text id="STD_TN_SystemCommand_RestoreFactorySettings" value="Restore Factory Settings"/>
+			<Text id="STD_TN_SystemCommand_BackToBox" value="Back-to-box"/>
+			<Text id="STD_TN_V_DeviceAccessLocks" value="Device Access Locks"/>
+			<Text id="STD_TD_V_DeviceAccessLocks" value="The access to the device parameters can be restricted by setting appropriate flags within this parameter."/>
+			<Text id="STD_TN_ParameterAccess" value="Parameter Write Access"/>
+			<Text id="STD_TD_ParameterAccess" value="This lock prevents the write access to all read/write parameters of the device except for the parameter 'Device Access Locks'."/>
+			<Text id="STD_TN_DataStorage" value="Data Storage"/>
+			<Text id="STD_TD_DataStorage" value="This lock prevents the write access to the device parameters via the data storage mechanism."/>
+			<Text id="STD_TN_LocalParameterization" value="Local Parameterization"/>
+			<Text id="STD_TD_LocalParameterization" value="This lock prevents the device settings from being changed via local operating elements on the device."/>
+			<Text id="STD_TN_LocalUserInterface" value="Local User Interface"/>
+			<Text id="STD_TD_LocalUserInterface" value="This lock prevents the access to the device settings and display via a local user interface. The user interface is disabled."/>
+			<Text id="STD_TN_locked" value="Locked"/>
+			<Text id="STD_TN_unlocked" value="Unlocked"/>
+			<Text id="STD_TN_V_VendorName" value="Vendor Name"/>
+			<Text id="STD_TD_V_VendorName" value="The vendor name that is assigned to a Vendor ID."/>
+			<Text id="STD_TN_V_VendorText" value="Vendor Text"/>
+			<Text id="STD_TD_V_VendorText" value="Additional information about the vendor."/>
+			<Text id="STD_TN_V_ProductName" value="Product Name"/>
+			<Text id="STD_TD_V_ProductName" value="Complete product name."/>
+			<Text id="STD_TN_V_ProductID" value="Product ID"/>
+			<Text id="STD_TD_V_ProductID" value="Vendor-specific product or type identification (e.g., item number or model number)."/>
+			<Text id="STD_TN_V_ProductText" value="Product Text"/>
+			<Text id="STD_TD_V_ProductText" value="Additional product information for the device."/>
+			<Text id="STD_TN_V_SerialNumber" value="Serial Number"/>
+			<Text id="STD_TD_V_SerialNumber" value="Unique, vendor-specific identifier of the individual device."/>
+			<Text id="STD_TN_V_HardwareRevision" value="Hardware Revision"/>
+			<Text id="STD_TD_V_HardwareRevision" value="Unique, vendor-specific identifier of the hardware revision of the individual device."/>
+			<Text id="STD_TN_V_FirmwareRevision" value="Firmware Revision"/>
+			<Text id="STD_TD_V_FirmwareRevision" value="Unique, vendor-specific identifier of the firmware revision of the individual device."/>
+			<Text id="STD_TN_V_ApplicationSpecificTag" value="Application-specific Tag"/>
+			<Text id="STD_TD_V_ApplicationSpecificTag" value="Possibility to mark a device with user- or application-specific information."/>
+			<Text id="STD_TN_V_ErrorCount" value="Error Count"/>
+			<Text id="STD_TD_V_ErrorCount" value="Number of errors that occurred in the technology-specific application since power on or restart."/>
+			<Text id="STD_TN_V_DeviceStatus" value="Device Status"/>
+			<Text id="STD_TD_V_DeviceStatus" value="Indicator for the current device condition and diagnosis state."/>
+			<Text id="STD_TN_DeviceStatus_OK" value="Device is OK"/>
+			<Text id="STD_TN_DeviceStatus_MaintenanceRequired" value="Maintenance required"/>
+			<Text id="STD_TN_DeviceStatus_OutOfSpecification" value="Out of specification"/>
+			<Text id="STD_TN_DeviceStatus_FunctionalCheck" value="Functional check"/>
+			<Text id="STD_TN_DeviceStatus_Failure" value="Failure"/>
+			<Text id="STD_TN_V_DetailedDeviceStatus" value="Detailed Device Status"/>
+			<Text id="STD_TD_V_DetailedDeviceStatus" value="List of all currently pending events in the device."/>
+			<Text id="STD_TN_V_ProcessDataInput" value="PD Input"/>
+			<Text id="STD_TD_V_ProcessDataInput" value="Last valid process input data of the device."/>
+			<Text id="STD_TN_V_ProcessDataOutput" value="PD Output"/>
+			<Text id="STD_TD_V_ProcessDataOutput" value="Last valid process output data written to the device."/>
+			<Text id="STD_TN_V_OffsetTime" value="Offset Time"/>
+			<Text id="STD_TD_V_OffsetTime" value="Synchronizes the technology-specific application on the communication cycles with an adjustable offset time. The offset time can be set according to cycle time specifications (parameter 'Min Cycle Time')."/>
+			<!-- ErrorTypes -->
+			<Text id="STD_TN_0x8000" value="Device application error - no details"/>
+			<Text id="STD_TD_0x8000" value="Service was denied by the technology-specific application. No detailed root-cause information is available."/>
+			<Text id="STD_TN_0x8011" value="Index not available"/>
+			<Text id="STD_TD_0x8011" value="Read or write access attempt to a non-existing index."/>
+			<Text id="STD_TN_0x8012" value="Subindex not available"/>
+			<Text id="STD_TD_0x8012" value="Read or write access attempt to a non-existing subindex of an existing index."/>
+			<Text id="STD_TN_0x8020" value="Service temporarily not available"/>
+			<Text id="STD_TD_0x8020" value="Parameter not accessible due to the current state of the technology-specific application."/>
+			<Text id="STD_TN_0x8021" value="Service temporarily unavailable - local control"/>
+			<Text id="STD_TD_0x8021" value="Parameter not accessible. The device is currently in an ongoing, locally controlled operation."/>
+			<Text id="STD_TN_0x8022" value="Service temporarily unavailable - device control"/>
+			<Text id="STD_TD_0x8022" value="Parameter not accessible. The technology-specific application is currently in a remotely triggered operation."/>
+			<Text id="STD_TN_0x8023" value="Access denied"/>
+			<Text id="STD_TD_0x8023" value="Write access to a read-only parameter or read access to write-only parameter."/>
+			<Text id="STD_TN_0x8030" value="Parameter value out of range"/>
+			<Text id="STD_TD_0x8030" value="Written parameter value is outside of the permitted value range."/>
+			<Text id="STD_TN_0x8031" value="Parameter value above limit"/>
+			<Text id="STD_TD_0x8031" value="Written parameter value is above its specified value range."/>
+			<Text id="STD_TN_0x8032" value="Parameter value below limit"/>
+			<Text id="STD_TD_0x8032" value="Written parameter value is below its specified value range."/>
+			<Text id="STD_TN_0x8033" value="Parameter length overrun"/>
+			<Text id="STD_TD_0x8033" value="Written parameter is longer than specified."/>
+			<Text id="STD_TN_0x8034" value="Parameter length underrun"/>
+			<Text id="STD_TD_0x8034" value="Written parameter is shorter than specified."/>
+			<Text id="STD_TN_0x8035" value="Function unavailable"/>
+			<Text id="STD_TD_0x8035" value="Written command is not supported by the technology-specific application."/>
+			<Text id="STD_TN_0x8036" value="Function temporarily unavailable"/>
+			<Text id="STD_TD_0x8036" value="Written command is unavailable due to the current state of the technology-specific application."/>
+			<Text id="STD_TN_0x8040" value="Invalid parameter set"/>
+			<Text id="STD_TD_0x8040" value="Written single parameter value collides with other existing parameter settings."/>
+			<Text id="STD_TN_0x8041" value="Inconsistent parameter set"/>
+			<Text id="STD_TD_0x8041" value="Parameter set inconsistencies at the end of block parameter transfer. Device plausibility check failed."/>
+			<Text id="STD_TN_0x8082" value="Application not ready"/>
+			<Text id="STD_TD_0x8082" value="Read or write access denied. The technology-specific application is temporarily unavailable."/>
+			<!-- Events -->
+			<Text id="STD_TN_0x0000" value="No malfunction"/>
+			<Text id="STD_TN_0x1000" value="General malfunction"/>
+			<Text id="STD_TD_0x1000" value="Unknown error"/>
+			<Text id="STD_TN_0x4000" value="Temperature fault"/>
+			<Text id="STD_TD_0x4000" value="Overload"/>
+			<Text id="STD_TN_0x4210" value="Device temperature overrun"/>
+			<Text id="STD_TD_0x4210" value="Clear source of heat"/>
+			<Text id="STD_TN_0x4220" value="Device temperature underrun"/>
+			<Text id="STD_TD_0x4220" value="Insulate device"/>
+			<Text id="STD_TN_0x5000" value="Device hardware fault"/>
+			<Text id="STD_TD_0x5000" value="Exchange device"/>
+			<Text id="STD_TN_0x5010" value="Component malfunction"/>
+			<Text id="STD_TD_0x5010" value="Repair or exchange"/>
+			<Text id="STD_TN_0x5011" value="Non-volatile memory loss"/>
+			<Text id="STD_TD_0x5011" value="Check batteries"/>
+			<Text id="STD_TN_0x5012" value="Batteries low"/>
+			<Text id="STD_TD_0x5012" value="Exchange batteries"/>
+			<Text id="STD_TN_0x5100" value="General power supply fault"/>
+			<Text id="STD_TD_0x5100" value="Check availability"/>
+			<Text id="STD_TN_0x5101" value="Fuse blown or open"/>
+			<Text id="STD_TD_0x5101" value="Check fuse switch or exchange fuse"/>
+			<Text id="STD_TN_0x5110" value="Primary supply voltage overrun"/>
+			<Text id="STD_TD_0x5110" value="Check valid voltage range"/>
+			<Text id="STD_TN_0x5111" value="Primary supply voltage underrun"/>
+			<Text id="STD_TD_0x5111" value="Check valid voltage range"/>
+			<Text id="STD_TN_0x5112" value="Secondary supply voltage fault (Port Class B)"/>
+			<Text id="STD_TD_0x5112" value="Check valid voltage range"/>
+			<Text id="STD_TN_0x6000" value="Device software fault"/>
+			<Text id="STD_TD_0x6000" value="Check firmware revision"/>
+			<Text id="STD_TN_0x6320" value="Parameter error"/>
+			<Text id="STD_TD_0x6320" value="Check datasheet and values"/>
+			<Text id="STD_TN_0x6321" value="Parameter missing"/>
+			<Text id="STD_TD_0x6321" value="Check datasheet"/>
+			<!-- Event 6350 - reserved in IO-Link specification V1.1.3			
+			<Text id="STD_TN_0x6350" value="Parameter changed"/>
+			<Text id="STD_TD_0x6350" value="Check configuration"/> -->
+			<Text id="STD_TN_0x7700" value="Wire break of a subordinate device"/>
+			<Text id="STD_TD_0x7700" value="Check installation"/>
+			<Text id="STD_TN_0x7701" value="Wire break of subordinate device 1"/>
+			<Text id="STD_TD_0x7701" value="Check installation"/>
+			<Text id="STD_TN_0x7702" value="Wire break of subordinate device 2"/>
+			<Text id="STD_TD_0x7702" value="Check installation"/>
+			<Text id="STD_TN_0x7703" value="Wire break of subordinate device 3"/>
+			<Text id="STD_TD_0x7703" value="Check installation"/>
+			<Text id="STD_TN_0x7704" value="Wire break of subordinate device 4"/>
+			<Text id="STD_TD_0x7704" value="Check installation"/>
+			<Text id="STD_TN_0x7705" value="Wire break of subordinate device 5"/>
+			<Text id="STD_TD_0x7705" value="Check installation"/>
+			<Text id="STD_TN_0x7706" value="Wire break of subordinate device 6"/>
+			<Text id="STD_TD_0x7706" value="Check installation"/>
+			<Text id="STD_TN_0x7707" value="Wire break of subordinate device 7"/>
+			<Text id="STD_TD_0x7707" value="Check installation"/>
+			<Text id="STD_TN_0x7708" value="Wire break of subordinate device 8"/>
+			<Text id="STD_TD_0x7708" value="Check installation"/>
+			<Text id="STD_TN_0x7709" value="Wire break of subordinate device 9"/>
+			<Text id="STD_TD_0x7709" value="Check installation"/>
+			<Text id="STD_TN_0x770A" value="Wire break of subordinate device 10"/>
+			<Text id="STD_TD_0x770A" value="Check installation"/>
+			<Text id="STD_TN_0x770B" value="Wire break of subordinate device 11"/>
+			<Text id="STD_TD_0x770B" value="Check installation"/>
+			<Text id="STD_TN_0x770C" value="Wire break of subordinate device 12"/>
+			<Text id="STD_TD_0x770C" value="Check installation"/>
+			<Text id="STD_TN_0x770D" value="Wire break of subordinate device 13"/>
+			<Text id="STD_TD_0x770D" value="Check installation"/>
+			<Text id="STD_TN_0x770E" value="Wire break of subordinate device 14"/>
+			<Text id="STD_TD_0x770E" value="Check installation"/>
+			<Text id="STD_TN_0x770F" value="Wire break of subordinate device 15"/>
+			<Text id="STD_TD_0x770F" value="Check installation"/>
+			<Text id="STD_TN_0x7710" value="Short circuit"/>
+			<Text id="STD_TD_0x7710" value="Check installation"/>
+			<Text id="STD_TN_0x7711" value="Ground fault"/>
+			<Text id="STD_TD_0x7711" value="Check installation"/>
+			<Text id="STD_TN_0x8C00" value="Technology-specific application fault"/>
+			<Text id="STD_TD_0x8C00" value="Reset device"/>
+			<Text id="STD_TN_0x8C01" value="Simulation active"/>
+			<Text id="STD_TD_0x8C01" value="Check operating mode"/>
+			<Text id="STD_TN_0x8C10" value="Process variable range overrun"/>
+			<Text id="STD_TD_0x8C10" value="Process data uncertain"/>
+			<Text id="STD_TN_0x8C20" value="Measurement range exceeded"/>
+			<Text id="STD_TD_0x8C20" value="Check application"/>
+			<Text id="STD_TN_0x8C30" value="Process variable range underrun"/>
+			<Text id="STD_TD_0x8C30" value="Process data uncertain"/>
+			<Text id="STD_TN_0x8C40" value="Maintenance required - Cleaning"/>
+			<Text id="STD_TD_0x8C40" value="Clean device"/>
+			<Text id="STD_TN_0x8C41" value="Maintenance required - Refill"/>
+			<Text id="STD_TD_0x8C41" value="Refill device"/>
+			<Text id="STD_TN_0x8C42" value="Maintenance required - Wear and tear"/>
+			<Text id="STD_TD_0x8C42" value="Exchange wear and tear parts"/>
+		</PrimaryLanguage>
+	</ExternalTextCollection>
+	<Stamp crc="777176496"><Checker name="IODD-Checker V1.1.5" version="V1.1.5.0"/></Stamp>
+</IODDStandardDefinitions>
