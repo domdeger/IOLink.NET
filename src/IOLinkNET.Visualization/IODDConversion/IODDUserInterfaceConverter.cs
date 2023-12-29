@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-
-using IOLinkNET.Integration;
-using IOLinkNET.IODD.Standard.Structure;
+﻿using IOLinkNET.Integration;
 using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Structure.Menu;
 using IOLinkNET.Visualization.Structure.Structure;

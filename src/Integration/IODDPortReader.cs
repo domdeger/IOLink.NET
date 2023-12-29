@@ -16,6 +16,7 @@ public class IODDPortReader
     private PortReaderInitilizationResult? _initilizationState;
     public PortReaderInitilizationResult InitilizationState => _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
 
+
     public IODDPortReader(IMasterConnection connection, IDeviceDefinitionProvider deviceDefinitionProvider,
         IIoddDataConverter ioddDataConverter, ITypeResolverFactory typeResolverFactory)
     {
@@ -46,7 +47,7 @@ public class IODDPortReader
         _initilizationState = new PortReaderInitilizationResult(pdInType, pdOutType, port, pdDataResolver, paramDataResolver, deviceDefinition);
     }
 
-    public async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
+    public virtual async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
     {
         var paramTypeDef = InitilizationState.ParameterTypeResolver.GetParameter(index, subindex);
 
@@ -102,6 +103,5 @@ public class IODDPortReader
 
         return (pdInType, pdOutType);
     }
-
     public record PortReaderInitilizationResult(ParsableDatatype? PdIn, ParsableDatatype? PdOut, byte Port, IProcessDataTypeResolver ProcessDataTypeResolver, IParameterTypeResolver ParameterTypeResolver, IODevice DeviceDefinition);
 }

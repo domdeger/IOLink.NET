@@ -1,15 +1,18 @@
+using System.Xml.Linq;
+
+using FluentAssertions;
+
 using IOLinkNET.Conversion;
 using IOLinkNET.Device.Contract;
 using IOLinkNET.Integration;
+using IOLinkNET.IODD;
 using IOLinkNET.IODD.Provider;
+using IOLinkNET.IODD.Resolution;
 using IOLinkNET.IODD.Resolution.Contracts;
 using IOLinkNET.IODD.Structure;
-using IOLinkNET.IODD;
-using System.Xml.Linq;
-using NSubstitute;
-using IOLinkNET.IODD.Resolution;
 using IOLinkNET.Visualization.Menu;
-using FluentAssertions;
+
+using NSubstitute;
 
 namespace Visualization.Tests;
 
@@ -61,8 +64,10 @@ public class MenuDataReaderTests
         typeResolverFactory.CreateParameterTypeResolver(Arg.Any<IODevice>()).Returns(d => new ParameterTypeResolver(d.Arg<IODevice>()));
         typeResolverFactory.CreateProcessDataTypeResolver(Arg.Any<IODevice>()).Returns(d => new ProcessDataTypeResolver(d.Arg<IODevice>()));
 
-        var portReader = new IODDPortReader(masterConnection, ioddProvider, new IoddConverter(), typeResolverFactory);
+        var portReader = Substitute.For<IODDPortReader>(masterConnection, ioddProvider, new IoddConverter(), typeResolverFactory);
         var menuDataReader = new MenuDataReader(portReader);
+
+        portReader.ReadConvertedParameterAsync(Arg.Any<ushort>(), Arg.Any<byte>()).Returns(string.Empty);
 
         return (portReader, ioddProvider, masterConnection, menuDataReader);
     }
@@ -82,6 +87,8 @@ public class MenuDataReaderTests
         var masterConnection = Substitute.For<IMasterConnection>();
         masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>())
             .Returns(portInfo);
+
+        masterConnection.ReadIndexAsync(portInfo.PortNumber, Arg.Any<ushort>()).Returns((byte[])[0]);
 
         return masterConnection;
     }

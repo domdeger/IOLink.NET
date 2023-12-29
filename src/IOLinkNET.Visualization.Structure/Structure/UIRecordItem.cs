@@ -2,7 +2,6 @@
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.Structure.Datatypes;
-using IOLinkNET.IODD.Structure.Structure.Menu;
 using IOLinkNET.Visualization.Structure.Interfaces;
 
 namespace IOLinkNET.Visualization.Structure.Structure;
