@@ -12,6 +12,7 @@ public record MenuSet(UIMenu IdentificationMenu, UIMenu? ParameterMenu, UIMenu? 
         {
             await ParameterMenu.ReadAsync();
         }
+
         if (ObservationMenu != null)
         {
             await ObservationMenu.ReadAsync();

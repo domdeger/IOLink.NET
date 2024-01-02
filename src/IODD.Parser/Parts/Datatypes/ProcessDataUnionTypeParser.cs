@@ -6,7 +6,7 @@ using IOLinkNET.IODD.Structure.Datatypes;
 
 namespace IOLinkNET.IODD.Parts.Datatypes;
 
-internal static class DataTypeParser
+internal static class ProcessDataUnionTypeParser
 {
     public static DatatypeT? Parse(string typeName, XElement dataTypeElement)
         => typeName switch

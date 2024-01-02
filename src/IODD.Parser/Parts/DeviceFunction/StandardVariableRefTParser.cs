@@ -27,7 +27,7 @@ internal class StandardVariableRefTParser
     {
         var variableId = element.ReadMandatoryAttribute("id");
         var stdVariableCollection = StandardDefinitionReader.GetVariableCollection();
-        var stdVariable = stdVariableCollection?.Elements(IODDStandardDefinitionNames.VariableName).Where(x => x.ReadMandatoryAttribute("id") == variableId).FirstOrDefault();
+        var stdVariable = stdVariableCollection.Elements(IODDStandardDefinitionNames.VariableName).Where(x => x.ReadMandatoryAttribute("id") == variableId).Single();
 
         DatatypeT? dataType = DatatypeTParser.ParseOptional(stdVariable.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), _parserLocator);
         DatatypeRefT? dataTypeRef = _parserLocator.ParseOptional<DatatypeRefT>(stdVariable.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
@@ -37,7 +37,6 @@ internal class StandardVariableRefTParser
         IEnumerable<RecordItemInfoT> recordItemInfos = stdVariable.Descendants(IODDDeviceFunctionNames.RecordItemInfoName).Select(_parserLocator.Parse<RecordItemInfoT>);
         ushort index = stdVariable.ReadMandatoryAttribute<ushort>("index");
         var id = stdVariable.ReadMandatoryAttribute("id");
-
         return new VariableT(id, index, dataType, dataTypeRef, name, description, accessRights, recordItemInfos);
     }
 }

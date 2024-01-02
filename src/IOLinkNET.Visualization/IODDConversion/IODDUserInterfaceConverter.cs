@@ -7,7 +7,7 @@ namespace IOLinkNET.Visualization.IODDConversion;
 internal class IODDUserInterfaceConverter
 {
     private readonly IODevice _ioDevice;
-    private readonly IODDPortReader _ioddPortReader; 
+    private readonly IODDPortReader _ioddPortReader;
     private readonly UserInterfaceT _userInterface;
 
     public IODDUserInterfaceConverter(IODevice ioDevice, IODDPortReader ioddPortReader)
@@ -29,9 +29,9 @@ internal class IODDUserInterfaceConverter
         var specialistRoleMenuSet = _userInterface.SpecialistRoleMenuSet;
 
         var convertedObserverRoleMenuSet = new MenuSet(
-            ConvertUIMenu(observerRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Observerrole Menu must provide Identification Menu"), 
-            ConvertUIMenu(observerRoleMenuSet.ParameterMenu, StandardMenuUserRoleReader.ParameterMenu), 
-            ConvertUIMenu(observerRoleMenuSet.ObservationMenu, StandardMenuUserRoleReader.ObservationMenu), 
+            ConvertUIMenu(observerRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Observerrole Menu must provide Identification Menu"),
+            ConvertUIMenu(observerRoleMenuSet.ParameterMenu, StandardMenuUserRoleReader.ParameterMenu),
+            ConvertUIMenu(observerRoleMenuSet.ObservationMenu, StandardMenuUserRoleReader.ObservationMenu),
             ConvertUIMenu(observerRoleMenuSet.DiagnosisMenu, StandardMenuUserRoleReader.DiagnosisMenu),
             _ioddPortReader
         );
@@ -58,15 +58,15 @@ internal class IODDUserInterfaceConverter
     {
         if (menu != null && menu?.MenuId != null)
         {
-            var stdMenuName = GetExternalRefText(menu, displayNameRef);
+            var standardMenuName = GetExternalRefText(menu, displayNameRef);
             var referencedMenu = _userInterface.MenuCollection.Where(x => x.Menu.Id == menu.MenuId).FirstOrDefault() ?? throw new InvalidOperationException("Referenced Menu not found");
-            var menuName = referencedMenu.Menu.Name == string.Empty ? stdMenuName : referencedMenu.Menu.Name;
+            var menuName = referencedMenu.Menu.Name == string.Empty ? standardMenuName : referencedMenu.Menu.Name;
 
-            return new UIMenu(menu.MenuId, 
-                menuName, 
-                null, 
-                ConvertVariableRefs(referencedMenu.Menu.VariableRefs), 
-                ConvertMenuRefs(referencedMenu.Menu.MenuRefs), 
+            return new UIMenu(menu.MenuId,
+                menuName,
+                null,
+                ConvertVariableRefs(referencedMenu.Menu.VariableRefs),
+                ConvertMenuRefs(referencedMenu.Menu.MenuRefs),
                 ConvertRecordItemRefs(referencedMenu.Menu.RecordItemRefs),
                 _ioddPortReader
             );
@@ -79,14 +79,14 @@ internal class IODDUserInterfaceConverter
     {
         if (menu != null && menu?.MenuId != null)
         {
-            var stdMenuName = GetExternalRefText(menu, displayNameRef);
+            var standardMenuName = GetExternalRefText(menu, displayNameRef);
             var referencedMenu = _userInterface.MenuCollection.Where(x => x.Menu.Id == menu.MenuId).FirstOrDefault() ?? throw new InvalidOperationException("Referenced Menu not found");
-            var menuName = referencedMenu.Menu.Name == string.Empty ? stdMenuName : referencedMenu.Menu.Name;
+            var menuName = referencedMenu.Menu.Name == string.Empty ? standardMenuName : referencedMenu.Menu.Name;
 
-            return new UIMenu(menu.MenuId, 
-                menuName, 
-                menu.Condition, 
-                ConvertVariableRefs(referencedMenu.Menu.VariableRefs), 
+            return new UIMenu(menu.MenuId,
+                menuName,
+                menu.Condition,
+                ConvertVariableRefs(referencedMenu.Menu.VariableRefs),
                 ConvertMenuRefs(referencedMenu.Menu.MenuRefs),
                 ConvertRecordItemRefs(referencedMenu.Menu.RecordItemRefs),
                 _ioddPortReader
@@ -96,101 +96,87 @@ internal class IODDUserInterfaceConverter
         return null;
     }
 
-    private IEnumerable<UIVariable>? ConvertVariableRefs(IEnumerable<UIVariableRefT>? uiVariableRefs)
+    private List<UIVariable>? ConvertVariableRefs(IEnumerable<UIVariableRefT>? uiVariableRefs)
     {
         if (uiVariableRefs == null)
         {
             return null;
         }
 
-        var list = new List<UIVariable>();
+        var variables = new List<UIVariable>();
 
-        foreach (var uiVariableRef in uiVariableRefs)
+        foreach (UIVariableRefT uiVariableRef in uiVariableRefs)
         {
-            /*var standardVariable = StandardDefinitionReader.GetStandardVariable(uiVariableRef.VariableId);
-            if(standardVariable != null)
-            {
-                list.Add(new UIVariable(
-                    standardVariable.Id,
-
-                    )
-                 );
-            }*/
-
             var variable = _ioDevice.ProfileBody.DeviceFunction.VariableCollection.Where(x => x.Id == uiVariableRef.VariableId).SingleOrDefault();
-            
-            list.Add(new UIVariable(uiVariableRef.VariableId,
+
+            variables.Add(new UIVariable(uiVariableRef.VariableId,
                 variable,
-                uiVariableRef.Gradient, 
-                uiVariableRef.Offset, 
-                uiVariableRef.UnitCode, 
-                uiVariableRef.AccessRights, 
-                uiVariableRef.ButtonValue, 
-                uiVariableRef.DisplayFormat, 
+                uiVariableRef.Gradient,
+                uiVariableRef.Offset,
+                uiVariableRef.UnitCode,
+                uiVariableRef.AccessRights,
+                uiVariableRef.ButtonValue,
+                uiVariableRef.DisplayFormat,
                 _ioddPortReader)
             );
         }
 
-        return list;
+        return variables;
     }
 
-    private IEnumerable<UIMenu>? ConvertMenuRefs(IEnumerable<UIMenuRefT>? menuRefs)
+    private List<UIMenu>? ConvertMenuRefs(IEnumerable<UIMenuRefT>? menuRefs)
     {
         if (menuRefs == null)
         {
             return null;
         }
 
-        var list = new List<UIMenu>();
+        var menus = new List<UIMenu>();
 
-        foreach (var menuRef in menuRefs)
+        foreach (UIMenuRefT menuRef in menuRefs)
         {
             var convertedMenu = ConvertUIMenu(menuRef, string.Empty);
             if (convertedMenu != null)
             {
-                list.Add(convertedMenu);
+                menus.Add(convertedMenu);
             }
         }
 
-        return list;
+        return menus;
     }
 
-    private IEnumerable<UIRecordItem>? ConvertRecordItemRefs(IEnumerable<UIRecordItemRefT>? uiRecordItemRefs)
+    private List<UIRecordItem>? ConvertRecordItemRefs(IEnumerable<UIRecordItemRefT>? uiRecordItemRefs)
     {
         if (uiRecordItemRefs == null)
         {
             return null;
         }
 
-        var list = new List<UIRecordItem>();
+        var recordItems = new List<UIRecordItem>();
 
-        foreach (var itemRef in uiRecordItemRefs)
+        foreach (UIRecordItemRefT itemRef in uiRecordItemRefs)
         {
-            var variable = _ioDevice.ProfileBody.DeviceFunction.VariableCollection.Where(x => x.Id == itemRef.VariableId).SingleOrDefault();
+            var recordItemVariable = _ioDevice.ProfileBody.DeviceFunction.VariableCollection.Where(x => x.Id == itemRef.VariableId).SingleOrDefault();
 
-            list.Add(new UIRecordItem(itemRef.VariableId, 
-                variable,
-                itemRef.SubIndex, 
-                itemRef.Gradient, 
-                itemRef.Offset, 
-                itemRef.UnitCode, 
-                itemRef.AccessRights, 
-                itemRef.ButtonValue, 
+            recordItems.Add(new UIRecordItem(itemRef.VariableId,
+                recordItemVariable,
+                itemRef.SubIndex,
+                itemRef.Gradient,
+                itemRef.Offset,
+                itemRef.UnitCode,
+                itemRef.AccessRights,
+                itemRef.ButtonValue,
                 itemRef.DisplayFormat,
                 _ioddPortReader)
             );
         }
 
-        return list;
+        return recordItems;
     }
 
 
-    private string GetExternalRefText(UIMenuRefSimpleT? menu, string displayNameRef)
-    {
-        if (menu?.Menu?.Name == string.Empty) {
-            return StandardMenuUserRoleReader.GetStandardMenuUserRoleText(displayNameRef, string.Empty);
-        }
-
-        return menu?.Menu?.Name ?? string.Empty;
-    }
+    private static string GetExternalRefText(UIMenuRefSimpleT? menu, string displayNameRef) =>
+        menu?.Menu?.Name == string.Empty
+            ? StandardMenuUserRoleReader.GetStandardMenuUserRoleText(displayNameRef, string.Empty)
+            : menu?.Menu?.Name ?? string.Empty;
 }

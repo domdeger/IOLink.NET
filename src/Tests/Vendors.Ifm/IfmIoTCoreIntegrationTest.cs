@@ -62,7 +62,7 @@ public class IoTCoreIntegrationTest
         await menuDataReader.InitializeForPortAsync(3);
 
         var readableMenus = menuDataReader.GetReadableMenus();
-        await readableMenus.ObserverRoleMenu.IdentificationMenu.ReadAsync();
+        await readableMenus.ReadAsync();
         /*await readableMenus.ReadAsync();
         readableMenus.Should().NotBeNull();*/
 

@@ -29,13 +29,13 @@ internal class UserInterfaceParser : IParserPart<UserInterfaceT>
             menuCollections.Add(menuCollection);
         }
 
-        XElement? observerRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.ObserverRoleMenuSetName).First();
+        XElement observerRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.ObserverRoleMenuSetName).First();
         MenuSetT observerRoleMenu = MenuSetTParser.Parse(observerRoleMenuSetElement, menuCollections);
 
-        XElement? maintenanceRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.MaintenanceRoleMenuSetName).First();
+        XElement maintenanceRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.MaintenanceRoleMenuSetName).First();
         MenuSetT maintenanceRoleMenu = MenuSetTParser.Parse(maintenanceRoleMenuSetElement, menuCollections);
 
-        XElement? specialistRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.SpecialistRoleMenuSetName).First();
+        XElement specialistRoleMenuSetElement = element.Elements(IODDDeviceFunctionNames.SpecialistRoleMenuSetName).First();
         MenuSetT specialistRoleMenu = MenuSetTParser.Parse(specialistRoleMenuSetElement, menuCollections);
 
         return new UserInterfaceT(menuCollections, observerRoleMenu, maintenanceRoleMenu, specialistRoleMenu);

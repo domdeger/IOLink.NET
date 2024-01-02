@@ -9,17 +9,24 @@ public class IODDFinderPublicClient : IIODDProvider
 {
     private readonly HttpClient _httpClient;
 
-    public IODDFinderPublicClient(Uri baseUrl)
+    public IODDFinderPublicClient(Uri baseUrl, bool shouldValidateSSLCertificate = true)
     {
-        var handler = new HttpClientHandler
+        if (shouldValidateSSLCertificate)
         {
-            ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+            _httpClient = new() { BaseAddress = baseUrl };
+        } 
+        else
+        {
+            var handler = new HttpClientHandler
             {
-                Console.WriteLine("SSL error skipped");
-                return true;
-            }
-        };
-        _httpClient = new(handler) { BaseAddress = baseUrl };
+                ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+                {
+                    Console.WriteLine("SSL error skipped");
+                    return true;
+                }
+            };
+            _httpClient = new(handler) { BaseAddress = baseUrl };
+        }
     }
 
     public IODDFinderPublicClient() : this(new Uri("https://ioddfinder.io-link.com/"))

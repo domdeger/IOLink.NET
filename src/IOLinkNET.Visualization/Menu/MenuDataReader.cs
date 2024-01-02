@@ -32,7 +32,7 @@ namespace IOLinkNET.Visualization.Menu
 
         public UIInterface GetReadableMenus()
         {
-            if(_iODDUserInterfaceConverter == null)
+            if (_iODDUserInterfaceConverter == null)
             {
                 throw new InvalidOperationException("MenuDataReader is not initialized");
             }

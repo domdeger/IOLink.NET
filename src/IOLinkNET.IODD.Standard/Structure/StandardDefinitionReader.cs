@@ -9,19 +9,28 @@ public static class StandardDefinitionReader
 
     static StandardDefinitionReader()
     {
-        using (var reader = new StreamReader("./XML/IODD-StandardDefinitions1.1.xml"))
+        var standardDefinitionPath = "./XML/IODD-StandardDefinitions1.1.xml";
+
+        if (!File.Exists(standardDefinitionPath))
+        {
+            throw new FileNotFoundException($"IODD-StandardDefinitions1.1.xml must be present to use {nameof(StandardDefinitionReader)}");
+        }
+
+        using (var reader = new StreamReader(standardDefinitionPath))
         {
             _ioddStandardDefinitions = XElement.Load(reader);
         }
     }
 
-    public static IEnumerable<XElement>? GetVariableCollection()
+    public static XElement GetVariableCollection()
     {
-        return _ioddStandardDefinitions?.Elements(IODDConstants.IODDXmlNamespace.GetName("VariableCollection"));
+        var variableCollection = _ioddStandardDefinitions.Elements(IODDStandardDefinitionNames.VariableCollectionName).Single();
+        return variableCollection ?? throw new InvalidOperationException("VariableCollection cannot be null in standard definitions");
     }
 
-    public static XElement? GetDatatypeCollection()
+    public static XElement GetDatatypeCollection()
     {
-        return _ioddStandardDefinitions?.Elements(IODDConstants.IODDXmlNamespace.GetName("DatatypeCollection")).FirstOrDefault();
+        var dataTypeCollection = _ioddStandardDefinitions.Elements(IODDStandardDefinitionNames.DatatypeCollectionName).Single();
+        return dataTypeCollection ?? throw new InvalidOperationException("DatatypeCollection cannot be null in standard definitions");
     }
 }

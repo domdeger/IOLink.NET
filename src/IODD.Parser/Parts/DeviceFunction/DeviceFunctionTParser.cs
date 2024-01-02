@@ -27,29 +27,28 @@ internal class DeviceFunctionTParser : IParserPart<DeviceFunctionT>
 
     public DeviceFunctionT Parse(XElement element)
     {
-        IEnumerable<DatatypeT> dataTypeCollection = _parserLocator
+        var dataTypeCollection = _parserLocator
             .ParseOptional<IEnumerable<DatatypeT>>(element
                 .Descendants(IODDDeviceFunctionNames.DatatypeCollectionName)
                 .FirstOrDefault()
             )?
             .ToArray() ?? Array.Empty<DatatypeT>();
         
-        List<VariableT> variableCollection = element
+        var variableCollection = element
             .Descendants(IODDDeviceFunctionNames.VariableName)
             .Select(_parserLocator.ParseMandatory<VariableT>)
-            .ToList();
-        variableCollection.AddRange(element
+            .Concat(element
             .Descendants(IODDDeviceFunctionNames.StandardVariableRefName)
             .Select(_standardVariableRefTParser.Parse)
-            .ToList());
+            .ToArray());
 
-        IEnumerable<ProcessDataT> pdCollection = element
+        var pdCollection = element
             .Descendants(IODDDeviceFunctionNames.ProcessDataCollectionName)
             .Descendants(IODDDeviceFunctionNames.ProcessDataName)
             .Select(_parserLocator.ParseMandatory<ProcessDataT>)
             .ToArray();
 
-        UserInterfaceT userInterface = element
+        var userInterface = element
             .Descendants(IODDDeviceFunctionNames.UserInterfaceName)
             .Select(_parserLocator.ParseMandatory<UserInterfaceT>)
             .First();

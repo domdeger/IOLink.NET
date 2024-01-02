@@ -8,13 +8,13 @@ public static class StandardMenuUserRoleReader
 {
     private static readonly IODDMenuUserRoleDefinitions? _ioddMenuUserRoleDefinitions;
 
-    public static readonly string IdentificationMenu = "STD_TN_MN_Identification";
-    public static readonly string ParameterMenu = "STD_TN_MN_Parameter";
-    public static readonly string ObservationMenu = "STD_TN_MN_Observation";
-    public static readonly string DiagnosisMenu = "STD_TN_MN_Diagnosis";
-    public static readonly string ObserverRoleMenuSet = "STD_TN_MR_Observer";
-    public static readonly string MaintenanceRoleMenuSet = "STD_TN_MR_Maintenance";
-    public static readonly string SpecialistRoleMenuSet = "STD_TN_MR_Specialist";
+    public const string IdentificationMenu = "STD_TN_MN_Identification";
+    public const string ParameterMenu = "STD_TN_MN_Parameter";
+    public const string ObservationMenu = "STD_TN_MN_Observation";
+    public const string DiagnosisMenu = "STD_TN_MN_Diagnosis";
+    public const string ObserverRoleMenuSet = "STD_TN_MR_Observer";
+    public const string MaintenanceRoleMenuSet = "STD_TN_MR_Maintenance";
+    public const string SpecialistRoleMenuSet = "STD_TN_MR_Specialist";
 
     static StandardMenuUserRoleReader()
     {
