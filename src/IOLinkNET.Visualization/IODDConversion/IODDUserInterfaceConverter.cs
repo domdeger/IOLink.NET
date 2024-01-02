@@ -1,16 +1,18 @@
 ﻿using IOLinkNET.Integration;
 using IOLinkNET.IODD.Structure;
+using IOLinkNET.IODD.Structure.Interfaces;
+using IOLinkNET.IODD.Structure.Interfaces.Menu;
 using IOLinkNET.IODD.Structure.Structure.Menu;
 using IOLinkNET.Visualization.Structure.Structure;
 
 namespace IOLinkNET.Visualization.IODDConversion;
 internal class IODDUserInterfaceConverter
 {
-    private readonly IODevice _ioDevice;
+    private readonly IIODevice _ioDevice;
     private readonly IODDPortReader _ioddPortReader;
-    private readonly UserInterfaceT _userInterface;
+    private readonly IUserInterfaceT _userInterface;
 
-    public IODDUserInterfaceConverter(IODevice ioDevice, IODDPortReader ioddPortReader)
+    public IODDUserInterfaceConverter(IIODevice ioDevice, IODDPortReader ioddPortReader)
     {
         _ioDevice = ioDevice;
         _ioddPortReader = ioddPortReader;
@@ -37,14 +39,14 @@ internal class IODDUserInterfaceConverter
         );
 
         var convertedMaintenanceRoleMenuSet = new MenuSet(
-            ConvertUIMenu(maintenanceRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Observerrole Menu must provide Identification Menu"),
+            ConvertUIMenu(maintenanceRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Maintenancerole Menu must provide Identification Menu"),
             ConvertUIMenu(maintenanceRoleMenuSet.ParameterMenu, StandardMenuUserRoleReader.ParameterMenu),
             ConvertUIMenu(maintenanceRoleMenuSet.ObservationMenu, StandardMenuUserRoleReader.ObservationMenu),
             ConvertUIMenu(maintenanceRoleMenuSet.DiagnosisMenu, StandardMenuUserRoleReader.DiagnosisMenu),
             _ioddPortReader
         );
         var convertedSpecialistRoleMenuSet = new MenuSet(
-            ConvertUIMenu(specialistRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Observerrole Menu must provide Identification Menu"),
+            ConvertUIMenu(specialistRoleMenuSet.IdentificationMenu, StandardMenuUserRoleReader.IdentificationMenu) ?? throw new InvalidOperationException("Specialistrole Menu must provide Identification Menu"),
             ConvertUIMenu(specialistRoleMenuSet.ParameterMenu, StandardMenuUserRoleReader.ParameterMenu),
             ConvertUIMenu(specialistRoleMenuSet.ObservationMenu, StandardMenuUserRoleReader.ObservationMenu),
             ConvertUIMenu(specialistRoleMenuSet.DiagnosisMenu, StandardMenuUserRoleReader.DiagnosisMenu),

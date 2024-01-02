@@ -18,6 +18,30 @@ namespace Visualization.Tests;
 
 public class MenuDataReaderTests
 {
+    [Fact]
+    public void CanInitializeMenuDataReader()
+    {
+        var menuDataReader = new MenuDataReader(GetSubstituteForIODDPortReader());
+        menuDataReader.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void GetIODDRawMenuStructure_ShouldThrowIfNotInitialized()
+    {
+        var menuDataReaderAction = () => new MenuDataReader(GetSubstituteForIODDPortReader()).GetIODDRawMenuStructure();
+
+        menuDataReaderAction.Should().Throw<InvalidOperationException>();
+    }
+
+    [Fact]
+    public void GetReadableMenus_ShouldThrowIfNotInitialized()
+    {
+        var menuDataReaderAction = () => new MenuDataReader(GetSubstituteForIODDPortReader()).GetReadableMenus();
+        
+        menuDataReaderAction.Should().Throw<InvalidOperationException>();
+    }
+
+
     [Theory]
     [InlineData(310, 733, "TV7105", "ifm electronic gmbh ", "TestData/ifm-0002DD-20230324-IODD1.1.xml")]
     [InlineData(888, 328205, "BNI IOL-727-S51-P012", "Balluff", "TestData/Balluff-BNI_IOL-727-S51-P012-20220211-IODD1.1.xml")]
@@ -41,7 +65,7 @@ public class MenuDataReaderTests
         var (_, _, _, menuDataReader) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
         await menuDataReader.InitializeForPortAsync(1);
         var rawMenuStructure = menuDataReader.GetIODDRawMenuStructure();
-        
+
         rawMenuStructure.Should().NotBeNull();
 
         rawMenuStructure.MaintenanceRoleMenuSet.IdentificationMenu.Should().NotBeNull();
@@ -49,6 +73,11 @@ public class MenuDataReaderTests
         rawMenuStructure.SpecialistRoleMenuSet.IdentificationMenu.Should().NotBeNull();
 
         rawMenuStructure.MenuCollection.Count().Should().Be(menuCollectionCount);
+    }
+
+    private static IODDPortReader GetSubstituteForIODDPortReader()
+    {
+        return Substitute.For<IODDPortReader>(Substitute.For<IMasterConnection>(), Substitute.For<IDeviceDefinitionProvider>(), new IoddConverter(), Substitute.For<ITypeResolverFactory>());
     }
 
     private (IODDPortReader, IDeviceDefinitionProvider, IMasterConnection, MenuDataReader) PreparePortReader(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)

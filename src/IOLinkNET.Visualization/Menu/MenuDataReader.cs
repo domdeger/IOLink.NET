@@ -1,5 +1,5 @@
 ﻿using IOLinkNET.Integration;
-using IOLinkNET.IODD.Structure.Structure.Menu;
+using IOLinkNET.IODD.Structure.Interfaces.Menu;
 using IOLinkNET.Visualization.IODDConversion;
 using IOLinkNET.Visualization.Structure.Structure;
 
@@ -25,7 +25,7 @@ namespace IOLinkNET.Visualization.Menu
             _iODDUserInterfaceConverter = new(_initilizationState.DeviceDefinition, _ioddPortReader);
         }
 
-        public UserInterfaceT GetIODDRawMenuStructure()
+        public IUserInterfaceT GetIODDRawMenuStructure()
         {
             return _initilizationState?.DeviceDefinition.ProfileBody.DeviceFunction.UserInterface ?? throw new InvalidOperationException("MenuDataReader is not initialized");
         }

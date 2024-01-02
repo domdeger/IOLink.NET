@@ -1,7 +1,8 @@
 using IOLinkNET.IODD.Structure.Datatypes;
-using IOLinkNET.IODD.Structure.Profile;
-using IOLinkNET.IODD.Structure.Structure.ExternalTextCollection;
+using IOLinkNET.IODD.Structure.Interfaces;
+using IOLinkNET.IODD.Structure.Interfaces.ExternalTextCollection;
+using IOLinkNET.IODD.Structure.Interfaces.Profile;
 
 namespace IOLinkNET.IODD.Structure;
 
-public record IODevice(ProfileBodyT ProfileBody, ExternalTextCollectionT ExternalTextCollection, IEnumerable<DatatypeT> StandardDatatypeCollection);
+public record IODevice(IProfileBodyT ProfileBody, IExternalTextCollectionT ExternalTextCollection, IEnumerable<DatatypeT> StandardDatatypeCollection): IIODevice;

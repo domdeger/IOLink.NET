@@ -28,6 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
       <ProjectReference Include="..\..\IOLinkNET.IODD.Standard\IOLinkNET.IODD.Standard.csproj" />
       <ProjectReference Include="..\..\IOLinkNET.Visualization.Structure\IOLinkNET.Visualization.Structure.csproj" />
       <ProjectReference Include="..\..\IOLinkNET.Visualization\IOLinkNET.Visualization.csproj" />

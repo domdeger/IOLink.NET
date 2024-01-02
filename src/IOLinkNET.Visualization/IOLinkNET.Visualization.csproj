@@ -24,4 +24,8 @@
       <ProjectReference Include="..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
       <ProjectReference Include="..\IOLinkNET.Visualization.Structure\IOLinkNET.Visualization.Structure.csproj" />
     </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Visualization.Tests" />
+    </ItemGroup>
 </Project>
