@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <IsPackable>false</IsPackable>
@@ -7,8 +7,8 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.msbuild">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="NSubstitute" />
@@ -32,10 +32,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
-      <ProjectReference Include="..\..\IOLinkNET.IODD.Standard\IOLinkNET.IODD.Standard.csproj" />
-      <ProjectReference Include="..\..\IOLinkNET.Visualization.Structure\IOLinkNET.Visualization.Structure.csproj" />
-      <ProjectReference Include="..\..\IOLinkNET.Visualization\IOLinkNET.Visualization.csproj" />
+        <ProjectReference Include="..\..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
     </ItemGroup>
 
 </Project>
