@@ -35,13 +35,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ifm", "Vendors\Ifm\Ifm.cspr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vendors.Ifm", "Tests\Vendors.Ifm\Vendors.Ifm.csproj", "{D3134702-1B3E-40B2-95C7-0C0B1305A417}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.Visualization", "IOLinkNET.Visualization\IOLinkNET.Visualization.csproj", "{D91EC38B-B260-42F5-94E6-4277514DFD9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.Visualization", "Visualization\IOLinkNET.Visualization.csproj", "{D91EC38B-B260-42F5-94E6-4277514DFD9F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.Visualization.Structure", "IOLinkNET.Visualization.Structure\IOLinkNET.Visualization.Structure.csproj", "{02BE1194-6105-4C66-A105-B9C4B4A41498}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.Visualization.Structure", "Visualization.Structure\IOLinkNET.Visualization.Structure.csproj", "{02BE1194-6105-4C66-A105-B9C4B4A41498}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Visualization.Tests", "Tests\Visualization.Tests\Visualization.Tests.csproj", "{0E89DBC2-CDCE-4A84-9818-1951940EF9FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOLinkNET.IODD.Standard", "IOLinkNET.IODD.Standard\IOLinkNET.IODD.Standard.csproj", "{6218F666-CCD6-469E-A8A4-1C8966F98FFB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOLinkNET.IODD.Standard", "IODD.Standard\IOLinkNET.IODD.Standard.csproj", "{6218F666-CCD6-469E-A8A4-1C8966F98FFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <ProjectReference Include="..\IODD.Standard\IOLinkNET.IODD.Standard.csproj" />
     <ProjectReference Include="..\IODD.Structure\IOLinkNET.IODD.Structure.csproj" />
-    <ProjectReference Include="..\IOLinkNET.IODD.Standard\IOLinkNET.IODD.Standard.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <PackageId>IOLinkNET.IODD.Parser</PackageId>

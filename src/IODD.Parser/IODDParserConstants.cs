@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 
-using IOLinkNET.IODD.Standard;
 using IOLinkNET.IODD.Standard.Constants;
 
 namespace IOLinkNET.IODD;
