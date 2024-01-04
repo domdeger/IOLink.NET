@@ -15,6 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -64,7 +67,6 @@ jobs:
 
       - name: Commit files
         run: |
-          git pull
           git add ./github/badges/badge_shieldsio_branchcoverage_brightgreen.svg
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -74,6 +76,6 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+          branch: ${{ github.head_ref }}
 
   
