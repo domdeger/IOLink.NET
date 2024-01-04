@@ -27,7 +27,7 @@ public class ParameterTypeResolver : IParameterTypeResolver
         if (subIndex is not null && subIndex > 0)
         {
             var type = _datatypeResolver.Resolve(variable) as RecordT;
-            if (type?.SubindexAccessSupported ?? false)
+            if (type?.SubindexAccessSupported == true)
             {
                 var recordItem = type?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
                     ?? throw new InvalidOperationException($"{type?.Id} is no Record or has no item with subindex {subIndex}");
