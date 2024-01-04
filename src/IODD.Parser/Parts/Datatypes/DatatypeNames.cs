@@ -12,6 +12,8 @@ internal static class DatatypeNames
 
     public const string Float32T = "Float32T";
 
+    public const string OctetStringT = "OctetStringT";
+
     public const string RecordT = "RecordT";
 
     public const string ArrayT = "ArrayT";

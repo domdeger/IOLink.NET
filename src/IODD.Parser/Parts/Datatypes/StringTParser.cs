@@ -8,10 +8,10 @@ namespace IOLinkNET.IODD.Parts.Datatypes;
 
 internal static class StringTParser
 {
-    public static StringT Parse(XElement elem)
+    public static StringT Parse(XElement elem, byte? fixedLengthRestriction = null)
     {
         string? id = elem.ReadOptionalAttribute("id");
-        byte fixedLength = elem.ReadMandatoryAttribute<byte>("fixedLength");
+        byte fixedLength = fixedLengthRestriction ?? elem.ReadMandatoryAttribute<byte>("fixedLength");
         string encoding = elem.ReadMandatoryAttribute("encoding");
 
         return new StringT(id, fixedLength, ParseEncoding(encoding));

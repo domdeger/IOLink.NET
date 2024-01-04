@@ -1,6 +1,7 @@
 using IOLinkNET.IODD.Structure.Datatypes;
 using IOLinkNET.IODD.Structure.DeviceFunction;
 using IOLinkNET.IODD.Structure.ProcessData;
+using IOLinkNET.IODD.Structure.Structure.Datatypes;
 
 namespace IOLinkNET.IODD.Resolution;
 
@@ -24,6 +25,7 @@ internal class ParsableDatatypeConverter
     {
         ComplexDatatypeT complex => ConvertComplex(complex, name),
         SimpleDatatypeT simple => ConvertScalar(simple, name),
+        ProcessDataUnionT processDataUnion => ConvertProcessDataUnion(processDataUnion, name),
         _ => throw new InvalidOperationException($"{type.GetType().Name} cannot be converted to a parsable datatype.")
     };
 
@@ -74,6 +76,36 @@ internal class ParsableDatatypeConverter
             ArrayT arrayT => ConvertArray(arrayT, name),
             _ => throw new InvalidOperationException($"{complexType.GetType().Name} cannot be converted to a parsable datatype.")
         };
+
+    private ParsableDatatype ConvertProcessDataUnion(ProcessDataUnionT processDataUnion, string? name = null)
+        => processDataUnion switch
+        {
+            ProcessDataInUnionT processDataInUnion => ConvertProcessDataInUnion(processDataInUnion, name),
+            ProcessDataOutUnionT processDataOutUnion => ConvertProcessDataOutUnion(processDataOutUnion, name),
+            ProcessDataUnionT processDataUnionT => ConvertProcessDataUnionType(processDataUnionT, name),
+            _ => throw new InvalidOperationException($"{processDataUnion.GetType().Name} cannot be converted to a parsable datatype.")
+        };
+
+    private ParsableDatatype ConvertProcessDataUnionType(ProcessDataUnionT processDataUnion, string? name = null)
+    {
+        var processDataUnionName = processDataUnion.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
+
+        return new ParsableDatatype(processDataUnionName);
+    }
+
+    private ParsableDatatype ConvertProcessDataInUnion(ProcessDataInUnionT processDataInUnion, string? name = null)
+    {
+        var processDataInUnionName = processDataInUnion.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
+
+        return new ParsableDatatype(processDataInUnionName);
+    }
+
+    private ParsableDatatype ConvertProcessDataOutUnion(ProcessDataOutUnionT processDataOutUnion, string? name = null)
+    {
+        var processDataOutUnionName = processDataOutUnion.Id ?? name ?? throw new NullReferenceException("Name needs to be set.");
+
+        return new ParsableDatatype(processDataOutUnionName);
+    }
 
     private ParsableRecord ConvertRecord(RecordT recordType, string? name = null)
     {

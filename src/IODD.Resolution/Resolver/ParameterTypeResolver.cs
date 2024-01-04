@@ -26,11 +26,14 @@ public class ParameterTypeResolver : IParameterTypeResolver
 
         if (subIndex is not null && subIndex > 0)
         {
-            var type = _datatypeResolver.Resolve(variable);
-            var recordItem = (type as RecordT)?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
-                ?? throw new InvalidOperationException($"{type.Id} is no Record or has no item with subindex {subIndex}");
+            var type = _datatypeResolver.Resolve(variable) as RecordT;
+            if (type?.SubindexAccessSupported ?? false)
+            {
+                var recordItem = type?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
+                    ?? throw new InvalidOperationException($"{type?.Id} is no Record or has no item with subindex {subIndex}");
 
-            return _converter.Convert(_datatypeResolver.Resolve(recordItem), $"{variable.Id}_{subIndex}");
+                return _converter.Convert(_datatypeResolver.Resolve(recordItem), $"{variable.Id}_{subIndex}");
+            }
         }
 
         return _converter.Convert(variable);

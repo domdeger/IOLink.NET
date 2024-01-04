@@ -17,6 +17,17 @@ public record UIRecordItem(string VariableId, VariableT? Variable, byte SubIndex
             return;
         }
 
-        Value = await IoddPortReader.ReadConvertedParameterAsync(Variable.Index, SubIndex);
+        if (VariableId == "V_ProcessDataInput")
+        {
+            Value = await IoddPortReader.ReadConvertedProcessDataInAsync();
+        }
+        else if (VariableId == "V_ProcessDataOutput")
+        {
+            Value = await IoddPortReader.ReadConvertedProcessDataOutAsync();
+        }
+        else
+        {
+            Value = await IoddPortReader.ReadConvertedParameterAsync(Variable.Index, SubIndex);
+        }
     }
 }

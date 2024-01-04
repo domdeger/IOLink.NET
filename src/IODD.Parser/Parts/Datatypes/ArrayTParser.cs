@@ -10,12 +10,13 @@ namespace IOLinkNET.IODD.Parts.Datatypes;
 
 internal static class ArrayTParser
 {
-    public static ArrayT Parse(XElement elem, IParserPartLocator parserLocator)
+    public static ArrayT Parse(XElement elem, IParserPartLocator parserLocator, byte? fixedLengthRestriction = null)
     {
         string? id = elem.ReadOptionalAttribute("id");
-        byte count = elem.ReadMandatoryAttribute<byte>("count");
+        byte count = fixedLengthRestriction ?? elem.ReadMandatoryAttribute<byte>("count");
+        bool subindexAccessSupported = elem.ReadOptionalAttribute<bool>("subindexAccessSupported");
         DatatypeRefT? typeRef = parserLocator.ParseOptional<DatatypeRefT>(elem.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
 
-        return new ArrayT(id, count, SimpleTypeParser.Parse(elem.Descendants(IODDParserConstants.SimpleDatatypeName).FirstOrDefault()), typeRef);
+        return new ArrayT(id, count, SimpleTypeParser.Parse(elem.Descendants(IODDParserConstants.SimpleDatatypeName).FirstOrDefault()), typeRef, subindexAccessSupported);
     }
 }

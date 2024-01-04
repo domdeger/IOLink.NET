@@ -49,10 +49,12 @@ public class MenuDataReaderTests
     /*[InlineData(1222, 18, "CSS 01411.2-xx", "STEGO Elektrotechnik GmbH", "TestData/STEGO-SmartSensor-CSS014-08-20190726-IODD1.1.xml")]*/
     public async Task CanReadMenus(ushort vendorId, uint deviceId, string productId, string vendorName, string ioddPath)
     {
-        var (_, _, _, menuDataReader) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
+        var (_, _, masterConnection, menuDataReader) = PreparePortReader(vendorId, deviceId, productId, vendorName, ioddPath);
+        masterConnection.ReadProcessDataInAsync(1).Returns(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x0, 0x0, 0x0, 0x0 });
         await menuDataReader.InitializeForPortAsync(1);
         var readableMenus = menuDataReader.GetReadableMenus();
         await readableMenus.ReadAsync();
+
         readableMenus.Should().NotBeNull();
     }
 

@@ -29,7 +29,8 @@ internal class StandardVariableRefTParser
         var stdVariableCollection = StandardDefinitionReader.GetVariableCollection();
         var stdVariable = stdVariableCollection.Elements(IODDStandardDefinitionNames.VariableName).Where(x => x.ReadMandatoryAttribute("id") == variableId).Single();
 
-        DatatypeT? dataType = DatatypeTParser.ParseOptional(stdVariable.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), _parserLocator);
+        var fixedLengthRestriction = element.ReadOptionalAttribute<byte>("fixedLengthRestriction");
+        DatatypeT? dataType = DatatypeTParser.ParseOptional(stdVariable.Descendants(IODDParserConstants.DatatypeName).FirstOrDefault(), fixedLengthRestriction, _parserLocator);
         DatatypeRefT? dataTypeRef = _parserLocator.ParseOptional<DatatypeRefT>(stdVariable.Descendants(IODDParserConstants.DatatypeRefName).FirstOrDefault());
         TextRefT name = _parserLocator.ParseMandatory<TextRefT>(stdVariable.Element(IODDTextRefNames.Name));
         TextRefT? description = _parserLocator.ParseOptional<TextRefT>(stdVariable.Element(IODDTextRefNames.DescriptionName));
