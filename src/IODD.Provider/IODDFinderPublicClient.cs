@@ -14,14 +14,13 @@ public class IODDFinderPublicClient : IIODDProvider
         if (shouldValidateSSLCertificate)
         {
             _httpClient = new() { BaseAddress = baseUrl };
-        } 
+        }
         else
         {
             var handler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
                 {
-                    Console.WriteLine("SSL error skipped");
                     return true;
                 }
             };
