@@ -59,4 +59,18 @@ jobs:
           recreate: true
           path: code-coverage-results.md
 
+      - name: Copy Code Coverage badge
+        run: cp "coveragesummary/badge_shieldsio_branchcoverage_brightgreen.svg" "./github/badges/badge_shieldsio_branchcoverage_brightgreen.svg"
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Publish Coverage Badge" -a
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
   

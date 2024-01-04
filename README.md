@@ -2,6 +2,9 @@
 
 **DISCLAIMER: IOLink.NET is currently under development and not yet feature complete. As soon as end-to-end functionality can be provide we will publish nuget packages and detailed code samples**
 
+![CI Workflow](https://github.com/domdeger/IOLink.NET/actions/workflows/ci.yml/badge.svg)
+![Code Coverage Badge](./.github/badges/badge_shieldsio_branchcoverage_brightgreen.svg)
+
 IOLink.NET aims to be a comprehensive yet lean library for interacting with [IO-Link](https://io-link.com/en/Technology/what_is_IO-Link.php?thisID=76) devices for the .NET ecosystem.
 
 IOLink.NET comes with everything needed to convert IO-Link data into human-readable data and vice versa. The following IO-Link data will be supported:
