@@ -63,11 +63,11 @@ jobs:
           path: code-coverage-results.md
 
       - name: Copy Code Coverage badge
-        run: mkdir -p ./github/badges && cp "coveragesummary/badge_shieldsio_branchcoverage_brightgreen.svg" "./github/badges/badge_shieldsio_branchcoverage_brightgreen.svg"
+        run: mkdir -p ./github/badges && cp "coveragesummary/badge_combined.svg" "./github/badges/badge_combined.svg"
 
       - name: Commit files
         run: |
-          git add ./github/badges/badge_shieldsio_branchcoverage_brightgreen.svg
+          git add ./github/badges/badge_combined.svg
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Publish Coverage Badge" -a
