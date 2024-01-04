@@ -55,27 +55,4 @@ jobs:
           output: both
           thresholds: '60 80'
 
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
-
-      - name: Copy Code Coverage badge
-        run: mkdir -p ./github/badges && cp "coveragesummary/badge_combined.svg" "./github/badges/badge_combined.svg"
-
-      - name: Commit files
-        run: |
-          git add ./github/badges/badge_combined.svg
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -m "Publish Coverage Badge" -a
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref }}
-
   

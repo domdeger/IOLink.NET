@@ -3,7 +3,6 @@
 **DISCLAIMER: IOLink.NET is currently under development and not yet feature complete. As soon as end-to-end functionality can be provide we will publish nuget packages and detailed code samples**
 
 ![CI Workflow](https://github.com/domdeger/IOLink.NET/actions/workflows/ci.yml/badge.svg)
-![Code Coverage Badge](./.github/badges/badge_combined.svg)
 
 IOLink.NET aims to be a comprehensive yet lean library for interacting with [IO-Link](https://io-link.com/en/Technology/what_is_IO-Link.php?thisID=76) devices for the .NET ecosystem.
 
