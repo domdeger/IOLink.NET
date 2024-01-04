@@ -64,6 +64,7 @@ jobs:
 
       - name: Commit files
         run: |
+          git add ./github/badges/badge_shieldsio_branchcoverage_brightgreen.svg
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m "Publish Coverage Badge" -a
