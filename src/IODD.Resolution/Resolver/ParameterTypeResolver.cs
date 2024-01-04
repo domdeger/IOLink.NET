@@ -24,15 +24,20 @@ public class ParameterTypeResolver : IParameterTypeResolver
 
         var variable = variables.FirstOrDefault(v => v.Index == index) ?? throw new ArgumentOutOfRangeException(nameof(index));
 
-        if (subIndex is not null && subIndex > 0)
+        if (subIndex is > 0)
         {
-            var type = _datatypeResolver.Resolve(variable) as RecordT;
+            var type = _datatypeResolver.Resolve(variable) as ComplexDatatypeT
+                ?? throw new InvalidOperationException($"{variable.Id} is no ComplexDatatype so access via subindex is not supported.");
+
             if (type?.SubindexAccessSupported == true)
             {
-                var recordItem = type?.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
-                    ?? throw new InvalidOperationException($"{type?.Id} is no Record or has no item with subindex {subIndex}");
-
-                return _converter.Convert(_datatypeResolver.Resolve(recordItem), $"{variable.Id}_{subIndex}");
+                return type switch
+                {
+                    RecordT record => _converter.Convert(_datatypeResolver.Resolve(record.Items.FirstOrDefault(rItem => rItem.Subindex == subIndex)
+                                        ?? throw new InvalidOperationException($"{type?.Id} has no item with subindex {subIndex}")), $"{variable.Id}_{subIndex}"),
+                    ArrayT array => _converter.Convert(_datatypeResolver.Resolve(array), $"{variable.Id}_{subIndex}"),
+                    _ => throw new InvalidOperationException($"{type?.Id} is an unsupported ComplexDatatype.")
+                };
             }
         }
 
