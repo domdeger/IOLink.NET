@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.IODD.Provider", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IODD.Provider.Tests", "Tests\IODD.Provider.Tests\IODD.Provider.Tests.csproj", "{D79F2EA0-3E3E-419A-9C2C-72133FD18799}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device", "Device\Device.csproj", "{973D98F0-A935-41B2-B7B4-728ED935C29F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device", "Device\IOLinkNET.Device.csproj", "{973D98F0-A935-41B2-B7B4-728ED935C29F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IOLinkNET.Integration", "Integration\IOLinkNET.Integration.csproj", "{E588E446-3E1E-432E-8DF0-9496C845D476}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Integration.Tests", "Tests\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vendors", "Vendors", "{59FD2624-BFA2-4199-9A85-7659DBCB49D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ifm", "Vendors\Ifm\Ifm.csproj", "{BC850865-5225-49D5-86C6-EA5F03A49CDD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ifm", "Vendors\Ifm\IOLinkNET.Vendors.Ifm.csproj", "{BC850865-5225-49D5-86C6-EA5F03A49CDD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Vendors.Ifm", "Tests\Vendors.Ifm\Vendors.Ifm.csproj", "{D3134702-1B3E-40B2-95C7-0C0B1305A417}"
 EndProject

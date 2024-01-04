@@ -3,7 +3,7 @@
     <PackageReference Include="Refit" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\Device\Device.csproj" />
+      <ProjectReference Include="..\..\Device\IOLinkNET.Device.csproj" />
     </ItemGroup>
 
       <PropertyGroup>

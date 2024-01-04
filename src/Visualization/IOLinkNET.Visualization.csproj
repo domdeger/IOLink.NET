@@ -19,7 +19,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Conversion\IOLinkNET.Conversion.csproj" />
-      <ProjectReference Include="..\Device\Device.csproj" />
+      <ProjectReference Include="..\Device\IOLinkNET.Device.csproj" />
       <ProjectReference Include="..\Integration\IOLinkNET.Integration.csproj" />
       <ProjectReference Include="..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
       <ProjectReference Include="..\Visualization.Structure\IOLinkNET.Visualization.Structure.csproj" />

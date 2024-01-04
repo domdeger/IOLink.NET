@@ -30,6 +30,6 @@
     <ProjectReference Include="..\..\IODD.Parser\IOLinkNET.IODD.Parser.csproj" />
     <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
     <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
-    <ProjectReference Include="..\..\Device\Device.csproj" />
+    <ProjectReference Include="..\..\Device\IOLinkNET.Device.csproj" />
   </ItemGroup>
 </Project>
