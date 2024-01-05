@@ -1,4 +1,5 @@
 ﻿using IOLinkNET.Integration;
+using IOLinkNET.IODD.Structure;
 using IOLinkNET.IODD.Structure.Interfaces.Menu;
 using IOLinkNET.Visualization.IODDConversion;
 using IOLinkNET.Visualization.Structure.Structure;
@@ -10,7 +11,7 @@ namespace IOLinkNET.Visualization.Menu
     public class MenuDataReader
     {
         private readonly IODDPortReader _ioddPortReader;
-        private PortReaderInitilizationResult? _initilizationState;
+        private IODevice? _device;
         private IODDUserInterfaceConverter? _iODDUserInterfaceConverter;
 
         public MenuDataReader(IODDPortReader ioddPortReader)
@@ -21,13 +22,13 @@ namespace IOLinkNET.Visualization.Menu
         public async Task InitializeForPortAsync(byte port)
         {
             await _ioddPortReader.InitializeForPortAsync(port);
-            _initilizationState = _ioddPortReader.InitilizationState;
-            _iODDUserInterfaceConverter = new(_initilizationState.DeviceDefinition, _ioddPortReader);
+            _device = _ioddPortReader.Device;
+            _iODDUserInterfaceConverter = new(_device, _ioddPortReader);
         }
 
         public IUserInterfaceT GetIODDRawMenuStructure()
         {
-            return _initilizationState?.DeviceDefinition.ProfileBody.DeviceFunction.UserInterface ?? throw new InvalidOperationException("MenuDataReader is not initialized");
+            return _device?.ProfileBody.DeviceFunction.UserInterface ?? throw new InvalidOperationException("MenuDataReader is not initialized");
         }
 
         public UIInterface GetReadableMenus()
