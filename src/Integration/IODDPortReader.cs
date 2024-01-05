@@ -14,8 +14,7 @@ public class IODDPortReader
     private readonly IIoddDataConverter _ioddDataConverter;
     private readonly ITypeResolverFactory _typeResolverFactory;
     private PortReaderInitilizationResult? _initilizationState;
-    public PortReaderInitilizationResult InitilizationState => _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
-
+    private PortReaderInitilizationResult InitilizationState => _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
 
     public IODDPortReader(IMasterConnection connection, IDeviceDefinitionProvider deviceDefinitionProvider,
         IIoddDataConverter ioddDataConverter, ITypeResolverFactory typeResolverFactory)
@@ -24,6 +23,14 @@ public class IODDPortReader
         _deviceDefinitionProvider = deviceDefinitionProvider;
         _ioddDataConverter = ioddDataConverter;
         _typeResolverFactory = typeResolverFactory;
+    }
+
+    public IODevice Device { 
+        get 
+        {
+            _ = _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
+            return InitilizationState.DeviceDefinition; 
+        } 
     }
 
     public async Task InitializeForPortAsync(byte port)
