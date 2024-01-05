@@ -28,23 +28,23 @@ Decoding IO-Link data requires us to complete different workloads before hands. 
 
 Based on the preprocessed IODD structure we are able to select the correct data types and decode/encode the given payloads. As you notice there is plenty of work to do for IOLinkNET. In this section we describe the functionality of the different projects.
 
-| Package							| Purpose                                                                                                                                    |
+| Package                           | Purpose                                                                                                                                    |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| IOLinkNET.IODD.Structure			| Contains model to represent the XML structure of an IODD.                                                                                  |
-| IOLinkNET.IODD.Provider			| Functionality to retrieve IODD packages from e.g. the IODDFinderAPI                                                                        |
-| IOLinkNET.IODD.Parser				| Parser components to transform XML IODD to IOLinkNET.IODD.Structure format                                                                 |
-| IOLinkNET.IODD.Resolution			| Defines favorable and self-contained format for data type representation and utility to create those from IOLinkNET.IODD.Structure format. |
-| IOLinkNET.IODD.Standard			| Contains IODD Standard components to support IO-Link Standards																			 |
-| IOLinkNET.Conversion				| Defines functionality to convert from and to iolink data.                                                                                  |
-| IOLinkNET.Device					| Defines contracts how communication with io link masters.                                                                                  |
-| IOLinkNET.Vendors.\*				| Provides vendor specific implementation of the Device interfaces.                                                                          |
-| IOLinkNET.Integration				| Orchestrates the modules to functionality that can read process data or parameter data from a device implementation.                       |
-| IOLinkNET.Visualization			| Base implementation to provide easy to use components which are useful for data visualization e.g. device readable menu structure			 |
-| IOLinkNET.Visualization.Structure | Contains visualization models which are more usable than using IODD structures with references											 |
+| IOLinkNET.IODD.Structure          | Contains model to represent the XML structure of an IODD.                                                                                  |
+| IOLinkNET.IODD.Provider           | Functionality to retrieve IODD packages from e.g. the IODDFinderAPI                                                                        |
+| IOLinkNET.IODD.Parser             | Parser components to transform XML IODD to IOLinkNET.IODD.Structure format                                                                 |
+| IOLinkNET.IODD.Resolution         | Defines favorable and self-contained format for data type representation and utility to create those from IOLinkNET.IODD.Structure format. |
+| IOLinkNET.IODD.Standard           | Contains IODD Standard components to support IO-Link Standards                                                                             |
+| IOLinkNET.Conversion              | Defines functionality to convert from and to iolink data.                                                                                  |
+| IOLinkNET.Device                  | Defines contracts how communication with io link masters.                                                                                  |
+| IOLinkNET.Vendors.\*              | Provides vendor specific implementation of the Device interfaces.                                                                          |
+| IOLinkNET.Integration             | Orchestrates the modules to functionality that can read process data or parameter data from a device implementation.                       |
+| IOLinkNET.Visualization           | Base implementation to provide easy to use components which are useful for data visualization e.g. device readable menu structure          |
+| IOLinkNET.Visualization.Structure | Contains visualization models which are more usable than using IODD structures with references                                             |
 
 ## Supporters
 
-As every project that requires hardware components to be integrated we need devices to test our vendor specific implemen very much for supporting our community project.
+As every project that requires hardware components to be integrated we need devices to test our vendor specific implementation against real devices. We highly appreciate every support from the community to source those devices and broaden the hardware support of IOLink.NET. This section is dedicated to thank the supports of the project!
 
 | Name                | Support                                                                 |
 | ------------------- | ----------------------------------------------------------------------- |
