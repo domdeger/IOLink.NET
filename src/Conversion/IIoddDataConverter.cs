@@ -4,5 +4,7 @@ namespace IOLinkNET.Conversion;
 
 public interface IIoddDataConverter
 {
-    object Convert(ParsableDatatype datatypeDef, ReadOnlySpan<byte> data);
+    object ConvertFromIoLink(ParsableDatatype datatypeDef, ReadOnlySpan<byte> data);
+
+    ReadOnlySpan<byte> ConvertToIoLink(ParsableDatatype datatypeDef, object value);
 }

@@ -4,10 +4,17 @@ namespace IOLinkNET.Conversion;
 
 public class IoddConverter : IIoddDataConverter
 {
-    public object Convert(ParsableDatatype datatypeDef, ReadOnlySpan<byte> data) => datatypeDef switch
+    public object ConvertFromIoLink(ParsableDatatype datatypeDef, ReadOnlySpan<byte> data) => datatypeDef switch
     {
-        ParsableComplexDataTypeDef complexType => IoddComplexConverter.Convert(complexType, data),
-        ParsableSimpleDatatypeDef simpleType => IoddScalarConverter.Convert(simpleType, data),
+        ParsableComplexDataTypeDef complexType => IoddComplexReader.Convert(complexType, data),
+        ParsableSimpleDatatypeDef simpleType => IoddScalarReader.Convert(simpleType, data),
+        _ => throw new NotImplementedException()
+    };
+
+    public ReadOnlySpan<byte> ConvertToIoLink(ParsableDatatype datatypeDef, object value) => datatypeDef switch
+    {
+        ParsableComplexDataTypeDef complexType => IoddComplexWriter.Convert(complexType, value),
+        ParsableSimpleDatatypeDef simpleType => IoddScalarWriter.Convert(simpleType, value),
         _ => throw new NotImplementedException()
     };
 }

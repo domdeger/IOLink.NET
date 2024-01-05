@@ -25,12 +25,13 @@ public class IODDPortReader
         _typeResolverFactory = typeResolverFactory;
     }
 
-    public IODevice Device { 
-        get 
+    public IODevice Device
+    {
+        get
         {
             _ = _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
-            return InitilizationState.DeviceDefinition; 
-        } 
+            return InitilizationState.DeviceDefinition;
+        }
     }
 
     public async Task InitializeForPortAsync(byte port)
@@ -60,7 +61,7 @@ public class IODDPortReader
 
         var value = await _connection.ReadIndexAsync(InitilizationState.Port, index, paramTypeDef.SubindexAccessSupported ? subindex : (byte)0);
 
-        var convertedValue = _ioddDataConverter.Convert(paramTypeDef, value.Span);
+        var convertedValue = _ioddDataConverter.ConvertFromIoLink(paramTypeDef, value.Span);
 
         return convertedValue;
     }
@@ -73,7 +74,7 @@ public class IODDPortReader
         }
 
         var value = await _connection.ReadProcessDataInAsync(InitilizationState.Port);
-        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdIn, value.Span);
+        var convertedValue = _ioddDataConverter.ConvertFromIoLink(InitilizationState.PdIn, value.Span);
 
         return convertedValue;
     }
@@ -86,7 +87,7 @@ public class IODDPortReader
         }
 
         var value = await _connection.ReadProcessDataOutAsync(InitilizationState.Port);
-        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdOut, value.Span);
+        var convertedValue = _ioddDataConverter.ConvertFromIoLink(InitilizationState.PdOut, value.Span);
 
         return convertedValue;
     }

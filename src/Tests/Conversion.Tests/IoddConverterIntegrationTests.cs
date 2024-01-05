@@ -21,7 +21,7 @@ public class IoddConverterIntegrationTests
         var pdResolver = new ProcessDataTypeResolver(device);
         var convertibleType = pdResolver.ResolveProcessDataIn()!;
 
-        var result = (converter.Convert(convertibleType, data) as List<(string, object)>)!.ToDictionary(x => x.Item1, y => y.Item2);
+        var result = (converter.ConvertFromIoLink(convertibleType, data) as List<(string, object)>)!.ToDictionary(x => x.Item1, y => y.Item2);
 
         result.Should().ContainKey("TI_PDObject_75").WhoseValue.Should().BeOfType<bool>().And.Be(false);
         result.Should().ContainKey("TI_PDObject_55").WhoseValue.Should().BeOfType<bool>().And.Be(false);
@@ -50,7 +50,7 @@ public class IoddConverterIntegrationTests
         var converter = new IoddConverter();
 
         var convertibleType = pdResolver.ResolveProcessDataIn()!;
-        var result = (converter.Convert(convertibleType, data) as List<(string, object)>)!.ToDictionary(x => x.Item1, y => y.Item2);
+        var result = (converter.ConvertFromIoLink(convertibleType, data) as List<(string, object)>)!.ToDictionary(x => x.Item1, y => y.Item2);
 
         result.Should().ContainKey("TN_PDI_BDC1").WhoseValue.Should().BeOfType<bool>().And.Be(false);
         result.Should().ContainKey("TN_PDI_PDV").WhoseValue.Should().Be(1799);

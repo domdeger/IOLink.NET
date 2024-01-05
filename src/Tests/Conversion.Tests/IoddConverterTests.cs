@@ -16,7 +16,7 @@ public class IoddConverterTests
         var recordItem1 = new ParsableRecordItem(new ParsableSimpleDatatypeDef("uint_2", KindOfSimpleType.UInteger, 4), "Test", 4, 1);
         var testRecord = new ParsableRecord("Test", 8, true, new[] { recordItem, recordItem1 });
 
-        object result = converter.Convert(testRecord, [/*1111 1111*/ 0xff]);
+        object result = converter.ConvertFromIoLink(testRecord, [/*1111 1111*/ 0xff]);
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
     }
 
@@ -41,7 +41,7 @@ public class IoddConverterTests
             new ParsableRecordItem(new ParsableSimpleDatatypeDef("TI_VAR_Device_Temp_Maximum_Device_Temp_Since_Reset", KindOfSimpleType.Integer, 16), "TI_VAR_Device_Temp_Maximum_Device_Temp_Since_Reset", 0, 7),
          });
 
-        object result = converter.Convert(testRecord, data);
+        object result = converter.ConvertFromIoLink(testRecord, data);
 
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
     }
@@ -67,7 +67,7 @@ public class IoddConverterTests
             new ParsableRecordItem(new ParsableSimpleDatatypeDef("Enable", KindOfSimpleType.OctetString, 8), "Enable", 0, 8),
         });
         var data = new byte[] { 0b01001001, 0xF8, 0x23, 0x41, 0xC3 };
-        var result = converter.Convert(recordDef, data);
+        var result = converter.ConvertFromIoLink(recordDef, data);
 
         result.Should().NotBeNull();
         result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
@@ -95,7 +95,7 @@ public class IoddConverterTests
         var converter = new IoddConverter();
 
         byte[] data = [0b0101101, 0b00111101];
-        object result = converter.Convert(arrayDefinition, data);
+        object result = converter.ConvertFromIoLink(arrayDefinition, data);
 
         _ = result.Should().BeAssignableTo<IEnumerable<(string, object)>>();
         var array = result as IEnumerable<(string, object)>;
