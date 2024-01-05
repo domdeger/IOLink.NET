@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Conversion\IOLinkNET.Conversion.csproj" />
-    <ProjectReference Include="..\..\IODD.Resolution\IOLinkNET.IODD.Resolution.csproj" />
     <ProjectReference Include="..\..\IODD.Parser\IOLinkNET.IODD.Parser.csproj" />
   </ItemGroup>
   <ItemGroup>

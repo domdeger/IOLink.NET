@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <PackageId>IOLinkNET.Visualization</PackageId>
+        <AssemblyVersion>0.1.0.0</AssemblyVersion>
+        <FileVersion>0.1.0.0</FileVersion>
+        <Version>0.1.0</Version>
+    </PropertyGroup>
+    <PropertyGroup>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>IOLinkNET is a library allows you to rapidly integrate and interact with devices that are using the IO-Link technology.</Description>
+        <PackageProjectUrl>https://github.com/domdeger/IOLink.NET/</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/domdeger/IOLink.NET/</RepositoryUrl>
+        <RepositoryType>Github</RepositoryType>
+    </PropertyGroup>
+    <ItemGroup>
+        <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+        <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Conversion\IOLinkNET.Conversion.csproj" />
+      <ProjectReference Include="..\Device\IOLinkNET.Device.csproj" />
+      <ProjectReference Include="..\Integration\IOLinkNET.Integration.csproj" />
+      <ProjectReference Include="..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
+      <ProjectReference Include="..\Visualization.Structure\IOLinkNET.Visualization.Structure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Visualization.Tests" />
+    </ItemGroup>
+</Project>

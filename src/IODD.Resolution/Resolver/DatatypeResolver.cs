@@ -5,11 +5,11 @@ namespace IOLinkNET.IODD.Resolution;
 
 internal class DatatypeResolver
 {
-    private readonly IEnumerable<DatatypeT> _datatypes;
+    private readonly DatatypeT[] _datatypes;
 
-    public DatatypeResolver(IEnumerable<DatatypeT> datatypes)
+    public DatatypeResolver(IEnumerable<DatatypeT> datatypes, IEnumerable<DatatypeT> standardDatatypes)
     {
-        _datatypes = datatypes;
+        _datatypes = datatypes.Concat(standardDatatypes).ToArray();
     }
 
     public DatatypeT Resolve(IDatatypeOrTypeRef resolvee)

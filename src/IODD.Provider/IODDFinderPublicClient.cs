@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Net.Http.Json;
 
 using IOLinkNET.IODD.Provider.Data;
@@ -8,9 +9,23 @@ public class IODDFinderPublicClient : IIODDProvider
 {
     private readonly HttpClient _httpClient;
 
-    public IODDFinderPublicClient(Uri baseUrl)
+    public IODDFinderPublicClient(Uri baseUrl, bool shouldValidateSSLCertificate = true)
     {
-        _httpClient = new() { BaseAddress = baseUrl };
+        if (shouldValidateSSLCertificate)
+        {
+            _httpClient = new() { BaseAddress = baseUrl };
+        }
+        else
+        {
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (request, cert, chain, errors) =>
+                {
+                    return true;
+                }
+            };
+            _httpClient = new(handler) { BaseAddress = baseUrl };
+        }
     }
 
     public IODDFinderPublicClient() : this(new Uri("https://ioddfinder.io-link.com/"))

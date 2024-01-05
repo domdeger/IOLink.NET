@@ -15,6 +15,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
@@ -29,10 +32,20 @@ jobs:
       - name: Test
         run: dotnet test ./src --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --filter Category!=IntegrationTest
 
-      - name: Code Coverage Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
+      - name: Merge Code Coverage files with Reportgenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
         with:
-          filename: coverage/**/coverage.cobertura.xml
+          reports: 'coverage/**/coverage.cobertura.xml'
+          targetdir: 'coveragesummary'
+          reporttypes: 'Html;Cobertura;XMLSummary;Badges'
+          verbosity: 'Info' # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
+          tag: '${{ github.run_number }}_${{ github.run_id }}'
+          toolpath: 'reportgeneratortool'
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: coveragesummary/Cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown

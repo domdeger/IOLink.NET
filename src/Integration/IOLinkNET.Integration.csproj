@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Device\Device.csproj" />
+    <ProjectReference Include="..\Device\IOLinkNET.Device.csproj" />
     <ProjectReference Include="..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
     <ProjectReference Include="..\IODD.Resolution\IOLinkNET.IODD.Resolution.csproj" />
     <ProjectReference Include="..\Conversion\IOLinkNET.Conversion.csproj" />
@@ -21,7 +21,10 @@
     <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-      <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
-      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+      <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+      <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\" />
   </ItemGroup>
 </Project>

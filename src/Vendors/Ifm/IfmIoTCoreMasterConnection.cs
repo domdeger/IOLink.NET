@@ -75,9 +75,14 @@ public class IfmIotCoreMasterConnection : IMasterConnection
         return await Task.WhenAll(tasks);
     }
 
-    public async Task<ReadOnlyMemory<byte>> ReadIndexAsync(byte portNumber, ushort index, byte subIindex = 0, CancellationToken cancellationToken = default)
+    public async Task<ReadOnlyMemory<byte>> ReadIndexAsync(byte portNumber, ushort index, byte subIndex = 0, CancellationToken cancellationToken = default)
     {
-        var resp = await _client.GetDeviceAcyclicDataAsync(new IfmIoTReadAcyclicRequest(portNumber, index, subIindex), cancellationToken);
+        var resp = await _client.GetDeviceAcyclicDataAsync(new IfmIoTReadAcyclicRequest(portNumber, index, subIndex), cancellationToken);
+        if (resp?.Data == null)
+        {
+            return null;
+        }
+
         return Convert.FromHexString(resp.Data.Value);
     }
     public async Task<ReadOnlyMemory<byte>> ReadProcessDataInAsync(byte portNumber, CancellationToken cancellationToken = default)

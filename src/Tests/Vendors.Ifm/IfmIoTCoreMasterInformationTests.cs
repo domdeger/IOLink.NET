@@ -1,6 +1,9 @@
-using IOLinkNET.Vendors.Ifm;
 using FluentAssertions;
+
+using IOLinkNET.Vendors.Ifm;
 using IOLinkNET.Vendors.Ifm.Data;
+
+using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
 
@@ -9,7 +12,7 @@ namespace Vendors.Ifm;
 [CollectionDefinition("IfmIoTCoreIntegrationTest", DisableParallelization = true)]
 public class IfmIoTCoreMasterInformationTests
 {
-    private readonly string _baseUrl = "http://192.168.2.227/";
+    private readonly string _baseUrl = $"http://{MasterConfiguration.IP}/";
     [Fact]
     public async Task CanGetMasterDeviceTagAsync()
     {
