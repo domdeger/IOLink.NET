@@ -6,7 +6,7 @@ using IOLinkNET.IODD.Structure.Structure.ExternalTextCollection;
 using IOLinkNET.IODD.Structure.Structure.Menu;
 
 namespace IOLinkNET.IODD.Parser.Parts.Menu;
-internal class MenuElementParser: IParserPart<MenuT>
+internal class MenuElementParser : IParserPart<MenuT>
 {
     private readonly IParserPartLocator _parserLocator;
     private readonly ExternalTextCollectionT _externalTextCollection;
@@ -39,11 +39,11 @@ internal class MenuElementParser: IParserPart<MenuT>
             uiVariableRefs.Add(UIVariableRefTParser.Parse(variableRef));
         }
 
-        foreach(var menuRef in menuRefElements)
+        foreach (var menuRef in menuRefElements)
         {
             UIMenuRefT? parsedMenuRef = _parserLocator.ParseOptional<UIMenuRefT>(menuRef);
 
-            if (parsedMenuRef != null)
+            if (parsedMenuRef is not null)
             {
                 uiMenuRefs.Add(parsedMenuRef);
             }

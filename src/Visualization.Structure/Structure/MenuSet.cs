@@ -8,17 +8,17 @@ public record MenuSet(UIMenu IdentificationMenu, UIMenu? ParameterMenu, UIMenu? 
     {
         await IdentificationMenu.ReadAsync();
 
-        if (ParameterMenu != null)
+        if (ParameterMenu is not null)
         {
             await ParameterMenu.ReadAsync();
         }
 
-        if (ObservationMenu != null)
+        if (ObservationMenu is not null)
         {
             await ObservationMenu.ReadAsync();
         }
 
-        if (DiagnosisMenu != null)
+        if (DiagnosisMenu is not null)
         {
             await DiagnosisMenu.ReadAsync();
         }

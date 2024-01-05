@@ -58,7 +58,7 @@ internal class IODDUserInterfaceConverter
 
     private UIMenu? ConvertUIMenu(UIMenuRefSimpleT? menu, string displayNameRef)
     {
-        if (menu != null && menu?.MenuId != null)
+        if (menu?.MenuId is not null)
         {
             var standardMenuName = GetExternalRefText(menu, displayNameRef);
             var referencedMenu = _userInterface.MenuCollection.Where(x => x.Menu.Id == menu.MenuId).FirstOrDefault() ?? throw new InvalidOperationException("Referenced Menu not found");
@@ -79,7 +79,7 @@ internal class IODDUserInterfaceConverter
 
     private UIMenu? ConvertUIMenu(UIMenuRefT? menu, string displayNameRef)
     {
-        if (menu != null && menu?.MenuId != null)
+        if (menu?.MenuId is not null)
         {
             var standardMenuName = GetExternalRefText(menu, displayNameRef);
             var referencedMenu = _userInterface.MenuCollection.Where(x => x.Menu.Id == menu.MenuId).FirstOrDefault() ?? throw new InvalidOperationException("Referenced Menu not found");
@@ -138,7 +138,7 @@ internal class IODDUserInterfaceConverter
         foreach (UIMenuRefT menuRef in menuRefs)
         {
             var convertedMenu = ConvertUIMenu(menuRef, string.Empty);
-            if (convertedMenu != null)
+            if (convertedMenu is not null)
             {
                 menus.Add(convertedMenu);
             }

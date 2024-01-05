@@ -9,17 +9,17 @@ namespace IOLinkNET.Visualization.Structure.Structure
         {
             await IdentificationMenu.ReadAsync();
 
-            if (ParameterMenu != null)
+            if (ParameterMenu is not null)
             {
                 await ParameterMenu.ReadAsync();
             }
 
-            if (ObservationMenu != null)
+            if (ObservationMenu is not null)
             {
                 await ObservationMenu.ReadAsync();
             }
 
-            if (DiagnosisMenu != null)
+            if (DiagnosisMenu is not null)
             {
                 await DiagnosisMenu.ReadAsync();
             }

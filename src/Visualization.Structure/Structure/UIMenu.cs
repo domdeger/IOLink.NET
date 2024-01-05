@@ -7,7 +7,7 @@ public record UIMenu(string Id, string? Name, ConditionT? Condition, IEnumerable
 {
     public async Task ReadAsync()
     {
-        if (Variables != null)
+        if (Variables is not null)
         {
             foreach (UIVariable variable in Variables)
             {
@@ -15,7 +15,7 @@ public record UIMenu(string Id, string? Name, ConditionT? Condition, IEnumerable
             }
         }
 
-        if (SubMenus != null)
+        if (SubMenus is not null)
         {
             foreach (UIMenu subMenu in SubMenus)
             {
@@ -23,7 +23,7 @@ public record UIMenu(string Id, string? Name, ConditionT? Condition, IEnumerable
             }
         }
 
-        if (RecordItems != null)
+        if (RecordItems is not null)
         {
             foreach (UIRecordItem recordItem in RecordItems)
             {
