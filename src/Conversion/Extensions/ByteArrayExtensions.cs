@@ -18,4 +18,10 @@ public static class ByteArrayExtensions
         return data;
     }
 
+
+    public static byte[] TruncateToBitLength(this byte[] data, ushort bitLength)
+    {
+        var requiredByteLength = bitLength / 8 + (bitLength % 8 != 0 ? 1 : 0);
+        return data[(data.Length - requiredByteLength)..];
+    }
 }

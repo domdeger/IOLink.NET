@@ -54,10 +54,7 @@ public class IoddScalarWriter
         byte[] bytes = new byte[val.GetByteCount()];
         val.WriteBigEndian(bytes);
 
-        var requiredByteLength = bitLength / 8 + (bitLength % 8 != 0 ? 1 : 0);
-
-        var limitedBytes = bytes.Skip(bytes.Length - requiredByteLength).ToArray();
-
+        byte[] limitedBytes = bytes.TruncateToBitLength(bitLength);
         return R.IsNegative(val) ? limitedBytes.PinNegativeIntToRequiredBitLength(bitLength) : limitedBytes;
     }
 }
