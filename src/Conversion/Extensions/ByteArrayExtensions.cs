@@ -2,14 +2,20 @@ namespace Conversion.Extensions;
 
 public static class ByteArrayExtensions
 {
-    public static byte[] ReverseIfNeeded(this byte[] data)
-        => BitConverter.IsLittleEndian ? data.Reverse().ToArray() : data;
-
-
-    public static byte[] ReverseIfNeededAndTake(this byte[] data, int count)
-        => (BitConverter.IsLittleEndian ? data.Reverse() : data)
-            .Skip(data.Length - count)
-            .Take(count)
-            .ToArray();
+    /// <summary>
+    /// If we have a negative integer, the resulting bytearray will be filled with 1s on the left, that may exceed the given bit length.
+    /// This method will set the first (8 - bitLength % 8) bits to 0.
+    /// Requires big-endian byte array. 
+    public static byte[] PinNegativeIntToRequiredBitLength(this byte[] data, ushort bitLength)
+    {
+        if (bitLength % 8 == 0)
+        {
+            // In this case we have a full byte and don't need to pin anything
+            return data;
+        }
+        var mask = (byte)(-1 << bitLength % 8);
+        data[0] ^= mask;
+        return data;
+    }
 
 }

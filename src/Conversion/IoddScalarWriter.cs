@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using System.Numerics;
 using System.Text;
 
 using Conversion.Extensions;
@@ -14,44 +15,22 @@ public class IoddScalarWriter
         => typeDef switch
         {
             { Datatype: KindOfSimpleType.Boolean } => BitConverter.GetBytes((bool)value),
-            { Datatype: KindOfSimpleType.Float } => BitConverter.GetBytes((float)value),
-            { Datatype: KindOfSimpleType.UInteger } => WriteUint(value, typeDef.Length),
+            { Datatype: KindOfSimpleType.Float } => WriteFloat(value),
+            { Datatype: KindOfSimpleType.UInteger } => WriteInt(value, typeDef.Length),
             { Datatype: KindOfSimpleType.Integer } => WriteInt(value, typeDef.Length),
-            { Datatype: KindOfSimpleType.OctetString } => Convert.FromHexString((string)value).ToArray(),
+            { Datatype: KindOfSimpleType.OctetString } => Convert.FromHexString((string)value),
             ParsableStringDef s => WriteString(s, (string)value),
             _ => throw new NotImplementedException()
-        };
-
-    private static byte[] WriteUint(object value, ushort bitLength)
-        => bitLength switch
-        {
-            >= 2 and <= 8 => BitConverter
-                .GetBytes(Convert.ToUInt16(value))
-                .ReverseIfNeeded()
-                .Take(1)
-                .ToArray(),
-            <= 16 => BitConverter.GetBytes(Convert.ToUInt16(value)).ReverseIfNeeded(),
-            <= 24 => BitConverter.GetBytes(Convert.ToUInt32(value)).ReverseIfNeededAndTake(3),
-            <= 32 => BitConverter.GetBytes(Convert.ToUInt32(value)).ReverseIfNeeded(),
-            <= 40 => BitConverter.GetBytes(Convert.ToUInt64(value)).ReverseIfNeededAndTake(5),
-            <= 48 => BitConverter.GetBytes(Convert.ToUInt64(value)).ReverseIfNeededAndTake(6),
-            <= 56 => BitConverter.GetBytes(Convert.ToUInt64(value)).ReverseIfNeededAndTake(7),
-            <= 64 => BitConverter.GetBytes(Convert.ToUInt64(value)).ReverseIfNeeded(),
-            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for Uint -> byte[] write")
         };
 
     private static byte[] WriteInt(object value, ushort bitLength)
         => bitLength switch
         {
-            >= 2 and <= 8 => [WriteInt8(value, bitLength)],
-            <= 16 => BitConverter.GetBytes(Convert.ToInt16(value)).ReverseIfNeeded(),
-            <= 24 => BitConverter.GetBytes(Convert.ToInt32(value)).ReverseIfNeededAndTake(3),
-            <= 32 => BitConverter.GetBytes(Convert.ToInt32(value)).ReverseIfNeeded(),
-            <= 40 => BitConverter.GetBytes(Convert.ToInt64(value)).ReverseIfNeededAndTake(5),
-            <= 48 => BitConverter.GetBytes(Convert.ToInt64(value)).ReverseIfNeededAndTake(6),
-            <= 56 => BitConverter.GetBytes(Convert.ToInt64(value)).ReverseIfNeededAndTake(7),
-            <= 64 => BitConverter.GetBytes(Convert.ToInt64(value)).ReverseIfNeeded(),
-            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for Int -> byte[] write")
+            <= 2 => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for (U)Int -> byte[] write"),
+            <= 16 => WriteInt(value, bitLength, Convert.ToInt16),
+            <= 32 => WriteInt(value, bitLength, Convert.ToInt32),
+            <= 64 => WriteInt(value, bitLength, Convert.ToInt64),
+            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for (U)Int -> byte[] write")
         };
 
     private static byte[] WriteString(ParsableStringDef stringDef, string value)
@@ -62,23 +41,23 @@ public class IoddScalarWriter
         _ => throw new NotImplementedException($"Encoding {stringDef.Encoding} is not supported.")
     };
 
-    private static byte WriteInt8(object value, ushort bitLength)
+    private static byte[] WriteFloat(object value)
     {
-        short val = Convert.ToInt16(value);
-        byte convertedByte = BitConverter.GetBytes(val)[BitConverter.IsLittleEndian ? 0 : 1];
-        if (val >= 0)
-        {
-            return convertedByte;
-        }
-        else
-        {
-            // We start with 0b1111_1111 and add 0s on the right, equivalent to bit length.
-            // e.g. 0b1111_1111 << 4 = 0b1111_0000
-            // This will get XORed with the converted byte, which will set the first (8 - bitLength) bits to 0.
-            var mask = (byte)(-1 << bitLength);
-            return (byte)(convertedByte ^ mask);
-        }
+        var bytes = new byte[4];
+        BinaryPrimitives.WriteSingleBigEndian(bytes, (float)value);
+        return bytes;
     }
 
+    private static byte[] WriteInt<R>(object value, ushort bitLength, Func<object, R> conversionFunc) where R : IBinaryInteger<R>
+    {
+        R val = conversionFunc(value);
+        byte[] bytes = new byte[val.GetByteCount()];
+        val.WriteBigEndian(bytes);
 
+        var requiredByteLength = bitLength / 8 + (bitLength % 8 != 0 ? 1 : 0);
+
+        var limitedBytes = bytes.Skip(bytes.Length - requiredByteLength).ToArray();
+
+        return R.IsNegative(val) ? limitedBytes.PinNegativeIntToRequiredBitLength(bitLength) : limitedBytes;
+    }
 }

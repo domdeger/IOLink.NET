@@ -1,6 +1,5 @@
 using FluentAssertions;
 
-using IOLinkNET.Conversion;
 using IOLinkNET.IODD.Resolution;
 using IOLinkNET.IODD.Structure.Datatypes;
 
@@ -21,92 +20,56 @@ public class IoddScalarWriterTests
     }
 
 
-    [Fact]
-    public void CanConvert17BitPositiveInteger()
+    [Theory]
+    [InlineData(28250, new byte[] { 0b00000000, 0b01101110, 0b01011010 })]
+    [InlineData(-28250, new byte[] { 0b00000001, 0b10010001, 0b10100110 })]
+    public void CanConvert17BitInteger(int value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 17);
-        byte[] result = IoddScalarWriter.Write(typeDef, 28250);
-        _ = result.Should().BeEquivalentTo(new byte[] { 0b00000000, 0b01101110, 0b01011010 });
+        byte[] result = IoddScalarWriter.Write(typeDef, value);
+        result.Should().BeEquivalentTo(expected);
     }
 
-    [Fact]
-    public void CanConvert17BitNegativeInteger()
-    {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 17);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00000001, 0b10010001, 0b10100110 });
-        _ = result.Should().Be(-28250);
-    }
 
-    [Fact]
-    public void CanConvert32BitNegativeInteger()
+    [Theory]
+    [InlineData(-28250100, new byte[] { 0b11111110, 0b01010000, 0b11110000, 0b00001100 })]
+    public void CanConvert32BitNegativeInteger(int value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 32);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b11111110, 0b01010000, 0b11110000, 0b00001100 });
-        _ = result.Should().Be(-28250100);
-        _ = result.Should().BeOfType<int>();
+        byte[] result = IoddScalarWriter.Write(typeDef, value);
+        result.Should().BeEquivalentTo(expected);
     }
 
-    [Fact]
-    public void CanConvert33BitNegativeInteger()
+    [Theory]
+    [InlineData(-28250100, new byte[] { 0b0000001, 0b11111110, 0b01010000, 0b11110000, 0b00001100 })]
+    public void CanConvert33BitNegativeInteger(int value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 33);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b0000001, 0b11111110, 0b01010000, 0b11110000, 0b00001100 });
-        _ = result.Should().Be(-28250100);
-        _ = result.Should().BeOfType<long>();
+        byte[] result = IoddScalarWriter.Write(typeDef, value);
+        result.Should().BeEquivalentTo(expected);
     }
 
-    [Fact]
-    public static void CanConvert12BitUInteger()
+    [Theory]
+    [InlineData(12, 4, new byte[] { 0b00000000, 0b0000_0100 })]
+    [InlineData(4, 4, new byte[] { 0b0000_0100 })]
+    [InlineData(17, 93786, new byte[] { 0b00000001, 0b01101110, 0b01011010 })]
+    [InlineData(48, 93786, new byte[] { 0b00000000, 0b00000000, 0b00000000, 0b00000001, 0b01101110, 0b01011010 })]
+    public static void CanConvertUInteger(ushort bitLength, uint value, byte[] expected)
     {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, 12);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00000000, 0b0000_0100 });
-        _ = result.Should().Be(4);
-        _ = result.Should().BeOfType<ushort>();
+        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, bitLength);
+        byte[] result = IoddScalarWriter.Write(typeDef, value);
+        result.Should().BeEquivalentTo(expected);
     }
 
-    [Fact]
-    public static void CanConvert4BitUInteger()
-    {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, 4);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b0000_0100 });
-        _ = result.Should().Be(4);
-        _ = result.Should().BeOfType<byte>();
-    }
 
-    [Fact]
-    public static void CanConvert17BitUInteger()
-    {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, 17);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00000001, 0b01101110, 0b01011010 });
-        _ = result.Should().Be(93786);
-        _ = result.Should().BeOfType<uint>();
-    }
-
-    [Fact]
-    public static void CanConvert48BitUInteger()
-    {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, 48);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00000000, 0b00000000, 0b00000000, 0b00000001, 0b01101110, 0b01011010 });
-        _ = result.Should().Be(93786);
-        _ = result.Should().BeOfType<ulong>();
-    }
-
-    [Fact]
-    public static void CanConvertPositiveFloat32()
+    [Theory]
+    [InlineData(0.75, new byte[] { 0b00111111, 0b01000000, 0b00000000, 0b00000000 })]
+    [InlineData(-0.75, new byte[] { 0b10111111, 0b01000000, 0b00000000, 0b00000000 })]
+    public static void CanConvertPositiveFloat32(float value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Float, 32);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b00111111, 0b01000000, 0b00000000, 0b00000000 });
-        _ = result.Should().Be(0.75);
-        _ = result.Should().BeOfType<float>();
-    }
-
-    [Fact]
-    public static void CanConvertNegativeFloat32()
-    {
-        var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Float, 32);
-        object result = IoddScalarConverter.Convert(typeDef, new byte[] { 0b10111111, 0b01000000, 0b00000000, 0b00000000 });
-        _ = result.Should().Be(-0.75);
-        _ = result.Should().BeOfType<float>();
+        byte[] result = IoddScalarWriter.Write(typeDef, value);
+        result.Should().BeEquivalentTo(expected);
     }
 
 
@@ -114,17 +77,15 @@ public class IoddScalarWriterTests
     public static void CanConvertAsciiString()
     {
         var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.ASCII);
-        object result = IoddScalarConverter.Convert(typeDef, "Hello"u8);
-        _ = result.Should().Be("Hello");
-        _ = result.Should().BeOfType<string>();
+        byte[] result = IoddScalarWriter.Write(typeDef, "Hello");
+        result.Should().BeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
     }
 
     [Fact]
     public static void CanConvertUtf8String()
     {
         var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.UTF8);
-        object result = IoddScalarConverter.Convert(typeDef, "Hello"u8);
-        _ = result.Should().Be("Hello");
-        _ = result.Should().BeOfType<string>();
+        byte[] result = IoddScalarWriter.Write(typeDef, "Hello😀");
+        result.Should().BeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0xF0, 0x9F, 0x98, 0x80 });
     }
 }
