@@ -16,21 +16,31 @@ public class IoddScalarWriter
         {
             { Datatype: KindOfSimpleType.Boolean } => BitConverter.GetBytes((bool)value),
             { Datatype: KindOfSimpleType.Float } => WriteFloat(value),
-            { Datatype: KindOfSimpleType.UInteger } => WriteInt(value, typeDef.Length),
+            { Datatype: KindOfSimpleType.UInteger } => WriteUInt(value, typeDef.Length),
             { Datatype: KindOfSimpleType.Integer } => WriteInt(value, typeDef.Length),
             { Datatype: KindOfSimpleType.OctetString } => Convert.FromHexString((string)value),
             ParsableStringDef s => WriteString(s, (string)value),
             _ => throw new NotImplementedException()
         };
 
+    private static byte[] WriteUInt(object value, ushort bitLength)
+        => bitLength switch
+        {
+            <= 2 => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for UInt -> byte[] write"),
+            <= 16 => WriteInt(value, bitLength, Convert.ToUInt16),
+            <= 32 => WriteInt(value, bitLength, Convert.ToUInt32),
+            <= 64 => WriteInt(value, bitLength, Convert.ToUInt64),
+            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for UInt -> byte[] write")
+        };
+
     private static byte[] WriteInt(object value, ushort bitLength)
         => bitLength switch
         {
-            <= 2 => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for (U)Int -> byte[] write"),
+            <= 2 => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for Int -> byte[] write"),
             <= 16 => WriteInt(value, bitLength, Convert.ToInt16),
             <= 32 => WriteInt(value, bitLength, Convert.ToInt32),
             <= 64 => WriteInt(value, bitLength, Convert.ToInt64),
-            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for (U)Int -> byte[] write")
+            _ => throw new ArgumentOutOfRangeException(nameof(bitLength), bitLength, "Invalid bitLength for Int -> byte[] write")
         };
 
     private static byte[] WriteString(ParsableStringDef stringDef, string value)

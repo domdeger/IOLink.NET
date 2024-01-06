@@ -1,3 +1,5 @@
+using System.Reflection.Metadata;
+
 using FluentAssertions;
 
 using IOLinkNET.IODD.Resolution;
@@ -54,7 +56,8 @@ public class IoddScalarWriterTests
     [InlineData(4, 4, new byte[] { 0b0000_0100 })]
     [InlineData(17, 93786, new byte[] { 0b00000001, 0b01101110, 0b01011010 })]
     [InlineData(48, 93786, new byte[] { 0b00000000, 0b00000000, 0b00000000, 0b00000001, 0b01101110, 0b01011010 })]
-    public static void CanConvertUInteger(ushort bitLength, uint value, byte[] expected)
+    [InlineData(64, ulong.MaxValue, new byte[]{0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111 })]
+    public static void CanConvertUInteger(ushort bitLength, ulong value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, bitLength);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
