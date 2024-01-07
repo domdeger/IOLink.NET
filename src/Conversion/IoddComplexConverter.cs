@@ -23,7 +23,7 @@ internal static class IoddComplexConverter
         {
             var itemOffset = (ushort)(arrayBitLength - i * arrayTypeDef.Type.Length);
             var itemData = ReadWithPadding(bits, itemOffset, arrayTypeDef.Type.Length);
-            result.Add(($"{arrayTypeDef.Name}_{i}", IoddScalarConverter.Convert(arrayTypeDef.Type, itemData)));
+            result.Add(($"{arrayTypeDef.Name}_{i}", IoddScalarReader.Convert(arrayTypeDef.Type, itemData)));
         }
 
         return result;
@@ -37,7 +37,7 @@ internal static class IoddComplexConverter
         {
             var translatedOffset = (ushort)(recordType.Length - recordItemDef.BitOffset);
             result.Add((recordItemDef.Name,
-                IoddScalarConverter.Convert(recordItemDef.Type,
+                IoddScalarReader.Convert(recordItemDef.Type,
                 ReadWithPadding(bits, recordItemDef.BitOffset, recordItemDef.Type.Length).ToArray().Reverse().ToArray())));
         }
 
