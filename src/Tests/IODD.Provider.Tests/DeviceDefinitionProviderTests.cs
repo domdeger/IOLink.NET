@@ -23,6 +23,7 @@ public class DeviceDefinitionProviderTests
         var provider = new DeviceDefinitionProvider(client);
         var definition = await provider.GetDeviceDefinitionAsync(310, 1367, "VVB001 Status B");
 
-        definition.ProfileBody.DeviceIdentity.VendorId.Should().Be(888);
+        definition.ProfileBody.DeviceIdentity.VendorId.Should().Be(310);
+        definition.ProfileBody.DeviceIdentity.DeviceId.Should().Be(1367);
     }
 }
