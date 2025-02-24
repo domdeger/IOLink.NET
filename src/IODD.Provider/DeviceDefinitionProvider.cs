@@ -1,7 +1,5 @@
-
 using System.IO.Compression;
 using System.Xml.Linq;
-
 using IOLinkNET.IODD.Structure;
 
 namespace IOLinkNET.IODD.Provider;
@@ -10,25 +8,42 @@ public class DeviceDefinitionProvider : IDeviceDefinitionProvider
 {
     private readonly IIODDProvider _ioddProvider;
     private readonly IODDParser _ioddParser = new IODDParser();
+
     public DeviceDefinitionProvider(IIODDProvider ioddProvider)
     {
         _ioddProvider = ioddProvider;
     }
 
-    public async Task<IODevice> GetDeviceDefinitionAsync(ushort vendorId, uint deviceId, string productId, CancellationToken cancellationToken = default)
+    public async Task<IODevice> GetDeviceDefinitionAsync(
+        ushort vendorId,
+        uint deviceId,
+        string productId,
+        CancellationToken cancellationToken = default
+    )
     {
-        var ioddPackage = await _ioddProvider.GetIODDPackageAsync(vendorId, deviceId, productId, cancellationToken);
+        var ioddPackage = await _ioddProvider.GetIODDPackageAsync(
+            vendorId,
+            deviceId,
+            productId,
+            cancellationToken
+        );
 
         using var zipArchive = new ZipArchive(ioddPackage, ZipArchiveMode.Read);
         var ioddXml = await FindMainIoddEntryAsync(zipArchive, cancellationToken);
 
-
-        return _ioddParser.Parse(ioddXml.Root ?? throw new InvalidOperationException("No root element found"));
+        return _ioddParser.Parse(
+            ioddXml.Root ?? throw new InvalidOperationException("No root element found")
+        );
     }
 
-    private async Task<XDocument> FindMainIoddEntryAsync(ZipArchive zipArchive, CancellationToken cancellationToken)
+    private async Task<XDocument> FindMainIoddEntryAsync(
+        ZipArchive zipArchive,
+        CancellationToken cancellationToken
+    )
     {
-        var xmlFiles = zipArchive.Entries.Where(e => e.Name.EndsWith(".xml", StringComparison.OrdinalIgnoreCase));
+        var xmlFiles = zipArchive.Entries.Where(e =>
+            e.Name.EndsWith(".xml", StringComparison.OrdinalIgnoreCase)
+        );
 
         foreach (var xmlFile in xmlFiles)
         {
