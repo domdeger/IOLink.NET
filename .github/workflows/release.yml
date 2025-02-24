@@ -108,7 +108,7 @@ jobs:
       - uses: ./.github/actions/publish_nuget
         name: Publish Nuget Packages to GitHub
         with:
-          nugetApiKey: ${{ secrets.NUGET_API_KEY }}
+          nugetApiKey: ${{ secrets.GITHUB_TOKEN }}
           nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
           nugetPackageDirectory: $PWD/packages
 
