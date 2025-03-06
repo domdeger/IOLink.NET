@@ -61,6 +61,12 @@ jobs:
           outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Standard
+        with:
+          projectPath: ./src/IODD.Standard
+          outputDirectory: ../../npkgs
+
+      - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for IODD.Structure
         with:
           projectPath: ./src/IODD.Structure
