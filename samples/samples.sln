@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_convert_iol_data_with_io
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_read_process_data_from_ifm_iotcore", "02_read_process_data_from_ifm_iotcore\02_read_process_data_from_ifm_iotcore.csproj", "{5C06058D-B10A-4903-8E0C-E88779DEBD02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02_read_process_data_from_ifm_iotcore", "03_work_with_iodds\03_work_with_iodds.csproj", "{4CE6306D-5438-4087-81F5-A27450A0368A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5C06058D-B10A-4903-8E0C-E88779DEBD02}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C06058D-B10A-4903-8E0C-E88779DEBD02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C06058D-B10A-4903-8E0C-E88779DEBD02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE6306D-5438-4087-81F5-A27450A0368A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE6306D-5438-4087-81F5-A27450A0368A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE6306D-5438-4087-81F5-A27450A0368A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE6306D-5438-4087-81F5-A27450A0368A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
