@@ -53,7 +53,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: Merge Code Coverage files with Reportgenerator
-        uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.4.12
         with:
           reports: 'coverage/**/coverage.cobertura.xml'
           targetdir: 'coveragesummary'
