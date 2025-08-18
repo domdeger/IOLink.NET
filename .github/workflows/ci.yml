@@ -14,15 +14,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: | 
+            7.0.x
+            8.0.x
+            9.0.x
+          
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: csharp
+            
       - name: Restore dependencies
         run: dotnet restore ./src
 
@@ -31,6 +48,9 @@ jobs:
 
       - name: Test
         run: dotnet test ./src --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage --filter Category!=IntegrationTest
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
 
       - name: Merge Code Coverage files with Reportgenerator
         uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0

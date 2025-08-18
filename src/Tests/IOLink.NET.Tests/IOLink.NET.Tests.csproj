@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Shouldly" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IOLink.NET\IOLink.NET.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Core\IOLink.NET.Core.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.IODD\IOLink.NET.IODD.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\TestData\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>TestData\%(Filename)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+
+</Project>

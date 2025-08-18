@@ -6,10 +6,11 @@ using IOLinkNET.Conversion;
 using IOLinkNET.IODD;
 using IOLinkNET.IODD.Resolution;
 
-
 // First we need to parse an IODD definition. This can be done by using the IODDParser class. Or by directly retrieving the IODD from the IODD finder with the IODDFinderPublicClient class.
 IODDParser parser = new();
-var device = parser.Parse(XElement.Load("../iodds/Balluff-BISM4A308240107S4-CCM-20210928-IODD1.1.xml"));
+var device = parser.Parse(
+    XElement.Load("./iodds/Balluff-BISM4A308240107S4-CCM-20210928-IODD1.1.xml")
+);
 
 // Now we can use the IoddConverter class to convert the data.
 var converter = new IoddConverter();
@@ -19,7 +20,6 @@ DecodeParameterData();
 
 void DecodeParameterData()
 {
-
     // Retrieve the parameter data from the device
     var data = Convert.FromBase64String("SGVsbG9IZWxsb0hlbGxvSGVsbG9IZWxsb0hlbGxvSGVsbG9IZWxsbw==");
 

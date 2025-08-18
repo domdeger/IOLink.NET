@@ -7,7 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="Shouldly" />
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -20,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Vendors\Ifm\IOLinkNET.Vendors.Ifm.csproj" />
-    <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
-    <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
-    <ProjectReference Include="..\..\Visualization\IOLinkNET.Visualization.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Vendors.Ifm\IOLink.NET.Vendors.Ifm.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET\IOLink.NET.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.IODD\IOLink.NET.IODD.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
   </ItemGroup>
 
 </Project>

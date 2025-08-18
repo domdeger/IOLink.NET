@@ -1,0 +1,47 @@
+using System.Reflection;
+using System.Xml.Linq;
+using IOLink.NET.IODD.Standard.Constants;
+
+namespace IOLink.NET.IODD.Standard.Structure;
+
+public static class StandardDefinitionReader
+{
+    private static readonly XElement _ioddStandardDefinitions;
+
+    static StandardDefinitionReader()
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = "IOLink.NET.IODD.Standard.XML.IODD-StandardDefinitions1.1.xml";
+
+        using var stream =
+            assembly.GetManifestResourceStream(resourceName)
+            ?? throw new FileNotFoundException(
+                $"IODD-StandardDefinitions1.1.xml must be present to use {nameof(StandardDefinitionReader)}"
+            );
+
+        using var reader = new StreamReader(stream);
+        _ioddStandardDefinitions = XElement.Load(reader);
+    }
+
+    public static XElement GetVariableCollection()
+    {
+        var variableCollection = _ioddStandardDefinitions
+            .Elements(IODDStandardDefinitionNames.VariableCollectionName)
+            .Single();
+        return variableCollection
+            ?? throw new InvalidOperationException(
+                "VariableCollection cannot be null in standard definitions"
+            );
+    }
+
+    public static XElement GetDatatypeCollection()
+    {
+        var dataTypeCollection = _ioddStandardDefinitions
+            .Elements(IODDStandardDefinitionNames.DatatypeCollectionName)
+            .Single();
+        return dataTypeCollection
+            ?? throw new InvalidOperationException(
+                "DatatypeCollection cannot be null in standard definitions"
+            );
+    }
+}

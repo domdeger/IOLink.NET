@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\IOLink.NET.Core\IOLink.NET.Core.csproj" />
+    <ProjectReference Include="..\IOLink.NET.IODD\IOLink.NET.IODD.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PackageId>IOLink.NET</PackageId>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <InformationalVersion>0.1.0+15.Branch.main.Sha.d6058282db27fe28bc9c33e5aed16016287219d5</InformationalVersion>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>IOLink.NET - Main library for interacting with devices using IO-Link technology including data conversion and integration functionality.</Description>
+    <PackageProjectUrl>https://github.com/domdeger/IOLink.NET/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/domdeger/IOLink.NET/</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+  </PropertyGroup>
+  <ItemGroup>
+      <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+</Project>

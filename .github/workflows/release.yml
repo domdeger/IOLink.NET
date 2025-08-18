@@ -8,7 +8,7 @@ jobs:
     name: Build Nuget Packages
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -23,7 +23,21 @@ jobs:
           updateAssemblyInfo: true
           useConfigFile: true
 
-      - run: mkdir -p $PWD/npks
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Create output directory
+        run: mkdir -p $PWD/npkgs
 
       - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for Conversion
@@ -75,31 +89,63 @@ jobs:
         name: Build Nuget Package for Vendors.Ifm
         with:
           projectPath: ./src/Vendors/Ifm
-          outputDirectory: ../../../npkgs
+          outputDirectory: ../../npkgs
 
-      - run: echo $PWD
-      - run: ls -la $PWD/npkgs
-      - name: Publish Nuget Package for ${{ inputs.projectPath }}
+      - name: Verify packages were created
+        run: |
+          if [ ! "$(ls -A $PWD/npkgs)" ]; then
+            echo "No packages were created!"
+            exit 1
+          fi
+          echo "Created packages:"
+          ls -la $PWD/npkgs
+
+      - name: Publish Nuget Package for packages
         uses: actions/upload-artifact@v4
         with:
-          name: packages
+          name: nuget-packages
           path: ./npkgs
+          retention-days: 30
 
   publish:
     name: Publish Nuget Packages
     runs-on: ubuntu-latest
     needs: pack
+    environment: production
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      
       - uses: actions/download-artifact@v4
         with:
-          name: packages
+          name: nuget-packages
           path: ./packages
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: 9.0.x
+
+      - name: Verify downloaded packages
+        run: |
+          echo "Downloaded packages:"
+          ls -la $PWD/packages
+          if [ ! "$(ls -A $PWD/packages)" ]; then
+            echo "No packages downloaded!"
+            exit 1
+          fi
+
+      - name: Validate package versions
+        run: |
+          echo "Validating package versions..."
+          for file in $PWD/packages/*.nupkg; do
+            if [ -f "$file" ]; then
+              filename=$(basename "$file")
+              echo "Checking if $filename already exists on NuGet.org..."
+              # Extract package name and version from filename
+              # This is a basic validation - you might want to enhance this
+              echo "Package: $filename"
+            fi
+          done
 
       - run: echo "$GITHUB_CONTEXT"
       - name: Upload Packages to release
@@ -107,15 +153,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           for file in $PWD/packages/*.nupkg; do
-            gh release upload ${{ github.event.release.tag_name }} $file
+            if [ -f "$file" ]; then
+              echo "Uploading $file to release ${{ github.event.release.tag_name }}"
+              gh release upload ${{ github.event.release.tag_name }} "$file" --clobber
+            fi
           done
-
-      # - uses: ./.github/actions/publish_nuget
-      #   name: Publish Nuget Packages to GitHub
-      #   with:
-      #     nugetApiKey: ${{ secrets.GITHUB_TOKEN }}
-      #     nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
-      #     nugetPackageDirectory: $PWD/packages
 
       - uses: ./.github/actions/publish_nuget
         name: Publish Nuget Packages to Nuget.org

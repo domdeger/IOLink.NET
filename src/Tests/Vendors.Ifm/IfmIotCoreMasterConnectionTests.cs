@@ -1,7 +1,5 @@
-using FluentAssertions;
-
-using IOLinkNET.Vendors.Ifm;
-
+using IOLink.NET.Vendors.Ifm;
+using Shouldly;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
@@ -10,7 +8,6 @@ namespace Vendors.Ifm;
 [Collection("IfmIoTCoreIntegrationTest")]
 public class IfmIotCoreMasterConnectionTests
 {
-
     private readonly string _baseUrl = $"http://{MasterConfiguration.IP}/";
 
     [Fact]
@@ -20,7 +17,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var result = await masterConnection.GetPortCountAsync();
-        result.Should().Be(4);
+        result.ShouldBe((byte)4);
     }
 
     [Fact]
@@ -30,7 +27,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var result = await masterConnection.GetPortInformationAsync(3);
-        result.Should().NotBeNull();
+        result.ShouldNotBeNull();
     }
 
     [Fact]
@@ -40,7 +37,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var result = await masterConnection.GetPortInformationsAsync();
-        result.Should().NotBeNull();
-        result.Length.Should().Be(4);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(4);
     }
 }
