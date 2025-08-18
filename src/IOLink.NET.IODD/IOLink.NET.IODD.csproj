@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IOLink.NET.Core\IOLink.NET.Core.csproj" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PackageId>IOLink.NET.IODD</PackageId>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <InformationalVersion>0.1.0+15.Branch.main.Sha.d6058282db27fe28bc9c33e5aed16016287219d5</InformationalVersion>
+    <Version>0.1.0</Version>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>IOLink.NET IODD - Complete IODD (IO Device Description) processing library including parsing, resolution, structure definitions and standard definitions.</Description>
+    <PackageProjectUrl>https://github.com/domdeger/IOLink.NET/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/domdeger/IOLink.NET/</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+  </PropertyGroup>
+  <ItemGroup>
+      <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Standard\XML\*.xml" />
+  </ItemGroup>
+</Project>

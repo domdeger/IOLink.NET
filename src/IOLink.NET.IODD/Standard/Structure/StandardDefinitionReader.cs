@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+using System.Xml.Linq;
 using IOLink.NET.IODD.Standard.Constants;
 
 namespace IOLink.NET.IODD.Standard.Structure;

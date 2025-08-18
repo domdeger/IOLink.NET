@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>IOLink.NET.Core</PackageId>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <InformationalVersion>0.1.0+15.Branch.main.Sha.d6058282db27fe28bc9c33e5aed16016287219d5</InformationalVersion>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>IOLink.NET Core - Contains core contracts and models for the IO-Link technology.</Description>
+    <PackageProjectUrl>https://github.com/domdeger/IOLink.NET/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/domdeger/IOLink.NET/</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
+  </PropertyGroup>
+  <ItemGroup>
+      <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+      <None Include="..\..\README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
+</Project>
