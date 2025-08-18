@@ -7,18 +7,27 @@ using IOLink.NET.IODD.Structure;
 
 namespace IOLink.NET.Integration;
 
-public class IODDPortReader(
-    IMasterConnection connection,
-    IDeviceDefinitionProvider deviceDefinitionProvider,
-    IIoddDataConverter ioddDataConverter,
-    ITypeResolverFactory typeResolverFactory
-)
+public class IODDPortReader
 {
-    private readonly IMasterConnection _connection = connection;
-    private readonly IDeviceDefinitionProvider _deviceDefinitionProvider = deviceDefinitionProvider;
-    private readonly IIoddDataConverter _ioddDataConverter = ioddDataConverter;
-    private readonly ITypeResolverFactory _typeResolverFactory = typeResolverFactory;
+    private readonly IMasterConnection _connection;
+    private readonly IDeviceDefinitionProvider _deviceDefinitionProvider;
+    private readonly IIoddDataConverter _ioddDataConverter;
+    private readonly ITypeResolverFactory _typeResolverFactory;
     private PortReaderInitilizationResult? _initilizationState;
+
+    public IODDPortReader(
+        IMasterConnection connection,
+        IDeviceDefinitionProvider deviceDefinitionProvider,
+        IIoddDataConverter ioddDataConverter,
+        ITypeResolverFactory typeResolverFactory
+    )
+    {
+        _connection = connection;
+        _deviceDefinitionProvider = deviceDefinitionProvider;
+        _ioddDataConverter = ioddDataConverter;
+        _typeResolverFactory = typeResolverFactory;
+    }
+
     private PortReaderInitilizationResult InitilizationState =>
         _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
 

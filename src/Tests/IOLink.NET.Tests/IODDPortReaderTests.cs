@@ -157,7 +157,7 @@ public class IODDPortReaderTests
         var pd =
             (await portReader.ReadConvertedProcessDataInAsync()) as IEnumerable<(string, object)>;
         pd.ShouldNotBeNull();
-        
+
         // Debug: Let's examine what's actually in the collection
         var pdList = pd.ToList();
         var targetItem = pdList.FirstOrDefault(x => x.Item1 == "TN_PDI_Feuchte");

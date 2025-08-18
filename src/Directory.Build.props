@@ -1,8 +1,16 @@
 <Project>
  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFrameworks>net7.0;net8.0;net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+ </PropertyGroup>
+ 
+ <!-- Framework-specific C# language versions -->
+ <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <LangVersion>11.0</LangVersion>
+ </PropertyGroup>
+ <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' OR '$(TargetFramework)' == 'net9.0'">
+    <LangVersion>12.0</LangVersion>
  </PropertyGroup>
 
  <PropertyGroup>

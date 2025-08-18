@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using Shouldly;
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
@@ -10,6 +9,7 @@ using IOLink.NET.IODD.Resolution.Contracts;
 using IOLink.NET.IODD.Structure;
 using IOLink.NET.Visualization.Menu;
 using NSubstitute;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -217,15 +217,8 @@ public class MenuDataReaderTests
 
         masterConnection
             .ReadIndexAsync(portInfo.PortNumber, Arg.Any<ushort>())
-            .Returns((byte[])[0]);
+            .Returns(new byte[] { 0 });
 
         return masterConnection;
     }
 }
-
-
-
-
-
-
-

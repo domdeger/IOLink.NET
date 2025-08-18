@@ -8,10 +8,10 @@ namespace IOLink.NET.Tests;
 public class IoddScalarWriterTests
 {
     [Theory]
-    [InlineData([4, new byte[] { 0b0000_0100 }])]
-    [InlineData([7, new byte[] { 0b0000_0111 }])]
-    [InlineData([-4, new byte[] { 0b0000_1100 }])]
-    [InlineData([-7, new byte[] { 0b0000_1001 }])]
+    [InlineData(4, new byte[] { 0b0000_0100 })]
+    [InlineData(7, new byte[] { 0b0000_0111 })]
+    [InlineData(-4, new byte[] { 0b0000_1100 })]
+    [InlineData(-7, new byte[] { 0b0000_1001 })]
     public void CanWrite4BitInteger(int value, byte[] expected)
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 4);
