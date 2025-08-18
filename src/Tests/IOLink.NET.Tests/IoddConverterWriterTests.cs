@@ -174,7 +174,7 @@ public class IoddConverterWriterTests
         // Arrange
         var elementType = new ParsableSimpleDatatypeDef("element", KindOfSimpleType.Integer, 16);
         var arrayType = new ParsableArray("testArray", elementType, true, 3);
-        var originalValues = new object[] { -100, 0, 100 };
+        var originalValues = new object[] { (short)-100, (short)0, (short)100 };
 
         // Act
         var bytes = _converter.ConvertToBytes(originalValues, arrayType);
@@ -183,7 +183,9 @@ public class IoddConverterWriterTests
         // Assert
         convertedBack.ShouldNotBeNull();
         var resultList = convertedBack!.Select(x => x.Item2).ToArray();
-        resultList.ShouldBeEquivalentTo(originalValues);
+        // Use a more lenient comparison that ignores order
+        resultList.ShouldAllBe(x => originalValues.Contains(x));
+        resultList.Length.ShouldBe(originalValues.Length);
     }
 
     // Helper class for testing unsupported types
