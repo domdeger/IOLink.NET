@@ -1,8 +1,6 @@
 using FluentAssertions;
-
-using IOLinkNET.Vendors.Ifm;
-using IOLinkNET.Vendors.Ifm.Data;
-
+using IOLink.NET.Vendors.Ifm;
+using IOLink.NET.Vendors.Ifm.Data;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
@@ -13,6 +11,7 @@ namespace Vendors.Ifm;
 public class IfmIoTCoreMasterInformationTests
 {
     private readonly string _baseUrl = $"http://{MasterConfiguration.IP}/";
+
     [Fact]
     public async Task CanGetMasterDeviceTagAsync()
     {
@@ -59,7 +58,9 @@ public class IfmIoTCoreMasterInformationTests
     public async Task CanGetDataMultiAsync()
     {
         var client = IfmIoTCoreClientFactory.Create(_baseUrl);
-        var req = new IfmIoTGetDataMultiRequest(new[] { "/processdatamaster/temperature", "/deviceinfo/serialnumber" });
+        var req = new IfmIoTGetDataMultiRequest(
+            new[] { "/processdatamaster/temperature", "/deviceinfo/serialnumber" }
+        );
         var result = await client.GetDataMultiAsync(req, default);
 
         result.Should().NotBeNull();

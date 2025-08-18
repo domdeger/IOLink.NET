@@ -1,7 +1,7 @@
 using System.Collections;
 using IOLink.NET.IODD.Resolution;
 
-namespace Conversion;
+namespace IOLink.NET.Conversion;
 
 public static class IoddComplexWriter
 {
@@ -90,22 +90,28 @@ public static class IoddComplexWriter
     private static BitArray ConvertValueToBits(ParsableSimpleDatatypeDef typeDef, object value)
     {
         // For very small bit lengths, handle the conversion directly
-        if (typeDef.Length <= 8 && (typeDef.Datatype == KindOfSimpleType.UInteger || typeDef.Datatype == KindOfSimpleType.Integer))
+        if (
+            typeDef.Length <= 8
+            && (
+                typeDef.Datatype == KindOfSimpleType.UInteger
+                || typeDef.Datatype == KindOfSimpleType.Integer
+            )
+        )
         {
             var numericValue = Convert.ToUInt64(value);
             var bits = new BitArray(typeDef.Length);
-            
+
             for (var i = 0; i < typeDef.Length; i++)
             {
                 bits[i] = (numericValue & (1UL << i)) != 0;
             }
-            
+
             return bits;
         }
 
         // For larger or other types, use the scalar writer
         var bytes = IoddScalarWriter.Write(typeDef, value);
-        
+
         // For multi-field records, we need to account for the reader's field-level reversal
         // The reader will reverse the bytes of each field individually, so we pre-reverse them
         var reversedBytes = bytes.Reverse().ToArray();
@@ -115,14 +121,14 @@ public static class IoddComplexWriter
     private static byte[] ConvertBitArrayToBytes(BitArray bits)
     {
         var bytes = new byte[(bits.Length + 7) / 8];
-        
+
         // Match the reader's bit packing logic
         for (var i = 0; i < bits.Length; i++)
         {
             var bit = bits[i];
             bytes[i / 8] |= (byte)(bit ? 1 << (i % 8) : 0);
         }
-        
+
         // Reverse to compensate for the reader's reversal
         return bytes.Reverse().ToArray();
     }

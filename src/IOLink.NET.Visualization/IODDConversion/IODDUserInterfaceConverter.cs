@@ -8,7 +8,7 @@ using IOLink.NET.Visualization.Structure.Structure;
 
 namespace IOLink.NET.Visualization.IODDConversion;
 
-internal class IODDUserInterfaceConverter
+public class IODDUserInterfaceConverter
 {
     private readonly IIODevice _ioDevice;
     private readonly IODDPortReader _ioddPortReader;

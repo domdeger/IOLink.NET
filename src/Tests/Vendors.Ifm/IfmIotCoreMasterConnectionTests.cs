@@ -1,7 +1,5 @@
 using FluentAssertions;
-
-using IOLinkNET.Vendors.Ifm;
-
+using IOLink.NET.Vendors.Ifm;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
@@ -10,7 +8,6 @@ namespace Vendors.Ifm;
 [Collection("IfmIoTCoreIntegrationTest")]
 public class IfmIotCoreMasterConnectionTests
 {
-
     private readonly string _baseUrl = $"http://{MasterConfiguration.IP}/";
 
     [Fact]

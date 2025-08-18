@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Xml.Serialization;
 using IOLink.NET.IODD.Standard.Definition;
 using IOLink.NET.IODD.Standard.Definition.IODDMenuUserRoleDefinitions;
@@ -18,12 +19,17 @@ public static class StandardMenuUserRoleReader
 
     static StandardMenuUserRoleReader()
     {
-        XmlSerializer serializer = new XmlSerializer(typeof(IODDMenuUserRoleDefinitions));
-        using (var reader = new StreamReader("./XML/Tool-MenuUserRole_X113.xml"))
-        {
-            _ioddMenuUserRoleDefinitions = (IODDMenuUserRoleDefinitions?)
-                serializer.Deserialize(reader);
-        }
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = "IOLink.NET.IODD.Standard.XML.Tool-MenuUserRole_X113.xml";
+
+        using var stream =
+            assembly.GetManifestResourceStream(resourceName)
+            ?? throw new FileNotFoundException(
+                $"Tool-MenuUserRole_X113.xml must be present to use {nameof(StandardMenuUserRoleReader)}"
+            );
+
+        var serializer = new XmlSerializer(typeof(IODDMenuUserRoleDefinitions));
+        _ioddMenuUserRoleDefinitions = (IODDMenuUserRoleDefinitions?)serializer.Deserialize(stream);
     }
 
     public static string GetStandardMenuUserRoleText(string id, string lang)

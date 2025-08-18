@@ -25,4 +25,11 @@
     <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\TestData\*.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>TestData\%(Filename)%(Extension)</Link>
+    </None>
+  </ItemGroup>
+
 </Project>

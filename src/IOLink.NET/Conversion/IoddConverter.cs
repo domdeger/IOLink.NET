@@ -1,4 +1,3 @@
-using Conversion;
 using IOLink.NET.IODD.Resolution;
 
 namespace IOLink.NET.Conversion;

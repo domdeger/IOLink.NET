@@ -1,11 +1,11 @@
-namespace Conversion.Extensions;
+namespace IOLink.NET.Conversion.Extensions;
 
 public static class ByteArrayExtensions
 {
     /// <summary>
     /// If we have a negative integer, the resulting bytearray will be filled with 1s on the left, that may exceed the given bit length.
     /// This method will set the first (8 - bitLength % 8) bits to 0.
-    /// Requires big-endian byte array. 
+    /// Requires big-endian byte array.
     public static byte[] PinNegativeIntToRequiredBitLength(this byte[] data, ushort bitLength)
     {
         if (bitLength % 8 == 0)
@@ -17,7 +17,6 @@ public static class ByteArrayExtensions
         data[0] ^= mask;
         return data;
     }
-
 
     public static byte[] TruncateToBitLength(this byte[] data, ushort bitLength)
     {

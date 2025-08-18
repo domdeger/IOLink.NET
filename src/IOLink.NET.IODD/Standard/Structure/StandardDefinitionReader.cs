@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Xml.Linq;
 using IOLink.NET.IODD.Standard.Constants;
 
@@ -9,19 +10,17 @@ public static class StandardDefinitionReader
 
     static StandardDefinitionReader()
     {
-        var standardDefinitionPath = "./XML/IODD-StandardDefinitions1.1.xml";
+        var assembly = Assembly.GetExecutingAssembly();
+        var resourceName = "IOLink.NET.IODD.Standard.XML.IODD-StandardDefinitions1.1.xml";
 
-        if (!File.Exists(standardDefinitionPath))
-        {
-            throw new FileNotFoundException(
+        using var stream =
+            assembly.GetManifestResourceStream(resourceName)
+            ?? throw new FileNotFoundException(
                 $"IODD-StandardDefinitions1.1.xml must be present to use {nameof(StandardDefinitionReader)}"
             );
-        }
 
-        using (var reader = new StreamReader(standardDefinitionPath))
-        {
-            _ioddStandardDefinitions = XElement.Load(reader);
-        }
+        using var reader = new StreamReader(stream);
+        _ioddStandardDefinitions = XElement.Load(reader);
     }
 
     public static XElement GetVariableCollection()

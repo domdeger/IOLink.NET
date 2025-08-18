@@ -1,13 +1,11 @@
 using FluentAssertions;
-
-using IOLinkNET.Conversion;
-using IOLinkNET.Integration;
-using IOLinkNET.IODD.Provider;
-using IOLinkNET.IODD.Resolution.Common;
-using IOLinkNET.Vendors.Ifm;
-using IOLinkNET.Visualization.Menu;
-using IOLinkNET.Visualization.Structure.Structure;
-
+using IOLink.NET.Conversion;
+using IOLink.NET.Integration;
+using IOLink.NET.IODD.Provider;
+using IOLink.NET.IODD.Resolution.Common;
+using IOLink.NET.Vendors.Ifm;
+using IOLink.NET.Visualization.Menu;
+using IOLink.NET.Visualization.Structure.Structure;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
@@ -25,14 +23,18 @@ public class IoTCoreIntegrationTest
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var definitionProvider = new DeviceDefinitionProvider(new IODDFinderPublicClient());
-        var portReader = new IODDPortReader(masterConnection, definitionProvider, new IoddConverter(), new DefaultTypeResolverFactory());
+        var portReader = new IODDPortReader(
+            masterConnection,
+            definitionProvider,
+            new IoddConverter(),
+            new DefaultTypeResolverFactory()
+        );
 
         await portReader.InitializeForPortAsync(3);
 
         var result = await portReader.ReadConvertedProcessDataInAsync();
         result.Should().NotBeNull();
     }
-
 
     [Fact]
     public async Task ShouldConvertParameterDataAsync()
@@ -41,7 +43,12 @@ public class IoTCoreIntegrationTest
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var definitionProvider = new DeviceDefinitionProvider(new IODDFinderPublicClient());
-        var portReader = new IODDPortReader(masterConnection, definitionProvider, new IoddConverter(), new DefaultTypeResolverFactory());
+        var portReader = new IODDPortReader(
+            masterConnection,
+            definitionProvider,
+            new IoddConverter(),
+            new DefaultTypeResolverFactory()
+        );
 
         await portReader.InitializeForPortAsync(3);
 
@@ -56,7 +63,12 @@ public class IoTCoreIntegrationTest
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var definitionProvider = new DeviceDefinitionProvider(new IODDFinderPublicClient());
-        var portReader = new IODDPortReader(masterConnection, definitionProvider, new IoddConverter(), new DefaultTypeResolverFactory());
+        var portReader = new IODDPortReader(
+            masterConnection,
+            definitionProvider,
+            new IoddConverter(),
+            new DefaultTypeResolverFactory()
+        );
 
         await portReader.InitializeForPortAsync(3);
 
@@ -78,7 +90,12 @@ public class IoTCoreIntegrationTest
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
         var definitionProvider = new DeviceDefinitionProvider(new IODDFinderPublicClient());
-        var portReader = new IODDPortReader(masterConnection, definitionProvider, new IoddConverter(), new DefaultTypeResolverFactory());
+        var portReader = new IODDPortReader(
+            masterConnection,
+            definitionProvider,
+            new IoddConverter(),
+            new DefaultTypeResolverFactory()
+        );
         var menuDataReader = new MenuDataReader(portReader);
 
         await portReader.InitializeForPortAsync(3);
@@ -111,13 +128,11 @@ public class IoTCoreIntegrationTest
         V_ProductName?.Variable?.Id.Should().Be("V_ProductName");
         V_ProductName?.Value.Should().Be("TV7105");
 
-
         var V_ProductText = identificationMenuVariables?[2];
         V_ProductText.Should().NotBeNull();
         V_ProductText?.VariableId.Should().Be("V_ProductText");
         V_ProductText?.Variable?.Id.Should().Be("V_ProductText");
         V_ProductText?.Value.Should().Be("Electronic Temperature Sensor");
-
 
         var V_SerialNumber = identificationMenuVariables?[3];
         V_SerialNumber.Should().NotBeNull();
@@ -125,13 +140,11 @@ public class IoTCoreIntegrationTest
         V_SerialNumber?.Variable?.Id.Should().Be("V_SerialNumber");
         V_SerialNumber?.Value.Should().Be("100001845450");
 
-
         var V_HardwareRevision = identificationMenuVariables?[4];
         V_HardwareRevision.Should().NotBeNull();
         V_HardwareRevision?.VariableId.Should().Be("V_HardwareRevision");
         V_HardwareRevision?.Variable?.Id.Should().Be("V_HardwareRevision");
         V_HardwareRevision?.Value.Should().Be("AE");
-
 
         var V_FirmwareRevision = identificationMenuVariables?[5];
         V_FirmwareRevision.Should().NotBeNull();
@@ -139,11 +152,12 @@ public class IoTCoreIntegrationTest
         V_FirmwareRevision?.Variable?.Id.Should().Be("V_FirmwareRevision");
         V_FirmwareRevision?.Value.Should().Be("106  ");
 
-
         var V_ApplicationSpecificTag = identificationMenuVariables?[6];
         V_ApplicationSpecificTag.Should().NotBeNull();
         V_ApplicationSpecificTag?.VariableId.Should().Be("V_ApplicationSpecificTag");
         V_ApplicationSpecificTag?.Variable?.Id.Should().Be("V_ApplicationSpecificTag");
-        V_ApplicationSpecificTag?.Value.Should().Be("***\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
+        V_ApplicationSpecificTag
+            ?.Value.Should()
+            .Be("***\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
     }
 }
