@@ -31,6 +31,30 @@ runs:
   - name: Build Nuget Package for ${{ inputs.projectPath }}
     shell: bash
     working-directory: ${{ inputs.projectPath }}
-    run: dotnet pack --include-source --include-symbols /p:ContinuousIntegrationBuild=true /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} -c Release -o ${{ inputs.outputDirectory }}
+    run: |
+      echo "Building NuGet package for ${{ inputs.projectPath }}"
+      echo "Package version: ${{ steps.gitversion.outputs.nugetVersionV2 }}"
+      echo "Output directory: ${{ inputs.outputDirectory }}"
+      
+      # Create output directory if it doesn't exist
+      mkdir -p ${{ inputs.outputDirectory }}
+      
+      # Build the package
+      dotnet pack \
+        --include-source \
+        --include-symbols \
+        /p:ContinuousIntegrationBuild=true \
+        /p:PackageVersion=${{ steps.gitversion.outputs.nugetVersionV2 }} \
+        -c Release \
+        -o ${{ inputs.outputDirectory }}
+      
+      # Verify package was created
+      if [ ! "$(ls -A ${{ inputs.outputDirectory }})" ]; then
+        echo "ERROR: No package was created in ${{ inputs.outputDirectory }}"
+        exit 1
+      fi
+      
+      echo "Successfully created package(s):"
+      ls -la ${{ inputs.outputDirectory }}
 
     

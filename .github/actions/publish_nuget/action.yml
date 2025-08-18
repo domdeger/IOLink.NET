@@ -18,10 +18,12 @@ runs:
 
   - name: Publish Nuget Packages 
     shell: bash
-    working-directory: ${{ inputs.projectPath }}
     run: |
       for file in ${{ inputs.nugetPackageDirectory }}/*.nupkg; do
-        dotnet nuget push $file -k ${{ inputs.nugetApiKey }} -s ${{ inputs.nugetPackageSource }} --skip-duplicate
+        if [ -f "$file" ]; then
+          echo "Publishing $file to ${{ inputs.nugetPackageSource }}"
+          dotnet nuget push "$file" -k ${{ inputs.nugetApiKey }} -s ${{ inputs.nugetPackageSource }} --skip-duplicate
+        fi
       done
 
     
