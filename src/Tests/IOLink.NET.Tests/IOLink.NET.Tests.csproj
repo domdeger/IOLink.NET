@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NSubstitute" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IOLink.NET\IOLink.NET.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Core\IOLink.NET.Core.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.IODD\IOLink.NET.IODD.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
+  </ItemGroup>
+
+</Project>

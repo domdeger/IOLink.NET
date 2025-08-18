@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Vendors\Ifm\IOLinkNET.Vendors.Ifm.csproj" />
-    <ProjectReference Include="..\..\Integration\IOLinkNET.Integration.csproj" />
-    <ProjectReference Include="..\..\IODD.Provider\IOLinkNET.IODD.Provider.csproj" />
-    <ProjectReference Include="..\..\Visualization\IOLinkNET.Visualization.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Vendors.Ifm\IOLink.NET.Vendors.Ifm.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET\IOLink.NET.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.IODD\IOLink.NET.IODD.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
   </ItemGroup>
 
 </Project>
