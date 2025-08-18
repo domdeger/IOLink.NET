@@ -1,8 +1,8 @@
 ﻿using System.Xml.Linq;
-
 using IOLinkNET.IODD.Standard.Constants;
 
 namespace IOLinkNET.IODD.Standard.Structure;
+
 public static class StandardDefinitionReader
 {
     private static readonly XElement _ioddStandardDefinitions;
@@ -13,7 +13,9 @@ public static class StandardDefinitionReader
 
         if (!File.Exists(standardDefinitionPath))
         {
-            throw new FileNotFoundException($"IODD-StandardDefinitions1.1.xml must be present to use {nameof(StandardDefinitionReader)}");
+            throw new FileNotFoundException(
+                $"IODD-StandardDefinitions1.1.xml must be present to use {nameof(StandardDefinitionReader)}"
+            );
         }
 
         using (var reader = new StreamReader(standardDefinitionPath))
@@ -24,13 +26,23 @@ public static class StandardDefinitionReader
 
     public static XElement GetVariableCollection()
     {
-        var variableCollection = _ioddStandardDefinitions.Elements(IODDStandardDefinitionNames.VariableCollectionName).Single();
-        return variableCollection ?? throw new InvalidOperationException("VariableCollection cannot be null in standard definitions");
+        var variableCollection = _ioddStandardDefinitions
+            .Elements(IODDStandardDefinitionNames.VariableCollectionName)
+            .Single();
+        return variableCollection
+            ?? throw new InvalidOperationException(
+                "VariableCollection cannot be null in standard definitions"
+            );
     }
 
     public static XElement GetDatatypeCollection()
     {
-        var dataTypeCollection = _ioddStandardDefinitions.Elements(IODDStandardDefinitionNames.DatatypeCollectionName).Single();
-        return dataTypeCollection ?? throw new InvalidOperationException("DatatypeCollection cannot be null in standard definitions");
+        var dataTypeCollection = _ioddStandardDefinitions
+            .Elements(IODDStandardDefinitionNames.DatatypeCollectionName)
+            .Single();
+        return dataTypeCollection
+            ?? throw new InvalidOperationException(
+                "DatatypeCollection cannot be null in standard definitions"
+            );
     }
 }
