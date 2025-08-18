@@ -73,6 +73,11 @@ jobs:
         with:
           projectPath: ./src/IODD.Resolution
           outputDirectory: ../../npkgs
+      - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IODD.Standard
+        with:
+          projectPath: ./src/IODD.Standard
+          outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
         name: Build Nuget Package for IODD.Structure
@@ -153,13 +158,6 @@ jobs:
               gh release upload ${{ github.event.release.tag_name }} "$file" --clobber
             fi
           done
-
-      - uses: ./.github/actions/publish_nuget
-        name: Publish Nuget Packages to GitHub
-        with:
-          nugetApiKey: ${{ secrets.NUGET_API_KEY }}
-          nugetPackageSource: ${{ vars.NUGET_PACKAGE_SOURCE }}
-          nugetPackageDirectory: $PWD/packages
 
       - uses: ./.github/actions/publish_nuget
         name: Publish Nuget Packages to Nuget.org
