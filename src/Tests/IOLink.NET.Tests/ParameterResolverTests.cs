@@ -31,7 +31,7 @@ public class ParameterResolverTests
         recordParam!.Name.ShouldBe("V_Inversion_Record");
         recordParam!.Entries?.ShouldNotBeEmpty();
         recordParam!
-            .Entries.ElementAt(0)
+            .Entries?.ElementAt(0)
             .ShouldBe(
                 new(
                     new ParsableSimpleDatatypeDef(
@@ -45,7 +45,7 @@ public class ParameterResolverTests
                 )
             );
         recordParam!
-            .Entries.Last()
+            .Entries?.Last()
             .ShouldBe(
                 new ParsableRecordItem(
                     new ParsableSimpleDatatypeDef(

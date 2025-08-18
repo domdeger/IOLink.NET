@@ -157,7 +157,7 @@ public class IoTCoreIntegrationTest
         V_ApplicationSpecificTag?.VariableId.ShouldBe("V_ApplicationSpecificTag");
         V_ApplicationSpecificTag?.Variable?.Id.ShouldBe("V_ApplicationSpecificTag");
         V_ApplicationSpecificTag
-            ?.Value.ToString()
+            ?.Value?.ToString()
             .ShouldBe<string>("***\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0");
     }
 }
