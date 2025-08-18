@@ -43,55 +43,33 @@ jobs:
         run: mkdir -p $PWD/npkgs
 
       - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for Conversion
+        name: Build Nuget Package for IOLink.NET.Core
         with:
-          projectPath: ./src/Conversion
+          projectPath: ./src/IOLink.NET.Core
           outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for Integration
+        name: Build Nuget Package for IOLink.NET.IODD
         with:
-          projectPath: ./src/Integration
+          projectPath: ./src/IOLink.NET.IODD
           outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
+        name: Build Nuget Package for IOLink.NET
         with:
-          projectPath: ./src/Device
+          projectPath: ./src/IOLink.NET
           outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for IODD.Parser
+        name: Build Nuget Package for IOLink.NET.Vendors.Ifm
         with:
-          projectPath: ./src/IODD.Parser
+          projectPath: ./src/IOLink.NET.Vendors.Ifm
           outputDirectory: ../../npkgs
 
       - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for IODD.Provider
+        name: Build Nuget Package for IOLink.NET.Visualization
         with:
-          projectPath: ./src/IODD.Provider
-          outputDirectory: ../../npkgs
-
-      - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for IODD.Resolution
-        with:
-          projectPath: ./src/IODD.Resolution
-          outputDirectory: ../../npkgs
-      - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for IODD.Standard
-        with:
-          projectPath: ./src/IODD.Standard
-          outputDirectory: ../../npkgs
-
-      - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for IODD.Structure
-        with:
-          projectPath: ./src/IODD.Structure
-          outputDirectory: ../../npkgs
-
-      - uses: ./.github/actions/build_nuget
-        name: Build Nuget Package for Vendors.Ifm
-        with:
-          projectPath: ./src/Vendors/Ifm
+          projectPath: ./src/IOLink.NET.Visualization
           outputDirectory: ../../npkgs
 
       - name: Verify packages were created
