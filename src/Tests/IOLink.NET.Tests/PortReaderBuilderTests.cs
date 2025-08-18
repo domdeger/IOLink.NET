@@ -1,10 +1,10 @@
-using FluentAssertions;
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
 using IOLink.NET.IODD.Provider;
 using IOLink.NET.IODD.Resolution.Contracts;
 using NSubstitute;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -15,7 +15,7 @@ public class PortReaderBuilderTests
     {
         var builderAction = () => PortReaderBuilder.NewPortReader().Build();
 
-        builderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(builderAction);
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class PortReaderBuilderTests
                 .WithDeviceDefinitionProvider(Substitute.For<IDeviceDefinitionProvider>())
                 .Build();
 
-        builderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(builderAction);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class PortReaderBuilderTests
                 .WithMasterConnection(Substitute.For<IMasterConnection>())
                 .Build();
 
-        builderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(builderAction);
     }
 
     [Fact]
@@ -52,7 +52,7 @@ public class PortReaderBuilderTests
                 .WithDeviceDefinitionProvider(Substitute.For<IDeviceDefinitionProvider>())
                 .Build();
 
-        builderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(builderAction);
     }
 
     [Fact]
@@ -66,7 +66,7 @@ public class PortReaderBuilderTests
                 .WithIoddDataConverter(Substitute.For<IIoddDataConverter>())
                 .Build();
 
-        builderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(builderAction);
     }
 
     [Fact]
@@ -81,6 +81,6 @@ public class PortReaderBuilderTests
                 .WithTypeResolverFactory(Substitute.For<ITypeResolverFactory>())
                 .Build();
 
-        builderAction.Should().NotThrow();
+        Should.NotThrow(builderAction);
     }
 }

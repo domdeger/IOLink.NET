@@ -1,7 +1,7 @@
 using System.Reflection.Metadata;
-using FluentAssertions;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure.Datatypes;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -16,7 +16,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 4);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Theory]
@@ -26,7 +26,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 17);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Theory]
@@ -35,7 +35,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 32);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Theory]
@@ -47,7 +47,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Integer, 33);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Theory]
@@ -78,7 +78,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.UInteger, bitLength);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Theory]
@@ -88,7 +88,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableSimpleDatatypeDef("intp", KindOfSimpleType.Float, 32);
         byte[] result = IoddScalarWriter.Write(typeDef, value);
-        result.Should().BeEquivalentTo(expected);
+        result.ShouldBeEquivalentTo(expected);
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.ASCII);
         byte[] result = IoddScalarWriter.Write(typeDef, "Hello");
-        result.Should().BeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
+        result.ShouldBeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
     }
 
     [Fact]
@@ -104,8 +104,8 @@ public class IoddScalarWriterTests
     {
         var typeDef = new ParsableStringDef("intp", 32, StringTEncoding.UTF8);
         byte[] result = IoddScalarWriter.Write(typeDef, "Hello😀");
-        result
-            .Should()
-            .BeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0xF0, 0x9F, 0x98, 0x80 });
+        result.ShouldBeEquivalentTo(
+            new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0xF0, 0x9F, 0x98, 0x80 }
+        );
     }
 }

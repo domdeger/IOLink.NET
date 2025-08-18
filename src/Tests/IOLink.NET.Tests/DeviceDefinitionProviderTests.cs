@@ -13,6 +13,6 @@ public class DeviceDefinitionProviderTests
         var provider = new DeviceDefinitionProvider(client);
         var definition = await provider.GetDeviceDefinitionAsync(888, 200710, "50142212");
 
-        definition.ProfileBody.DeviceIdentity.VendorId.Should().Be(888);
+        definition.ProfileBody.DeviceIdentity.VendorId.ShouldBe((ushort)888);
     }
 }

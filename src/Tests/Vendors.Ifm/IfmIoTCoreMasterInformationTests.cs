@@ -1,4 +1,4 @@
-using FluentAssertions;
+using Shouldly;
 using IOLink.NET.Vendors.Ifm;
 using IOLink.NET.Vendors.Ifm.Data;
 using Vendors.Ifm.Configuration;
@@ -18,8 +18,8 @@ public class IfmIoTCoreMasterInformationTests
         var client = IfmIoTCoreClientFactory.Create(_baseUrl);
         var result = await client.GetMasterDeviceTagAsync(default);
 
-        result.Should().NotBeNull();
-        result.Data.Value.Should().NotBeNull();
+        result.ShouldNotBeNull();
+        result.Data.Value.ShouldNotBeNull();
     }
 
     [Fact]
@@ -29,8 +29,8 @@ public class IfmIoTCoreMasterInformationTests
         var req = new IfmIoTReadAcyclicRequest(3, 18, 0);
         var result = await client.GetDeviceAcyclicDataAsync(req, default);
 
-        result.Should().NotBeNull();
-        result.Data.Value.Should().NotBeNull();
+        result.ShouldNotBeNull();
+        result.Data.Value.ShouldNotBeNull();
     }
 
     [Fact]
@@ -40,8 +40,8 @@ public class IfmIoTCoreMasterInformationTests
         var req = new IfmIoTReadPdInRequest(3);
         var result = await client.GetDevicePdinDataAsync(req, default);
 
-        result.Should().NotBeNull();
-        result.Data.Value.Should().NotBeNull();
+        result.ShouldNotBeNull();
+        result.Data.Value.ShouldNotBeNull();
     }
 
     [Fact(Skip = "Devices not always have PDOut data")]
@@ -51,7 +51,7 @@ public class IfmIoTCoreMasterInformationTests
         var req = new IfmIoTReadPdOutRequest(3);
         var result = await client.GetDevicePdoutDataAsync(req, default);
 
-        result.Should().NotBeNull();
+        result.ShouldNotBeNull();
     }
 
     [Fact]
@@ -63,7 +63,7 @@ public class IfmIoTCoreMasterInformationTests
         );
         var result = await client.GetDataMultiAsync(req, default);
 
-        result.Should().NotBeNull();
+        result.ShouldNotBeNull();
     }
 
     [Fact]
@@ -73,6 +73,13 @@ public class IfmIoTCoreMasterInformationTests
         var req = new IfmIoTGetPortTreeRequest();
         var result = await client.GetPortTreeAsync(req, default);
 
-        result.Should().NotBeNull();
+        result.ShouldNotBeNull();
     }
 }
+
+
+
+
+
+
+

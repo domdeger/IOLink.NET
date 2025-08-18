@@ -12,7 +12,14 @@ public class IODDFinderPublicClientTests
         var client = new IODDFinderPublicClient(_baseUrl);
         var iodd = await client.GetIODDPackageAsync(888, 131329, "");
 
-        iodd.Should().NotBeNull();
-        iodd.CanRead.Should().BeTrue();
+        iodd.ShouldNotBeNull();
+        iodd.CanRead.ShouldBeTrue();
     }
 }
+
+
+
+
+
+
+

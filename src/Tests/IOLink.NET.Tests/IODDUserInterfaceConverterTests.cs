@@ -1,4 +1,3 @@
-﻿using FluentAssertions;
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
@@ -9,6 +8,7 @@ using IOLink.NET.IODD.Structure.Structure.Menu;
 using IOLink.NET.Visualization.IODDConversion;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -26,10 +26,7 @@ public class IODDUserInterfaceConverterTests
 
         var convertAction = () => ioddUserInterfaceConverter.Convert();
 
-        convertAction
-            .Should()
-            .Throw<ArgumentNullException>()
-            .WithMessage("*User Interface not present in IODD*");
+        Should.Throw<ArgumentNullException>(convertAction, "User Interface not present in IODD");
     }
 
     [Fact]
@@ -45,10 +42,10 @@ public class IODDUserInterfaceConverterTests
         );
         var convertAction = () => ioddUserInterfaceConverter.Convert();
 
-        convertAction
-            .Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage("*Observerrole Menu must provide Identification Menu*");
+        Should.Throw<InvalidOperationException>(
+            convertAction,
+            "Observerrole Menu must provide Identification Menu"
+        );
     }
 
     [Fact]
@@ -73,10 +70,10 @@ public class IODDUserInterfaceConverterTests
         );
         var convertAction = () => ioddUserInterfaceConverter.Convert();
 
-        convertAction
-            .Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage("*Maintenancerole Menu must provide Identification Menu*");
+        Should.Throw<InvalidOperationException>(
+            convertAction,
+            "Maintenancerole Menu must provide Identification Menu"
+        );
     }
 
     [Fact]
@@ -106,10 +103,10 @@ public class IODDUserInterfaceConverterTests
         );
         var convertAction = () => ioddUserInterfaceConverter.Convert();
 
-        convertAction
-            .Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage("*Specialistrole Menu must provide Identification Menu*");
+        Should.Throw<InvalidOperationException>(
+            convertAction,
+            "Specialistrole Menu must provide Identification Menu"
+        );
     }
 
     private static IODDPortReader GetSubstituteForIODDPortReader()

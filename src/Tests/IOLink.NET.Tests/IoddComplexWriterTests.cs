@@ -1,6 +1,6 @@
-using FluentAssertions;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure.Datatypes;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -18,8 +18,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(arrayType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(3); // 3 bytes for 3 8-bit elements
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(3); // 3 bytes for 3 8-bit elements
     }
 
     [Fact]
@@ -32,9 +32,7 @@ public class IoddComplexWriterTests
 
         // Act & Assert
         var act = () => IoddComplexWriter.Write(arrayType, values);
-        act.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Array length mismatch. Expected 3, got 2*");
+        Should.Throw<ArgumentException>(act, "Array length mismatch. Expected 3, got 2*");
     }
 
     [Fact]
@@ -47,9 +45,7 @@ public class IoddComplexWriterTests
 
         // Act & Assert
         var act = () => IoddComplexWriter.Write(arrayType, value);
-        act.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Value must be an enumerable for array types*");
+        Should.Throw<ArgumentException>(act, "Value must be an enumerable for array types*");
     }
 
     [Fact]
@@ -64,8 +60,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(arrayType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1); // 2 4-bit elements should fit in 1 byte
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1); // 2 4-bit elements should fit in 1 byte
     }
 
     [Fact]
@@ -92,8 +88,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(recordType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1); // 8 bits = 1 byte
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1); // 8 bits = 1 byte
     }
 
     [Fact]
@@ -122,9 +118,7 @@ public class IoddComplexWriterTests
 
         // Act & Assert
         var act = () => IoddComplexWriter.Write(recordType, values);
-        act.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Missing value for record item 'field2'*");
+        Should.Throw<ArgumentException>(act, "Missing value for record item 'field2'*");
     }
 
     [Fact]
@@ -143,9 +137,10 @@ public class IoddComplexWriterTests
 
         // Act & Assert
         var act = () => IoddComplexWriter.Write(recordType, value);
-        act.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("Value must be an enumerable of key-value pairs for record types*");
+        Should.Throw<ArgumentException>(
+            act,
+            "Value must be an enumerable of key-value pairs for record types*"
+        );
     }
 
     [Fact]
@@ -188,8 +183,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(recordType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(4); // 25 bits = 4 bytes (rounded up)
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(4); // 25 bits = 4 bytes (rounded up)
     }
 
     [Fact]
@@ -201,9 +196,10 @@ public class IoddComplexWriterTests
 
         // Act & Assert
         var act = () => IoddComplexWriter.Write(unsupportedType, value);
-        act.Should()
-            .Throw<InvalidOperationException>()
-            .WithMessage("Type TestUnsupportedComplexType is not supported.");
+        Should.Throw<InvalidOperationException>(
+            act,
+            "Type TestUnsupportedComplexType is not supported."
+        );
     }
 
     [Theory]
@@ -224,8 +220,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(arrayType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(length);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(length);
     }
 
     [Fact]
@@ -240,8 +236,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(arrayType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1); // 8 bits = 1 byte
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1); // 8 bits = 1 byte
     }
 
     [Fact]
@@ -288,8 +284,8 @@ public class IoddComplexWriterTests
         var result = IoddComplexWriter.Write(recordType, values);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1); // 8 bits = 1 byte
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1); // 8 bits = 1 byte
     }
 
     // Helper class for testing unsupported types

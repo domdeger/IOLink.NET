@@ -14,10 +14,17 @@ public class ProcessDataResolverTests
         var device = parser.Parse(XElement.Load(iodd));
         var pdResolver = new ProcessDataTypeResolver(device);
 
-        pdResolver.HasCondition().Should().Be(hasCondition);
+        pdResolver.HasCondition().ShouldBe(hasCondition);
 
         var parsablePdIn = pdResolver.ResolveProcessDataIn(condition);
-        parsablePdIn.Should().NotBeNull();
-        parsablePdIn.Should().BeOfType<ParsableRecord>();
+        parsablePdIn.ShouldNotBeNull();
+        parsablePdIn.ShouldBeOfType<ParsableRecord>();
     }
 }
+
+
+
+
+
+
+

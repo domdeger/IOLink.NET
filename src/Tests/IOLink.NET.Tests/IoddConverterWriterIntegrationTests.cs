@@ -1,9 +1,9 @@
 using System.Xml.Linq;
-using FluentAssertions;
 using IOLink.NET.Conversion;
 using IOLink.NET.IODD;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure.Datatypes;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -31,7 +31,7 @@ public class IoddConverterWriterIntegrationTests
         var resultBytes = converter.ConvertToBytes(convertedObjects!, convertibleType);
 
         // Assert
-        resultBytes.Should().BeEquivalentTo(originalData);
+        resultBytes.ShouldBeEquivalentTo(originalData);
     }
 
     [Fact]
@@ -72,9 +72,9 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(inputData, testRecord);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1);
-        result[0].Should().Be(0xFF); // 11111111 in binary
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1);
+        result[0].ShouldBe((byte)0xFF); // 11111111 in binary
     }
 
     [Fact]
@@ -176,8 +176,8 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(inputData, testRecord);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(14); // 112 bits = 14 bytes
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(14); // 112 bits = 14 bytes
     }
 
     [Fact]
@@ -193,8 +193,8 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(inputData, arrayType);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(8); // 4 * 16 bits = 64 bits = 8 bytes
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(8); // 4 * 16 bits = 64 bits = 8 bytes
     }
 
     [Fact]
@@ -247,8 +247,8 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(inputData, testRecord);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(5); // 33 bits = 5 bytes (rounded up)
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(5); // 33 bits = 5 bytes (rounded up)
     }
 
     [Fact]
@@ -263,8 +263,8 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(value, floatType);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(4); // 32 bits = 4 bytes
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(4); // 32 bits = 4 bytes
     }
 
     [Fact]
@@ -279,8 +279,8 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(value, stringType);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(value.Length);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(value.Length);
     }
 
     [Fact]
@@ -331,7 +331,7 @@ public class IoddConverterWriterIntegrationTests
         var result = converter.ConvertToBytes(inputData, testRecord);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(2); // 13 bits = 2 bytes (rounded up)
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(2); // 13 bits = 2 bytes (rounded up)
     }
 }

@@ -21,9 +21,9 @@ public class ParserTest
         IODDParser parser = new();
         var device = parser.Parse(XElement.Load(path));
 
-        device.Should().NotBeNull();
-        device.ProfileBody.DeviceIdentity.VendorId.Should().Be(expectedVendorId);
-        device.ProfileBody.DeviceIdentity.DeviceId.Should().Be(expectedDeviceId);
+        device.ShouldNotBeNull();
+        device.ProfileBody.DeviceIdentity.VendorId.ShouldBe(expectedVendorId);
+        device.ProfileBody.DeviceIdentity.DeviceId.ShouldBe(expectedDeviceId);
     }
 
     [Theory]
@@ -43,15 +43,14 @@ public class ParserTest
 
         if (hasMenus)
         {
-            device.ProfileBody.DeviceFunction.UserInterface.Should().NotBeNull();
+            device.ProfileBody.DeviceFunction.UserInterface.ShouldNotBeNull();
             device
                 .ProfileBody.DeviceFunction.UserInterface.MenuCollection?.Count()
-                .Should()
-                .Be(menuCollectionCount);
+                .ShouldBe(menuCollectionCount);
         }
         else
         {
-            device.ProfileBody.DeviceFunction.UserInterface.Should().BeNull();
+            device.ProfileBody.DeviceFunction.UserInterface.ShouldBeNull();
         }
     }
 
@@ -69,11 +68,10 @@ public class ParserTest
         IODDParser parser = new();
         var device = parser.Parse(XElement.Load(path));
 
-        device.ExternalTextCollection.Should().NotBeNull();
+        device.ExternalTextCollection.ShouldNotBeNull();
         device
             .ExternalTextCollection.TextDefinitions.Count()
-            .Should()
-            .Be(externalTextCollectionTextDefinitionCount);
+            .ShouldBe(externalTextCollectionTextDefinitionCount);
     }
 
     [Theory]
@@ -87,7 +85,7 @@ public class ParserTest
         IODDParser parser = new();
         var device = parser.Parse(XElement.Load(path));
 
-        device.StandardDatatypeCollection.Should().NotBeNull();
-        device.StandardDatatypeCollection.Should().HaveCount(2);
+        device.StandardDatatypeCollection.ShouldNotBeNull();
+        device.StandardDatatypeCollection.Count().ShouldBe(2);
     }
 }

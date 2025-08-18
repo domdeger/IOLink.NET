@@ -1,7 +1,7 @@
-using FluentAssertions;
 using IOLink.NET.Conversion;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure.Datatypes;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -20,9 +20,9 @@ public class IoddConverterWriterTests
         var result = _converter.ConvertToBytes(value, typeDef);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(1);
-        result[0].Should().Be(42);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(1);
+        result[0].ShouldBe((byte)42);
     }
 
     [Fact]
@@ -37,8 +37,8 @@ public class IoddConverterWriterTests
         var result = _converter.ConvertToBytes(values, arrayType);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(3);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(3);
     }
 
     [Fact]
@@ -65,8 +65,8 @@ public class IoddConverterWriterTests
         var result = _converter.ConvertToBytes(values, recordType);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().Be(2);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBe(2);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class IoddConverterWriterTests
 
         // Act & Assert
         var act = () => _converter.ConvertToBytes(value, unsupportedType);
-        act.Should().Throw<NotImplementedException>();
+        Should.Throw<NotImplementedException>(act);
     }
 
     [Theory]
@@ -99,8 +99,8 @@ public class IoddConverterWriterTests
         var result = _converter.ConvertToBytes(value, typeDef);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Length.Should().BeGreaterThan(0);
+        result.ShouldNotBeNull();
+        result.Length.ShouldBeGreaterThan(0);
     }
 
     [Fact]
@@ -114,8 +114,8 @@ public class IoddConverterWriterTests
         var result = _converter.ConvertToBytes(value, typeDef);
 
         // Assert
-        result.Should().NotBeNull();
-        result.Should().BeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
+        result.ShouldNotBeNull();
+        result.ShouldBeEquivalentTo(new byte[] { 0x48, 0x65, 0x6C, 0x6C, 0x6F });
     }
 
     [Fact]
@@ -130,7 +130,7 @@ public class IoddConverterWriterTests
         var convertedBack = _converter.Convert(typeDef, bytes);
 
         // Assert
-        convertedBack.Should().Be(originalValue);
+        convertedBack.ShouldBe(originalValue);
     }
 
     [Fact]
@@ -162,10 +162,10 @@ public class IoddConverterWriterTests
         var convertedBack = _converter.Convert(recordType, bytes) as IEnumerable<(string, object)>;
 
         // Assert
-        convertedBack.Should().NotBeNull();
+        convertedBack.ShouldNotBeNull();
         var resultDict = convertedBack!.ToDictionary(x => x.Item1, x => x.Item2);
-        resultDict["temperature"].Should().Be(-250);
-        resultDict["humidity"].Should().Be(65);
+        resultDict["temperature"].ShouldBe(-250);
+        resultDict["humidity"].ShouldBe(65);
     }
 
     [Fact]
@@ -181,9 +181,9 @@ public class IoddConverterWriterTests
         var convertedBack = _converter.Convert(arrayType, bytes) as IEnumerable<(string, object)>;
 
         // Assert
-        convertedBack.Should().NotBeNull();
+        convertedBack.ShouldNotBeNull();
         var resultList = convertedBack!.Select(x => x.Item2).ToArray();
-        resultList.Should().BeEquivalentTo(originalValues);
+        resultList.ShouldBeEquivalentTo(originalValues);
     }
 
     // Helper class for testing unsupported types

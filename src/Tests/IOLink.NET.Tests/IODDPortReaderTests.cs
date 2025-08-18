@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using FluentAssertions;
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
@@ -9,6 +8,7 @@ using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Resolution.Contracts;
 using IOLink.NET.IODD.Structure;
 using NSubstitute;
+using Shouldly;
 
 namespace IOLink.NET.Tests;
 
@@ -69,7 +69,7 @@ public class IODDPortReaderTests
 
         var initTask = () => portReader.InitializeForPortAsync(1);
 
-        await initTask.Should().ThrowAsync<InvalidOperationException>();
+        await Should.ThrowAsync<InvalidOperationException>(initTask);
     }
 
     [Fact]
@@ -90,7 +90,7 @@ public class IODDPortReaderTests
 
         var initTask = () => portReader.InitializeForPortAsync(1);
 
-        await initTask.Should().ThrowAsync<InvalidOperationException>();
+        await Should.ThrowAsync<InvalidOperationException>(initTask);
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class IODDPortReaderTests
         );
         var readParamTask = () => portReader.ReadConvertedParameterAsync(58, 0);
 
-        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+        await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
 
     [Fact]
@@ -120,7 +120,7 @@ public class IODDPortReaderTests
         );
         var readParamTask = portReader.ReadConvertedProcessDataInAsync;
 
-        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+        await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
 
     [Fact]
@@ -135,7 +135,7 @@ public class IODDPortReaderTests
         );
         var readParamTask = portReader.ReadConvertedProcessDataOutAsync;
 
-        await readParamTask.Should().ThrowAsync<InvalidOperationException>();
+        await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
 
     [Fact]
@@ -156,7 +156,7 @@ public class IODDPortReaderTests
 
         var pd =
             (await portReader.ReadConvertedProcessDataInAsync()) as IEnumerable<(string, object)>;
-        pd.Should().ContainEquivalentOf(("TN_PDI_Feuchte", 0));
+        pd.ShouldContain(("TN_PDI_Feuchte", 0));
     }
 
     [Theory]
@@ -186,7 +186,7 @@ public class IODDPortReaderTests
         await portReader.InitializeForPortAsync(1);
 
         var converted = await portReader.ReadConvertedParameterAsync(58, 0);
-        converted.Should().Be(4);
+        converted.ShouldBe(4);
     }
 
     private (IODDPortReader, IDeviceDefinitionProvider, IMasterConnection) PreparePortReader(

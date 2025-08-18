@@ -1,5 +1,5 @@
 using System.Xml.Linq;
-using FluentAssertions;
+using Shouldly;
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
@@ -19,7 +19,7 @@ public class MenuDataReaderTests
     public void CanInitializeMenuDataReader()
     {
         var menuDataReader = new MenuDataReader(GetSubstituteForIODDPortReader());
-        menuDataReader.Should().NotBeNull();
+        menuDataReader.ShouldNotBeNull();
     }
 
     [Fact]
@@ -28,7 +28,7 @@ public class MenuDataReaderTests
         var menuDataReaderAction = () =>
             new MenuDataReader(GetSubstituteForIODDPortReader()).GetIODDRawMenuStructure();
 
-        menuDataReaderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(menuDataReaderAction);
     }
 
     [Fact]
@@ -37,7 +37,7 @@ public class MenuDataReaderTests
         var menuDataReaderAction = () =>
             new MenuDataReader(GetSubstituteForIODDPortReader()).GetReadableMenus();
 
-        menuDataReaderAction.Should().Throw<InvalidOperationException>();
+        Should.Throw<InvalidOperationException>(menuDataReaderAction);
     }
 
     [Theory]
@@ -85,7 +85,7 @@ public class MenuDataReaderTests
         var readableMenus = menuDataReader.GetReadableMenus();
         await readableMenus.ReadAsync();
 
-        readableMenus.Should().NotBeNull();
+        readableMenus.ShouldNotBeNull();
     }
 
     [Theory]
@@ -132,13 +132,13 @@ public class MenuDataReaderTests
         await menuDataReader.InitializeForPortAsync(1);
         var rawMenuStructure = menuDataReader.GetIODDRawMenuStructure();
 
-        rawMenuStructure.Should().NotBeNull();
+        rawMenuStructure.ShouldNotBeNull();
 
-        rawMenuStructure.MaintenanceRoleMenuSet.IdentificationMenu.Should().NotBeNull();
-        rawMenuStructure.ObserverRoleMenuSet.IdentificationMenu.Should().NotBeNull();
-        rawMenuStructure.SpecialistRoleMenuSet.IdentificationMenu.Should().NotBeNull();
+        rawMenuStructure.MaintenanceRoleMenuSet.IdentificationMenu.ShouldNotBeNull();
+        rawMenuStructure.ObserverRoleMenuSet.IdentificationMenu.ShouldNotBeNull();
+        rawMenuStructure.SpecialistRoleMenuSet.IdentificationMenu.ShouldNotBeNull();
 
-        rawMenuStructure.MenuCollection.Count().Should().Be(menuCollectionCount);
+        rawMenuStructure.MenuCollection.Count().ShouldBe(menuCollectionCount);
     }
 
     private static IODDPortReader GetSubstituteForIODDPortReader()
@@ -222,3 +222,10 @@ public class MenuDataReaderTests
         return masterConnection;
     }
 }
+
+
+
+
+
+
+

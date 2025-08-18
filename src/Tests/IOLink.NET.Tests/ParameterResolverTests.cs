@@ -24,16 +24,15 @@ public class ParameterResolverTests
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(210);
-        param.Should().NotBeNull();
-        param.Should().BeOfType<ParsableRecord>();
+        param.ShouldNotBeNull();
+        param.ShouldBeOfType<ParsableRecord>();
         var recordParam = param as ParsableRecord;
 
-        recordParam!.Name.Should().Be("V_Inversion_Record");
-        recordParam!.Entries?.Should().NotBeEmpty();
+        recordParam!.Name.ShouldBe("V_Inversion_Record");
+        recordParam!.Entries?.ShouldNotBeEmpty();
         recordParam!
-            .Entries.Should()
-            .HaveElementAt(
-                0,
+            .Entries.ElementAt(0)
+            .ShouldBe(
                 new(
                     new ParsableSimpleDatatypeDef(
                         "TI_VAR_Inversion_P0P4",
@@ -46,8 +45,8 @@ public class ParameterResolverTests
                 )
             );
         recordParam!
-            .Entries.Should()
-            .EndWith(
+            .Entries.Last()
+            .ShouldBe(
                 new ParsableRecordItem(
                     new ParsableSimpleDatatypeDef(
                         "TI_VAR_Inversion_P3P2",
@@ -67,11 +66,12 @@ public class ParameterResolverTests
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(210, 1);
-        param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        param.ShouldNotBeNull();
+        param.ShouldBeOfType<ParsableSimpleDatatypeDef>();
 
         var simpleDatatype = param as ParsableSimpleDatatypeDef;
-        simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.Boolean);
-        simpleDatatype!.Name.Should().Be("V_Inversion_Record_1");
+        simpleDatatype!.Datatype.ShouldBe(KindOfSimpleType.Boolean);
+        simpleDatatype!.Name.ShouldBe("V_Inversion_Record_1");
     }
 
     [Fact]
@@ -80,11 +80,12 @@ public class ParameterResolverTests
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(112);
-        param.Should().NotBeNull().And.BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        param.ShouldNotBeNull();
+        param.ShouldBeOfType<ParsableSimpleDatatypeDef>();
 
         var simpleDatatype = param as ParsableSimpleDatatypeDef;
-        simpleDatatype!.Datatype.Should().Be(KindOfSimpleType.UInteger);
-        simpleDatatype!.Name.Should().Be("V_Diag_Level_Config");
+        simpleDatatype!.Datatype.ShouldBe(KindOfSimpleType.UInteger);
+        simpleDatatype!.Name.ShouldBe("V_Diag_Level_Config");
     }
 
     [Fact]
@@ -93,15 +94,16 @@ public class ParameterResolverTests
         var parameterResolver = new ParameterTypeResolver(_iodd);
 
         var param = parameterResolver.GetParameter(113);
-        param.Should().NotBeNull().And.BeOfType<ParsableArray>().And.NotBeNull();
+        param.ShouldNotBeNull();
+        param.ShouldBeOfType<ParsableArray>();
 
         var arrayParam =
             param as ParsableArray
             ?? throw new InvalidOperationException("Did not receive an array.");
-        arrayParam.Name.Should().Be("V_EventCodeSupp");
-        arrayParam.Length.Should().Be(5);
-        arrayParam.Type.Should().BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
-        arrayParam.Type.Datatype.Should().Be(KindOfSimpleType.UInteger);
-        arrayParam!.Type.Should().BeOfType<ParsableSimpleDatatypeDef>().And.NotBeNull();
+        arrayParam.Name.ShouldBe("V_EventCodeSupp");
+        arrayParam.Length.ShouldBe((ushort)5);
+        arrayParam.Type.ShouldBeOfType<ParsableSimpleDatatypeDef>();
+        arrayParam.Type.Datatype.ShouldBe(KindOfSimpleType.UInteger);
+        arrayParam!.Type.ShouldBeOfType<ParsableSimpleDatatypeDef>();
     }
 }
