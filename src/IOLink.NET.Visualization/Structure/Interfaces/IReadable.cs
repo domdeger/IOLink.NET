@@ -5,5 +5,5 @@ namespace IOLink.NET.Visualization.Structure.Interfaces;
 internal interface IReadable
 {
     IIODDPortReader IoddPortReader { get; }
-    Task ReadAsync();
+    Task ReadAsync(CancellationToken cancellationToken);
 }

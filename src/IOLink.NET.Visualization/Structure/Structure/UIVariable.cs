@@ -20,13 +20,15 @@ public record UIVariable(
 {
     public object? Value;
 
-    public async Task ReadAsync()
+    public async Task ReadAsync(CancellationToken cancellationToken)
     {
         if (Variable == null)
         {
             return;
         }
 
-        Value = await IoddPortReader.ReadConvertedParameterResultAsync(Variable.Index, 0);
+        Value = await IoddPortReader
+            .ReadConvertedParameterResultAsync(Variable.Index, 0, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

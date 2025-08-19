@@ -19,18 +19,16 @@ public class DeviceDefinitionProvider : IDeviceDefinitionProvider
         ushort vendorId,
         uint deviceId,
         string productId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
-        var ioddPackage = await _ioddProvider.GetIODDPackageAsync(
-            vendorId,
-            deviceId,
-            productId,
-            cancellationToken
-        );
+        var ioddPackage = await _ioddProvider
+            .GetIODDPackageAsync(vendorId, deviceId, productId, cancellationToken)
+            .ConfigureAwait(false);
 
         using var zipArchive = new ZipArchive(ioddPackage, ZipArchiveMode.Read);
-        var ioddXml = await FindMainIoddEntryAsync(zipArchive, cancellationToken);
+        var ioddXml = await FindMainIoddEntryAsync(zipArchive, cancellationToken)
+            .ConfigureAwait(false);
 
         return _ioddParser.Parse(
             ioddXml.Root ?? throw new InvalidOperationException("No root element found")
@@ -49,7 +47,9 @@ public class DeviceDefinitionProvider : IDeviceDefinitionProvider
         foreach (var xmlFile in xmlFiles)
         {
             using var xmlFileStream = xmlFile.Open();
-            var xml = await XDocument.LoadAsync(xmlFileStream, LoadOptions.None, cancellationToken);
+            var xml = await XDocument
+                .LoadAsync(xmlFileStream, LoadOptions.None, cancellationToken)
+                .ConfigureAwait(false);
             if (IODDParser.IsIODDFile(xml))
             {
                 return xml;

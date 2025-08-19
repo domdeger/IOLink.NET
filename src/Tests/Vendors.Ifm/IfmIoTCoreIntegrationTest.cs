@@ -31,9 +31,9 @@ public class IoTCoreIntegrationTest
             new DefaultTypeResolverFactory()
         );
 
-        await portReader.InitializeForPortAsync(3);
+        await portReader.InitializeForPortAsync(3, CancellationToken.None);
 
-        var result = await portReader.ReadConvertedProcessDataInResultAsync();
+        var result = await portReader.ReadConvertedProcessDataInResultAsync(CancellationToken.None);
         result.ShouldNotBeNull();
     }
 
@@ -51,9 +51,13 @@ public class IoTCoreIntegrationTest
             new DefaultTypeResolverFactory()
         );
 
-        await portReader.InitializeForPortAsync(3);
+        await portReader.InitializeForPortAsync(3, CancellationToken.None);
 
-        var result500 = await portReader.ReadConvertedParameterResultAsync(561, 0);
+        var result500 = await portReader.ReadConvertedParameterResultAsync(
+            561,
+            0,
+            CancellationToken.None
+        );
         result500.ShouldNotBeNull();
     }
 
@@ -71,12 +75,28 @@ public class IoTCoreIntegrationTest
             new DefaultTypeResolverFactory()
         );
 
-        await portReader.InitializeForPortAsync(3);
+        await portReader.InitializeForPortAsync(3, CancellationToken.None);
 
-        var V_SP_FH1_result = await portReader.ReadConvertedParameterResultAsync(583, 0);
-        var rP_FL1_result = await portReader.ReadConvertedParameterResultAsync(584, 0);
-        var dS1_result = await portReader.ReadConvertedParameterResultAsync(581, 0);
-        var dr1_result = await portReader.ReadConvertedParameterResultAsync(582, 0);
+        var V_SP_FH1_result = await portReader.ReadConvertedParameterResultAsync(
+            583,
+            0,
+            CancellationToken.None
+        );
+        var rP_FL1_result = await portReader.ReadConvertedParameterResultAsync(
+            584,
+            0,
+            CancellationToken.None
+        );
+        var dS1_result = await portReader.ReadConvertedParameterResultAsync(
+            581,
+            0,
+            CancellationToken.None
+        );
+        var dr1_result = await portReader.ReadConvertedParameterResultAsync(
+            582,
+            0,
+            CancellationToken.None
+        );
 
         var V_SP_FH1 = (V_SP_FH1_result as ScalarResult)?.Value;
         var rP_FL1 = (rP_FL1_result as ScalarResult)?.Value;
@@ -104,11 +124,11 @@ public class IoTCoreIntegrationTest
         );
         var menuDataReader = new MenuDataReader(portReader);
 
-        await portReader.InitializeForPortAsync(3);
-        await menuDataReader.InitializeForPortAsync(3);
+        await portReader.InitializeForPortAsync(3, CancellationToken.None);
+        await menuDataReader.InitializeForPortAsync(3, CancellationToken.None);
 
         var readableMenus = menuDataReader.GetReadableMenus();
-        await readableMenus.ReadAsync();
+        await readableMenus.ReadAsync(CancellationToken.None);
 
         readableMenus.ObserverRoleMenu.IdentificationMenu.ShouldNotBeNull();
         readableMenus.MaintenanceRoleMenu.IdentificationMenu.ShouldNotBeNull();

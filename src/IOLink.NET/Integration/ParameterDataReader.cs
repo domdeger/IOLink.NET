@@ -30,16 +30,20 @@ public class ParameterDataReader
     public async Task<ConversionResult> ReadParameterAsync(
         PortContext context,
         ushort index,
-        byte subindex
+        byte subindex,
+        CancellationToken cancellationToken
     )
     {
         var paramTypeDef = context.ParameterTypeResolver.GetParameter(index, subindex);
 
-        var value = await _connection.ReadIndexAsync(
-            context.Port,
-            index,
-            paramTypeDef.SubindexAccessSupported ? subindex : (byte)0
-        );
+        var value = await _connection
+            .ReadIndexAsync(
+                context.Port,
+                index,
+                cancellationToken,
+                paramTypeDef.SubindexAccessSupported ? subindex : (byte)0
+            )
+            .ConfigureAwait(false);
 
         var convertedValue = _converter.Convert(paramTypeDef, value.Span);
         return _resultWrapper.WrapConversionResult(convertedValue);
@@ -51,21 +55,26 @@ public class ParameterDataReader
     /// <param name="context">The port context.</param>
     /// <param name="index">The parameter index.</param>
     /// <param name="subindex">The parameter subindex.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The raw converted object.</returns>
     [Obsolete("Use ReadParameterAsync instead for better type safety.")]
     public async Task<object> ReadParameterRawAsync(
         PortContext context,
         ushort index,
-        byte subindex
+        byte subindex,
+        CancellationToken cancellationToken
     )
     {
         var paramTypeDef = context.ParameterTypeResolver.GetParameter(index, subindex);
 
-        var value = await _connection.ReadIndexAsync(
-            context.Port,
-            index,
-            paramTypeDef.SubindexAccessSupported ? subindex : (byte)0
-        );
+        var value = await _connection
+            .ReadIndexAsync(
+                context.Port,
+                index,
+                cancellationToken,
+                paramTypeDef.SubindexAccessSupported ? subindex : (byte)0
+            )
+            .ConfigureAwait(false);
 
         var convertedValue = _converter.Convert(paramTypeDef, value.Span);
         return convertedValue;

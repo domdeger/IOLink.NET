@@ -21,7 +21,7 @@ public record UIRecordItem(
 {
     public object? Value;
 
-    public async Task ReadAsync()
+    public async Task ReadAsync(CancellationToken cancellationToken)
     {
         if (Variable == null)
         {
@@ -30,18 +30,21 @@ public record UIRecordItem(
 
         if (VariableId == "V_ProcessDataInput")
         {
-            Value = await IoddPortReader.ReadConvertedProcessDataInResultAsync();
+            Value = await IoddPortReader
+                .ReadConvertedProcessDataInResultAsync(cancellationToken)
+                .ConfigureAwait(false);
         }
         else if (VariableId == "V_ProcessDataOutput")
         {
-            Value = await IoddPortReader.ReadConvertedProcessDataOutResultAsync();
+            Value = await IoddPortReader
+                .ReadConvertedProcessDataOutResultAsync(cancellationToken)
+                .ConfigureAwait(false);
         }
         else
         {
-            Value = await IoddPortReader.ReadConvertedParameterResultAsync(
-                Variable.Index,
-                SubIndex
-            );
+            Value = await IoddPortReader
+                .ReadConvertedParameterResultAsync(Variable.Index, SubIndex, cancellationToken)
+                .ConfigureAwait(false);
         }
     }
 }

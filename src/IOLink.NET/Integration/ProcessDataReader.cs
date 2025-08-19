@@ -24,16 +24,22 @@ public class ProcessDataReader
     /// Reads and converts process data input, returning a typed result.
     /// </summary>
     /// <param name="context">The port context.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
     /// <exception cref="InvalidOperationException">Thrown when device has no process data in declared.</exception>
-    public async Task<ConversionResult> ReadProcessDataInAsync(PortContext context)
+    public async Task<ConversionResult> ReadProcessDataInAsync(
+        PortContext context,
+        CancellationToken cancellationToken
+    )
     {
         if (context.PdIn is null)
         {
             throw new InvalidOperationException("Device has no process data in declared.");
         }
 
-        var value = await _connection.ReadProcessDataInAsync(context.Port);
+        var value = await _connection
+            .ReadProcessDataInAsync(context.Port, cancellationToken)
+            .ConfigureAwait(false);
         var convertedValue = _converter.Convert(context.PdIn, value.Span);
         return _resultWrapper.WrapConversionResult(convertedValue);
     }
@@ -42,16 +48,22 @@ public class ProcessDataReader
     /// Reads and converts process data output, returning a typed result.
     /// </summary>
     /// <param name="context">The port context.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
     /// <exception cref="InvalidOperationException">Thrown when device has no process data out declared.</exception>
-    public async Task<ConversionResult> ReadProcessDataOutAsync(PortContext context)
+    public async Task<ConversionResult> ReadProcessDataOutAsync(
+        PortContext context,
+        CancellationToken cancellationToken
+    )
     {
         if (context.PdOut is null)
         {
             throw new InvalidOperationException("Device has no process data out declared.");
         }
 
-        var value = await _connection.ReadProcessDataOutAsync(context.Port);
+        var value = await _connection
+            .ReadProcessDataOutAsync(context.Port, cancellationToken)
+            .ConfigureAwait(false);
         var convertedValue = _converter.Convert(context.PdOut, value.Span);
         return _resultWrapper.WrapConversionResult(convertedValue);
     }
@@ -60,16 +72,22 @@ public class ProcessDataReader
     /// Reads and converts process data input, returning the raw object (obsolete method).
     /// </summary>
     /// <param name="context">The port context.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The raw converted object.</returns>
     [Obsolete("Use ReadProcessDataInAsync instead for better type safety.")]
-    public async Task<object> ReadProcessDataInRawAsync(PortContext context)
+    public async Task<object> ReadProcessDataInRawAsync(
+        PortContext context,
+        CancellationToken cancellationToken
+    )
     {
         if (context.PdIn is null)
         {
             throw new InvalidOperationException("Device has no process data in declared.");
         }
 
-        var value = await _connection.ReadProcessDataInAsync(context.Port);
+        var value = await _connection
+            .ReadProcessDataInAsync(context.Port, cancellationToken)
+            .ConfigureAwait(false);
         var convertedValue = _converter.Convert(context.PdIn, value.Span);
         return convertedValue;
     }
@@ -78,16 +96,22 @@ public class ProcessDataReader
     /// Reads and converts process data output, returning the raw object (obsolete method).
     /// </summary>
     /// <param name="context">The port context.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>The raw converted object.</returns>
     [Obsolete("Use ReadProcessDataOutAsync instead for better type safety.")]
-    public async Task<object> ReadProcessDataOutRawAsync(PortContext context)
+    public async Task<object> ReadProcessDataOutRawAsync(
+        PortContext context,
+        CancellationToken cancellationToken
+    )
     {
         if (context.PdOut is null)
         {
             throw new InvalidOperationException("Device has no process data out declared.");
         }
 
-        var value = await _connection.ReadProcessDataOutAsync(context.Port);
+        var value = await _connection
+            .ReadProcessDataOutAsync(context.Port, cancellationToken)
+            .ConfigureAwait(false);
         var convertedValue = _converter.Convert(context.PdOut, value.Span);
         return convertedValue;
     }

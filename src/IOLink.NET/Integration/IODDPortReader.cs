@@ -50,15 +50,23 @@ public class IODDPortReader : IIODDPortReader
         }
     }
 
-    public async Task InitializeForPortAsync(byte port)
+    public async Task InitializeForPortAsync(byte port, CancellationToken cancellationToken)
     {
-        _portContext = await _portInitializer.InitializePortAsync(port);
+        _portContext = await _portInitializer
+            .InitializePortAsync(port, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     [Obsolete("Use ReadConvertedParameterResultAsync instead for better type safety.")]
-    public virtual async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
+    public virtual async Task<object> ReadConvertedParameterAsync(
+        ushort index,
+        byte subindex,
+        CancellationToken cancellationToken
+    )
     {
-        return await _parameterDataReader.ReadParameterRawAsync(PortContext, index, subindex);
+        return await _parameterDataReader
+            .ReadParameterRawAsync(PortContext, index, subindex, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
@@ -66,42 +74,60 @@ public class IODDPortReader : IIODDPortReader
     /// </summary>
     /// <param name="index">The parameter index.</param>
     /// <param name="subindex">The parameter subindex.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
     public virtual async Task<ConversionResult> ReadConvertedParameterResultAsync(
         ushort index,
-        byte subindex
+        byte subindex,
+        CancellationToken cancellationToken
     )
     {
-        return await _parameterDataReader.ReadParameterAsync(PortContext, index, subindex);
+        return await _parameterDataReader
+            .ReadParameterAsync(PortContext, index, subindex, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     [Obsolete("Use ReadConvertedProcessDataInResultAsync instead for better type safety.")]
-    public async Task<object> ReadConvertedProcessDataInAsync()
+    public async Task<object> ReadConvertedProcessDataInAsync(CancellationToken cancellationToken)
     {
-        return await _processDataReader.ReadProcessDataInRawAsync(PortContext);
+        return await _processDataReader
+            .ReadProcessDataInRawAsync(PortContext, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
     /// Reads and converts process data input, returning a typed result that distinguishes between scalar and complex values.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
-    public async Task<ConversionResult> ReadConvertedProcessDataInResultAsync()
+    public async Task<ConversionResult> ReadConvertedProcessDataInResultAsync(
+        CancellationToken cancellationToken
+    )
     {
-        return await _processDataReader.ReadProcessDataInAsync(PortContext);
+        return await _processDataReader
+            .ReadProcessDataInAsync(PortContext, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     [Obsolete("Use ReadConvertedProcessDataOutResultAsync instead for better type safety.")]
-    public async Task<object> ReadConvertedProcessDataOutAsync()
+    public async Task<object> ReadConvertedProcessDataOutAsync(CancellationToken cancellationToken)
     {
-        return await _processDataReader.ReadProcessDataOutRawAsync(PortContext);
+        return await _processDataReader
+            .ReadProcessDataOutRawAsync(PortContext, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>
     /// Reads and converts process data output, returning a typed result that distinguishes between scalar and complex values.
     /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
-    public async Task<ConversionResult> ReadConvertedProcessDataOutResultAsync()
+    public async Task<ConversionResult> ReadConvertedProcessDataOutResultAsync(
+        CancellationToken cancellationToken
+    )
     {
-        return await _processDataReader.ReadProcessDataOutAsync(PortContext);
+        return await _processDataReader
+            .ReadProcessDataOutAsync(PortContext, cancellationToken)
+            .ConfigureAwait(false);
     }
 }

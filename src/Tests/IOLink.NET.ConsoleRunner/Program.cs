@@ -19,10 +19,10 @@ Console.WriteLine("Reading Process & Acyclic data from configured master.");
 while (true)
 {
     // Read the process data from the device.
-    var processData = await portReader.ReadConvertedProcessDataInAsync(CancellationToken.None);
+    var processData = await portReader.ReadConvertedProcessDataInResultAsync(default);
 
     // Read the parameter 19, subindex 0 from the device. It is device specific what this parameter represents or if it is even available.
-    var parameter = await portReader.ReadConvertedParameterAsync(19, 0, CancellationToken.None);
+    var parameter = await portReader.ReadConvertedParameterAsync(19, 0, default);
     if (parameter is List<ValueTuple<string, object>> parameterValues)
     {
         // Print the parameter values to the console.

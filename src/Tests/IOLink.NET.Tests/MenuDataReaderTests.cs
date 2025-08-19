@@ -79,11 +79,11 @@ public class MenuDataReaderTests
             ioddPath
         );
         masterConnection
-            .ReadProcessDataInAsync(1)
+            .ReadProcessDataInAsync(1, Arg.Any<CancellationToken>())
             .Returns(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x0, 0x0, 0x0, 0x0 });
-        await menuDataReader.InitializeForPortAsync(1);
+        await menuDataReader.InitializeForPortAsync(1, CancellationToken.None);
         var readableMenus = menuDataReader.GetReadableMenus();
-        await readableMenus.ReadAsync();
+        await readableMenus.ReadAsync(CancellationToken.None);
 
         readableMenus.ShouldNotBeNull();
     }
@@ -129,7 +129,7 @@ public class MenuDataReaderTests
             vendorName,
             ioddPath
         );
-        await menuDataReader.InitializeForPortAsync(1);
+        await menuDataReader.InitializeForPortAsync(1, CancellationToken.None);
         var rawMenuStructure = menuDataReader.GetIODDRawMenuStructure();
 
         rawMenuStructure.ShouldNotBeNull();
@@ -189,7 +189,11 @@ public class MenuDataReaderTests
         var menuDataReader = new MenuDataReader(portReader);
 
         portReader
-            .ReadConvertedParameterAsync(Arg.Any<ushort>(), Arg.Any<byte>())
+            .ReadConvertedParameterAsync(
+                Arg.Any<ushort>(),
+                Arg.Any<byte>(),
+                Arg.Any<CancellationToken>()
+            )
             .Returns(string.Empty);
 
         return (portReader, ioddProvider, masterConnection, menuDataReader);
@@ -216,7 +220,7 @@ public class MenuDataReaderTests
         masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>()).Returns(portInfo);
 
         masterConnection
-            .ReadIndexAsync(portInfo.PortNumber, Arg.Any<ushort>())
+            .ReadIndexAsync(portInfo.PortNumber, Arg.Any<ushort>(), Arg.Any<CancellationToken>())
             .Returns(new byte[] { 0 });
 
         return masterConnection;

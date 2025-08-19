@@ -6,6 +6,12 @@
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/samples/02_read_process_data_from_ifm_iotcore/02_read_process_data_from_ifm_iotcore.csproj"
+        },
+        {
+            "name": "C#: IOLink.NET.ConsoleRunner",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Tests/IOLink.NET.ConsoleRunner/IOLink.NET.ConsoleRunner.csproj"
         }
     ]
 }

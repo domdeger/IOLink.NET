@@ -45,7 +45,7 @@ public class IODDPortReaderTests
             ioddPath
         );
 
-        await portReader.InitializeForPortAsync(1);
+        await portReader.InitializeForPortAsync(1, CancellationToken.None);
 
         await ioddProvider
             .Received()
@@ -67,7 +67,7 @@ public class IODDPortReaderTests
         portInfo.Status.Returns(PortStatus.Connected);
         masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>()).Returns(portInfo);
 
-        var initTask = () => portReader.InitializeForPortAsync(1);
+        var initTask = () => portReader.InitializeForPortAsync(1, CancellationToken.None);
 
         await Should.ThrowAsync<InvalidOperationException>(initTask);
     }
@@ -88,7 +88,7 @@ public class IODDPortReaderTests
 
         masterConnection.GetPortInformationAsync(1, Arg.Any<CancellationToken>()).Returns(portInfo);
 
-        var initTask = () => portReader.InitializeForPortAsync(1);
+        var initTask = () => portReader.InitializeForPortAsync(1, CancellationToken.None);
 
         await Should.ThrowAsync<InvalidOperationException>(initTask);
     }
@@ -103,7 +103,8 @@ public class IODDPortReaderTests
             "Balluff",
             "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml"
         );
-        var readParamTask = () => portReader.ReadConvertedParameterAsync(58, 0);
+        var readParamTask = () =>
+            portReader.ReadConvertedParameterAsync(58, 0, CancellationToken.None);
 
         await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
@@ -118,7 +119,8 @@ public class IODDPortReaderTests
             "Balluff",
             "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml"
         );
-        var readParamTask = portReader.ReadConvertedProcessDataInAsync;
+        var readParamTask = async () =>
+            await portReader.ReadConvertedProcessDataInAsync(CancellationToken.None);
 
         await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
@@ -133,7 +135,8 @@ public class IODDPortReaderTests
             "Balluff",
             "TestData/Balluff-BCS_R08RRE-PIM80C-20150206-IODD1.1.xml"
         );
-        var readParamTask = portReader.ReadConvertedProcessDataOutAsync;
+        var readParamTask = async () =>
+            await portReader.ReadConvertedProcessDataOutAsync(CancellationToken.None);
 
         await Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
@@ -148,14 +151,17 @@ public class IODDPortReaderTests
             "STEGO",
             "TestData/STEGO-SmartSensor-CSS014-08-20190726-IODD1.1.xml"
         );
-        masterConnection.ReadIndexAsync(1, 66).Returns(new byte[] { 0x00 });
         masterConnection
-            .ReadProcessDataInAsync(1)
+            .ReadIndexAsync(1, 66, Arg.Any<CancellationToken>())
+            .Returns(new byte[] { 0x00 });
+        masterConnection
+            .ReadProcessDataInAsync(1, Arg.Any<CancellationToken>())
             .Returns(new byte[] { 0x00, 0x00, 0x00, 0x00, 0x0, 0x0, 0x0, 0x0 });
-        await portReader.InitializeForPortAsync(1);
+        await portReader.InitializeForPortAsync(1, CancellationToken.None);
 
         var pd =
-            (await portReader.ReadConvertedProcessDataInAsync()) as IEnumerable<(string, object)>;
+            (await portReader.ReadConvertedProcessDataInAsync(CancellationToken.None))
+            as IEnumerable<(string, object)>;
         pd.ShouldNotBeNull();
 
         // Debug: Let's examine what's actually in the collection
@@ -188,10 +194,12 @@ public class IODDPortReaderTests
             vendorName,
             ioddPath
         );
-        masterConnection.ReadIndexAsync(1, 58).Returns(new byte[] { 0x00, 0x00, 0x00, 0x04 });
-        await portReader.InitializeForPortAsync(1);
+        masterConnection
+            .ReadIndexAsync(1, 58, Arg.Any<CancellationToken>())
+            .Returns(new byte[] { 0x00, 0x00, 0x00, 0x04 });
+        await portReader.InitializeForPortAsync(1, CancellationToken.None);
 
-        var converted = await portReader.ReadConvertedParameterAsync(58, 0);
+        var converted = await portReader.ReadConvertedParameterAsync(58, 0, CancellationToken.None);
         converted.ShouldBe(4);
     }
 

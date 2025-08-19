@@ -4,5 +4,10 @@ namespace IOLink.NET.IODD.Provider;
 
 public interface IDeviceDefinitionProvider
 {
-    Task<IODevice> GetDeviceDefinitionAsync(ushort vendorId, uint deviceId, string productId, CancellationToken cancellationToken = default);
+    Task<IODevice> GetDeviceDefinitionAsync(
+        ushort vendorId,
+        uint deviceId,
+        string productId,
+        CancellationToken cancellationToken
+    );
 }

@@ -14,13 +14,13 @@ public record UIMenu(
     IIODDPortReader IoddPortReader
 ) : IReadable
 {
-    public async Task ReadAsync()
+    public async Task ReadAsync(CancellationToken cancellationToken)
     {
         if (Variables is not null)
         {
             foreach (UIVariable variable in Variables)
             {
-                await variable.ReadAsync();
+                await variable.ReadAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -28,7 +28,7 @@ public record UIMenu(
         {
             foreach (UIMenu subMenu in SubMenus)
             {
-                await subMenu.ReadAsync();
+                await subMenu.ReadAsync(cancellationToken).ConfigureAwait(false);
             }
         }
 
@@ -36,7 +36,7 @@ public record UIMenu(
         {
             foreach (UIRecordItem recordItem in RecordItems)
             {
-                await recordItem.ReadAsync();
+                await recordItem.ReadAsync(cancellationToken).ConfigureAwait(false);
             }
         }
     }

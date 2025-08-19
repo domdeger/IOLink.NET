@@ -10,10 +10,10 @@ public record UIInterface(
     IIODDPortReader IoddPortReader
 ) : IReadable
 {
-    public async Task ReadAsync()
+    public async Task ReadAsync(CancellationToken cancellationToken)
     {
-        await ObserverRoleMenu.ReadAsync();
-        await MaintenanceRoleMenu.ReadAsync();
-        await SpecialistRoleMenu.ReadAsync();
+        await ObserverRoleMenu.ReadAsync(cancellationToken).ConfigureAwait(false);
+        await MaintenanceRoleMenu.ReadAsync(cancellationToken).ConfigureAwait(false);
+        await SpecialistRoleMenu.ReadAsync(cancellationToken).ConfigureAwait(false);
     }
 }

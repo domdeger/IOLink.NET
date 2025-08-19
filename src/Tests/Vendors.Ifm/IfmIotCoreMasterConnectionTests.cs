@@ -16,7 +16,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterClient = IfmIoTCoreClientFactory.Create(_baseUrl);
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
-        var result = await masterConnection.GetPortCountAsync();
+        var result = await masterConnection.GetPortCountAsync(CancellationToken.None);
         result.ShouldBe((byte)4);
     }
 
@@ -26,7 +26,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterClient = IfmIoTCoreClientFactory.Create(_baseUrl);
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
-        var result = await masterConnection.GetPortInformationAsync(3);
+        var result = await masterConnection.GetPortInformationAsync(3, CancellationToken.None);
         result.ShouldNotBeNull();
     }
 
@@ -36,7 +36,7 @@ public class IfmIotCoreMasterConnectionTests
         var masterClient = IfmIoTCoreClientFactory.Create(_baseUrl);
         var masterConnection = new IfmIotCoreMasterConnection(masterClient);
 
-        var result = await masterConnection.GetPortInformationsAsync();
+        var result = await masterConnection.GetPortInformationsAsync(CancellationToken.None);
         result.ShouldNotBeNull();
         result.Length.ShouldBe(4);
     }
