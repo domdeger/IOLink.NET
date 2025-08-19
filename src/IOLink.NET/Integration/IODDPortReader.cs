@@ -58,15 +58,18 @@ public class IODDPortReader : IIODDPortReader
     }
 
     [Obsolete("Use ReadConvertedParameterResultAsync instead for better type safety.")]
-    public virtual async Task<object> ReadConvertedParameterAsync(
+    public virtual Task<object> ReadConvertedParameterAsync(
         ushort index,
         byte subindex,
         CancellationToken cancellationToken
     )
     {
-        return await _parameterDataReader
-            .ReadParameterRawAsync(PortContext, index, subindex, cancellationToken)
-            .ConfigureAwait(false);
+        return _parameterDataReader.ReadParameterRawAsync(
+            PortContext,
+            index,
+            subindex,
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -76,23 +79,24 @@ public class IODDPortReader : IIODDPortReader
     /// <param name="subindex">The parameter subindex.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
-    public virtual async Task<ConversionResult> ReadConvertedParameterResultAsync(
+    public virtual Task<ConversionResult> ReadConvertedParameterResultAsync(
         ushort index,
         byte subindex,
         CancellationToken cancellationToken
     )
     {
-        return await _parameterDataReader
-            .ReadParameterAsync(PortContext, index, subindex, cancellationToken)
-            .ConfigureAwait(false);
+        return _parameterDataReader.ReadParameterAsync(
+            PortContext,
+            index,
+            subindex,
+            cancellationToken
+        );
     }
 
     [Obsolete("Use ReadConvertedProcessDataInResultAsync instead for better type safety.")]
-    public async Task<object> ReadConvertedProcessDataInAsync(CancellationToken cancellationToken)
+    public Task<object> ReadConvertedProcessDataInAsync(CancellationToken cancellationToken)
     {
-        return await _processDataReader
-            .ReadProcessDataInRawAsync(PortContext, cancellationToken)
-            .ConfigureAwait(false);
+        return _processDataReader.ReadProcessDataInRawAsync(PortContext, cancellationToken);
     }
 
     /// <summary>
@@ -100,21 +104,17 @@ public class IODDPortReader : IIODDPortReader
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
-    public async Task<ConversionResult> ReadConvertedProcessDataInResultAsync(
+    public Task<ConversionResult> ReadConvertedProcessDataInResultAsync(
         CancellationToken cancellationToken
     )
     {
-        return await _processDataReader
-            .ReadProcessDataInAsync(PortContext, cancellationToken)
-            .ConfigureAwait(false);
+        return _processDataReader.ReadProcessDataInAsync(PortContext, cancellationToken);
     }
 
     [Obsolete("Use ReadConvertedProcessDataOutResultAsync instead for better type safety.")]
-    public async Task<object> ReadConvertedProcessDataOutAsync(CancellationToken cancellationToken)
+    public Task<object> ReadConvertedProcessDataOutAsync(CancellationToken cancellationToken)
     {
-        return await _processDataReader
-            .ReadProcessDataOutRawAsync(PortContext, cancellationToken)
-            .ConfigureAwait(false);
+        return _processDataReader.ReadProcessDataOutRawAsync(PortContext, cancellationToken);
     }
 
     /// <summary>
@@ -122,12 +122,10 @@ public class IODDPortReader : IIODDPortReader
     /// </summary>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
-    public async Task<ConversionResult> ReadConvertedProcessDataOutResultAsync(
+    public Task<ConversionResult> ReadConvertedProcessDataOutResultAsync(
         CancellationToken cancellationToken
     )
     {
-        return await _processDataReader
-            .ReadProcessDataOutAsync(PortContext, cancellationToken)
-            .ConfigureAwait(false);
+        return _processDataReader.ReadProcessDataOutAsync(PortContext, cancellationToken);
     }
 }

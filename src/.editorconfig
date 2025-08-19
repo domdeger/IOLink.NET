@@ -368,3 +368,65 @@ dotnet_naming_style.s_camelcase.capitalization = camel_case
 dotnet_diagnostic.IDE0130.severity = none
 dotnet_diagnostic.IDE0230.severity = none
 dotnet_diagnostic.CS0618.severity = none
+
+#### Async/Await Conventions ####
+
+# CA2007: Do not directly await a Task without calling ConfigureAwait
+dotnet_diagnostic.CA2007.severity = error
+
+# Require CancellationToken parameter in async methods
+# This is enforced through custom analyzers and code review
+# AsyncFixer01: Unnecessary async/await usage
+dotnet_diagnostic.AsyncFixer01.severity = error
+
+# AsyncFixer02: Long-running or blocking operations under an async method
+dotnet_diagnostic.AsyncFixer02.severity = error
+
+# AsyncFixer03: Fire & forget async void methods
+dotnet_diagnostic.AsyncFixer03.severity = error
+
+# AsyncFixer04: Fire & forget async call inside a using block
+dotnet_diagnostic.AsyncFixer04.severity = error
+
+# AsyncFixer05: Downcasting from a nested task to an outer task
+dotnet_diagnostic.AsyncFixer05.severity = error
+
+# VSTHRD100: Avoid async void methods
+dotnet_diagnostic.VSTHRD100.severity = error
+
+# VSTHRD101: Avoid unsupported async delegates
+dotnet_diagnostic.VSTHRD101.severity = error
+
+# VSTHRD103: Call async methods when in an async method
+dotnet_diagnostic.VSTHRD103.severity = suggestion
+
+# VSTHRD110: Observe result of async calls
+dotnet_diagnostic.VSTHRD110.severity = suggestion
+
+# VSTHRD111: Use ConfigureAwait(bool)
+dotnet_diagnostic.VSTHRD111.severity = error
+
+# VSTHRD114: Avoid returning null from a Task-returning method
+dotnet_diagnostic.VSTHRD114.severity = error
+
+# VSTHRD200: Use Async suffix for async methods  
+dotnet_diagnostic.VSTHRD200.severity = suggestion
+
+# CA1849: Call async methods when in an async method
+dotnet_diagnostic.CA1849.severity = suggestion
+
+# CA2016: Forward the CancellationToken parameter to methods that take one
+dotnet_diagnostic.CA2016.severity = error
+
+# Custom rule: Async methods should have CancellationToken parameter
+# This requires custom implementation but documents the requirement
+# dotnet_diagnostic.CustomAsync001.severity = error
+
+#### Test Files - Relaxed Async/Await Rules ####
+[Tests/**/*.cs]
+
+# Allow more flexibility in test files for async/await patterns
+dotnet_diagnostic.AsyncFixer01.severity = suggestion
+dotnet_diagnostic.VSTHRD111.severity = suggestion
+dotnet_diagnostic.CA2007.severity = suggestion
+dotnet_diagnostic.CA2016.severity = suggestion

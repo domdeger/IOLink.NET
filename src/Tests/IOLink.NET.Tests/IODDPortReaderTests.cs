@@ -54,7 +54,7 @@ public class IODDPortReaderTests
     }
 
     [Fact]
-    public async Task ShouldThrowIfPortIsNotInIOLinkModeAsync()
+    public Task ShouldThrowIfPortIsNotInIOLinkModeAsync()
     {
         var (portReader, _, masterConnection) = PreparePortReader(
             888,
@@ -69,11 +69,11 @@ public class IODDPortReaderTests
 
         var initTask = () => portReader.InitializeForPortAsync(1, CancellationToken.None);
 
-        await Should.ThrowAsync<InvalidOperationException>(initTask);
+        return Should.ThrowAsync<InvalidOperationException>(initTask);
     }
 
     [Fact]
-    public async Task ShouldThrowIfNoDeviceInfoAsync()
+    public Task ShouldThrowIfNoDeviceInfoAsync()
     {
         var (portReader, _, masterConnection) = PreparePortReader(
             888,
@@ -90,11 +90,11 @@ public class IODDPortReaderTests
 
         var initTask = () => portReader.InitializeForPortAsync(1, CancellationToken.None);
 
-        await Should.ThrowAsync<InvalidOperationException>(initTask);
+        return Should.ThrowAsync<InvalidOperationException>(initTask);
     }
 
     [Fact]
-    public async Task ShouldThrowIfUninitializedParameterReadAsync()
+    public Task ShouldThrowIfUninitializedParameterReadAsync()
     {
         var (portReader, _, _) = PreparePortReader(
             888,
@@ -106,7 +106,7 @@ public class IODDPortReaderTests
         var readParamTask = () =>
             portReader.ReadConvertedParameterAsync(58, 0, CancellationToken.None);
 
-        await Should.ThrowAsync<InvalidOperationException>(readParamTask);
+        return Should.ThrowAsync<InvalidOperationException>(readParamTask);
     }
 
     [Fact]
