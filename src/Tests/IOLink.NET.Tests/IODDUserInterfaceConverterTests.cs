@@ -109,13 +109,8 @@ public class IODDUserInterfaceConverterTests
         );
     }
 
-    private static IODDPortReader GetSubstituteForIODDPortReader()
+    private static IIODDPortReader GetSubstituteForIODDPortReader()
     {
-        return Substitute.For<IODDPortReader>(
-            Substitute.For<IMasterConnection>(),
-            Substitute.For<IDeviceDefinitionProvider>(),
-            Substitute.For<IIoddDataConverter>(),
-            Substitute.For<ITypeResolverFactory>()
-        );
+        return Substitute.For<IIODDPortReader>();
     }
 }

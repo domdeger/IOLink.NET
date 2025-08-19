@@ -1,11 +1,22 @@
-using IOLink.NET.Integration;
+using IOLink.NET.Core.Contracts;
 using IOLink.NET.IODD.Structure.Datatypes;
 using IOLink.NET.IODD.Structure.DeviceFunction;
 using IOLink.NET.IODD.Structure.Structure.Datatypes;
 using IOLink.NET.Visualization.Structure.Interfaces;
 
 namespace IOLink.NET.Visualization.Structure.Structure;
-public record UIVariable(string VariableId, VariableT? Variable, decimal? Gradient, decimal? Offset, uint? UnitCode, AccessRightsT? AccessRights, string? ButtonValue, DisplayFormat? DisplayFormat, IODDPortReader IoddPortReader) : IReadable
+
+public record UIVariable(
+    string VariableId,
+    VariableT? Variable,
+    decimal? Gradient,
+    decimal? Offset,
+    uint? UnitCode,
+    AccessRightsT? AccessRights,
+    string? ButtonValue,
+    DisplayFormat? DisplayFormat,
+    IIODDPortReader IoddPortReader
+) : IReadable
 {
     public object? Value;
 
@@ -16,6 +27,6 @@ public record UIVariable(string VariableId, VariableT? Variable, decimal? Gradie
             return;
         }
 
-        Value = await IoddPortReader.ReadConvertedParameterAsync(Variable.Index, 0);
+        Value = await IoddPortReader.ReadConvertedParameterResultAsync(Variable.Index, 0);
     }
 }

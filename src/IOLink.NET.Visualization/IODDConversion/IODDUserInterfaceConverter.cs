@@ -1,4 +1,4 @@
-using IOLink.NET.Integration;
+using IOLink.NET.Core.Contracts;
 using IOLink.NET.IODD.Standard.Structure;
 using IOLink.NET.IODD.Structure;
 using IOLink.NET.IODD.Structure.Interfaces;
@@ -11,10 +11,10 @@ namespace IOLink.NET.Visualization.IODDConversion;
 public class IODDUserInterfaceConverter
 {
     private readonly IIODevice _ioDevice;
-    private readonly IODDPortReader _ioddPortReader;
+    private readonly IIODDPortReader _ioddPortReader;
     private readonly IUserInterfaceT _userInterface;
 
-    public IODDUserInterfaceConverter(IIODevice ioDevice, IODDPortReader ioddPortReader)
+    public IODDUserInterfaceConverter(IIODevice ioDevice, IIODDPortReader ioddPortReader)
     {
         _ioDevice = ioDevice;
         _ioddPortReader = ioddPortReader;

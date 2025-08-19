@@ -1,9 +1,18 @@
-using IOLink.NET.Integration;
+using IOLink.NET.Core.Contracts;
 using IOLink.NET.IODD.Structure.ProcessData;
 using IOLink.NET.Visualization.Structure.Interfaces;
 
 namespace IOLink.NET.Visualization.Structure.Structure;
-public record UIMenu(string Id, string? Name, ConditionT? Condition, IEnumerable<UIVariable>? Variables, IEnumerable<UIMenu>? SubMenus, IEnumerable<UIRecordItem>? RecordItems, IODDPortReader IoddPortReader) : IReadable
+
+public record UIMenu(
+    string Id,
+    string? Name,
+    ConditionT? Condition,
+    IEnumerable<UIVariable>? Variables,
+    IEnumerable<UIMenu>? SubMenus,
+    IEnumerable<UIRecordItem>? RecordItems,
+    IIODDPortReader IoddPortReader
+) : IReadable
 {
     public async Task ReadAsync()
     {

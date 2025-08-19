@@ -1,8 +1,9 @@
-using IOLink.NET.Integration;
+using IOLink.NET.Core.Contracts;
 
 namespace IOLink.NET.Visualization.Structure.Interfaces;
+
 internal interface IReadable
 {
-    IODDPortReader IoddPortReader { get; }
+    IIODDPortReader IoddPortReader { get; }
     Task ReadAsync();
 }

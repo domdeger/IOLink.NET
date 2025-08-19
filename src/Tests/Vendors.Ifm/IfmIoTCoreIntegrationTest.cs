@@ -1,4 +1,5 @@
 using IOLink.NET.Conversion;
+using IOLink.NET.Core.Models;
 using IOLink.NET.Integration;
 using IOLink.NET.IODD.Provider;
 using IOLink.NET.IODD.Resolution.Common;
@@ -32,7 +33,7 @@ public class IoTCoreIntegrationTest
 
         await portReader.InitializeForPortAsync(3);
 
-        var result = await portReader.ReadConvertedProcessDataInAsync();
+        var result = await portReader.ReadConvertedProcessDataInResultAsync();
         result.ShouldNotBeNull();
     }
 
@@ -52,7 +53,7 @@ public class IoTCoreIntegrationTest
 
         await portReader.InitializeForPortAsync(3);
 
-        var result500 = await portReader.ReadConvertedParameterAsync(561, 0);
+        var result500 = await portReader.ReadConvertedParameterResultAsync(561, 0);
         result500.ShouldNotBeNull();
     }
 
@@ -72,10 +73,15 @@ public class IoTCoreIntegrationTest
 
         await portReader.InitializeForPortAsync(3);
 
-        var V_SP_FH1 = await portReader.ReadConvertedParameterAsync(583, 0);
-        var rP_FL1 = await portReader.ReadConvertedParameterAsync(584, 0);
-        var dS1 = await portReader.ReadConvertedParameterAsync(581, 0);
-        var dr1 = await portReader.ReadConvertedParameterAsync(582, 0);
+        var V_SP_FH1_result = await portReader.ReadConvertedParameterResultAsync(583, 0);
+        var rP_FL1_result = await portReader.ReadConvertedParameterResultAsync(584, 0);
+        var dS1_result = await portReader.ReadConvertedParameterResultAsync(581, 0);
+        var dr1_result = await portReader.ReadConvertedParameterResultAsync(582, 0);
+
+        var V_SP_FH1 = (V_SP_FH1_result as ScalarResult)?.Value;
+        var rP_FL1 = (rP_FL1_result as ScalarResult)?.Value;
+        var dS1 = (dS1_result as ScalarResult)?.Value;
+        var dr1 = (dr1_result as ScalarResult)?.Value;
 
         V_SP_FH1.ShouldBe(600);
         rP_FL1.ShouldBe(500);
