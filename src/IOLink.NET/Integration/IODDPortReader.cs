@@ -1,5 +1,6 @@
 using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
+using IOLink.NET.Core.Models;
 using IOLink.NET.IODD.Provider;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Resolution.Contracts;
@@ -7,13 +8,17 @@ using IOLink.NET.IODD.Structure;
 
 namespace IOLink.NET.Integration;
 
-public class IODDPortReader
+/// <summary>
+/// Main orchestrator for reading IODD data from IO-Link devices.
+/// This class coordinates between port initialization, parameter reading, and process data reading.
+/// </summary>
+public class IODDPortReader : IIODDPortReader
 {
-    private readonly IMasterConnection _connection;
-    private readonly IDeviceDefinitionProvider _deviceDefinitionProvider;
-    private readonly IIoddDataConverter _ioddDataConverter;
-    private readonly ITypeResolverFactory _typeResolverFactory;
-    private PortReaderInitilizationResult? _initilizationState;
+    private readonly PortInitializer _portInitializer;
+    private readonly ParameterDataReader _parameterDataReader;
+    private readonly ProcessDataReader _processDataReader;
+
+    private PortContext? _portContext;
 
     public IODDPortReader(
         IMasterConnection connection,
@@ -22,134 +27,81 @@ public class IODDPortReader
         ITypeResolverFactory typeResolverFactory
     )
     {
-        _connection = connection;
-        _deviceDefinitionProvider = deviceDefinitionProvider;
-        _ioddDataConverter = ioddDataConverter;
-        _typeResolverFactory = typeResolverFactory;
+        _portInitializer = new PortInitializer(
+            connection,
+            deviceDefinitionProvider,
+            typeResolverFactory
+        );
+        _parameterDataReader = new ParameterDataReader(connection, ioddDataConverter);
+        _processDataReader = new ProcessDataReader(connection, ioddDataConverter);
     }
 
-    private PortReaderInitilizationResult InitilizationState =>
-        _initilizationState ?? throw new InvalidOperationException("PortReader is not initialized");
+    private PortContext PortContext =>
+        _portContext ?? throw new InvalidOperationException("PortReader is not initialized");
 
     public IODevice Device
     {
         get
         {
             _ =
-                _initilizationState
+                _portContext
                 ?? throw new InvalidOperationException("PortReader is not initialized");
-            return InitilizationState.DeviceDefinition;
+            return PortContext.DeviceDefinition;
         }
     }
 
     public async Task InitializeForPortAsync(byte port)
     {
-        var portInfo = await _connection.GetPortInformationAsync(port);
-        if (!portInfo.Status.HasFlag(PortStatus.IOLink))
-        {
-            throw new InvalidOperationException("Port is not in IO-Link mode");
-        }
-
-        if (portInfo.DeviceInformation is null)
-        {
-            throw new InvalidOperationException(
-                $"Device information is not available for requested port {port}"
-            );
-        }
-
-        var deviceDefinition = await _deviceDefinitionProvider.GetDeviceDefinitionAsync(
-            portInfo.DeviceInformation.VendorId,
-            portInfo.DeviceInformation.DeviceId,
-            portInfo.DeviceInformation.ProductId
-        );
-        var pdDataResolver = _typeResolverFactory.CreateProcessDataTypeResolver(deviceDefinition);
-        var paramDataResolver = _typeResolverFactory.CreateParameterTypeResolver(deviceDefinition);
-
-        var (pdInType, pdOutType) = await GetProcessDataTypesAsync(port, pdDataResolver);
-        _initilizationState = new PortReaderInitilizationResult(
-            pdInType,
-            pdOutType,
-            port,
-            pdDataResolver,
-            paramDataResolver,
-            deviceDefinition
-        );
+        _portContext = await _portInitializer.InitializePortAsync(port);
     }
 
+    [Obsolete("Use ReadConvertedParameterResultAsync instead for better type safety.")]
     public virtual async Task<object> ReadConvertedParameterAsync(ushort index, byte subindex)
     {
-        var paramTypeDef = InitilizationState.ParameterTypeResolver.GetParameter(index, subindex);
-
-        var value = await _connection.ReadIndexAsync(
-            InitilizationState.Port,
-            index,
-            paramTypeDef.SubindexAccessSupported ? subindex : (byte)0
-        );
-
-        var convertedValue = _ioddDataConverter.Convert(paramTypeDef, value.Span);
-
-        return convertedValue;
+        return await _parameterDataReader.ReadParameterRawAsync(PortContext, index, subindex);
     }
 
-    public async Task<object> ReadConvertedProcessDataInAsync()
-    {
-        if (InitilizationState.PdIn is null)
-        {
-            throw new InvalidOperationException("Device has no process data in declared.");
-        }
-
-        var value = await _connection.ReadProcessDataInAsync(InitilizationState.Port);
-        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdIn, value.Span);
-
-        return convertedValue;
-    }
-
-    public async Task<object> ReadConvertedProcessDataOutAsync()
-    {
-        if (InitilizationState.PdOut is null)
-        {
-            throw new InvalidOperationException("Device has no process data out declared.");
-        }
-
-        var value = await _connection.ReadProcessDataOutAsync(InitilizationState.Port);
-        var convertedValue = _ioddDataConverter.Convert(InitilizationState.PdOut, value.Span);
-
-        return convertedValue;
-    }
-
-    private async Task<(ParsableDatatype? PdIn, ParsableDatatype? PdOut)> GetProcessDataTypesAsync(
-        byte port,
-        IProcessDataTypeResolver processDataTypeResolver
+    /// <summary>
+    /// Reads and converts a parameter value, returning a typed result that distinguishes between scalar and complex values.
+    /// </summary>
+    /// <param name="index">The parameter index.</param>
+    /// <param name="subindex">The parameter subindex.</param>
+    /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
+    public virtual async Task<ConversionResult> ReadConvertedParameterResultAsync(
+        ushort index,
+        byte subindex
     )
     {
-        ParsableDatatype? pdInType;
-        ParsableDatatype? pdOutType;
-        if (processDataTypeResolver.HasCondition())
-        {
-            var condition = processDataTypeResolver.ResolveCondition();
-            var conditionValue = await _connection.ReadIndexAsync(
-                port,
-                condition.VariableDef.Index,
-                condition.ConditionDef.Subindex ?? 0
-            );
-            pdInType = processDataTypeResolver.ResolveProcessDataIn(conditionValue.Span[0]);
-            pdOutType = processDataTypeResolver.ResolveProcessDataOut(conditionValue.Span[0]);
-        }
-        else
-        {
-            pdInType = processDataTypeResolver.ResolveProcessDataIn();
-            pdOutType = processDataTypeResolver.ResolveProcessDataOut();
-        }
-
-        return (pdInType, pdOutType);
+        return await _parameterDataReader.ReadParameterAsync(PortContext, index, subindex);
     }
 
-    public record PortReaderInitilizationResult(
-        ParsableDatatype? PdIn,
-        ParsableDatatype? PdOut,
-        byte Port,
-        IProcessDataTypeResolver ProcessDataTypeResolver,
-        IParameterTypeResolver ParameterTypeResolver,
-        IODevice DeviceDefinition
-    );
+    [Obsolete("Use ReadConvertedProcessDataInResultAsync instead for better type safety.")]
+    public async Task<object> ReadConvertedProcessDataInAsync()
+    {
+        return await _processDataReader.ReadProcessDataInRawAsync(PortContext);
+    }
+
+    /// <summary>
+    /// Reads and converts process data input, returning a typed result that distinguishes between scalar and complex values.
+    /// </summary>
+    /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
+    public async Task<ConversionResult> ReadConvertedProcessDataInResultAsync()
+    {
+        return await _processDataReader.ReadProcessDataInAsync(PortContext);
+    }
+
+    [Obsolete("Use ReadConvertedProcessDataOutResultAsync instead for better type safety.")]
+    public async Task<object> ReadConvertedProcessDataOutAsync()
+    {
+        return await _processDataReader.ReadProcessDataOutRawAsync(PortContext);
+    }
+
+    /// <summary>
+    /// Reads and converts process data output, returning a typed result that distinguishes between scalar and complex values.
+    /// </summary>
+    /// <returns>A ConversionResult containing either a ScalarResult or ComplexResult.</returns>
+    public async Task<ConversionResult> ReadConvertedProcessDataOutResultAsync()
+    {
+        return await _processDataReader.ReadProcessDataOutAsync(PortContext);
+    }
 }
