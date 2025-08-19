@@ -1,12 +1,9 @@
 using IOLink.NET.Conversion;
-using IOLink.NET.Core.Models;
 using IOLink.NET.Integration;
 using IOLink.NET.IODD.Provider;
 using IOLink.NET.IODD.Resolution.Common;
-using IOLink.NET.Vendors.Ifm;
 using IOLink.NET.Visualization.Menu;
 using IOLink.NET.Visualization.Structure.Structure;
-using Shouldly;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;

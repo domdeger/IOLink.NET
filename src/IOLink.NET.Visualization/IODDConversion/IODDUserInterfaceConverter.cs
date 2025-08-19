@@ -1,6 +1,5 @@
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.IODD.Standard.Structure;
-using IOLink.NET.IODD.Structure;
 using IOLink.NET.IODD.Structure.Interfaces;
 using IOLink.NET.IODD.Structure.Interfaces.Menu;
 using IOLink.NET.IODD.Structure.Structure.Menu;

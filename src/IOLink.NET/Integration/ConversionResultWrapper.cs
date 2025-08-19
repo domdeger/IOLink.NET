@@ -1,4 +1,3 @@
-using System.Collections;
 using IOLink.NET.Core.Models;
 
 namespace IOLink.NET.Integration;

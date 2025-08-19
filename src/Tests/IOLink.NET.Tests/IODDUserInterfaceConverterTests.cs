@@ -1,14 +1,9 @@
-using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
-using IOLink.NET.Integration;
-using IOLink.NET.IODD.Provider;
-using IOLink.NET.IODD.Resolution.Contracts;
 using IOLink.NET.IODD.Structure.Interfaces;
 using IOLink.NET.IODD.Structure.Structure.Menu;
 using IOLink.NET.Visualization.IODDConversion;
 using NSubstitute;
 using NSubstitute.ReturnsExtensions;
-using Shouldly;
 
 namespace IOLink.NET.Tests;
 

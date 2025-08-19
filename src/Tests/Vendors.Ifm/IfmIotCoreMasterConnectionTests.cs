@@ -1,5 +1,3 @@
-using IOLink.NET.Vendors.Ifm;
-using Shouldly;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;

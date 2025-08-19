@@ -1,5 +1,3 @@
-using Shouldly;
-using IOLink.NET.Conversion;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure.Datatypes;
 
@@ -155,10 +153,3 @@ public class IoddScalarConverterTests
         _ = result.ShouldBeOfType<string>();
     }
 }
-
-
-
-
-
-
-

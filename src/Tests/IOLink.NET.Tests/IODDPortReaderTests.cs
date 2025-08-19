@@ -1,14 +1,11 @@
 using System.Xml.Linq;
-using IOLink.NET.Conversion;
 using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
-using IOLink.NET.IODD;
 using IOLink.NET.IODD.Provider;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Resolution.Contracts;
 using IOLink.NET.IODD.Structure;
 using NSubstitute;
-using Shouldly;
 
 namespace IOLink.NET.Tests;
 

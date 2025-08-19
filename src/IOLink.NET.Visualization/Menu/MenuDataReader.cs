@@ -1,4 +1,3 @@
-using IOLink.NET.Core.Contracts;
 using IOLink.NET.Integration;
 using IOLink.NET.IODD.Structure;
 using IOLink.NET.IODD.Structure.Interfaces.Menu;
