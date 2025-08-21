@@ -8,6 +8,6 @@ public interface IDeviceDefinitionProvider<T>
         ushort vendorId,
         uint deviceId,
         string productId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     );
 }

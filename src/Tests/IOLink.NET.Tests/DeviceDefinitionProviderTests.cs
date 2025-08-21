@@ -11,7 +11,12 @@ public class DeviceDefinitionProviderTests
     {
         var client = new IODDFinderPublicClient(_baseUrl);
         var provider = new DeviceDefinitionProvider(client);
-        var definition = await provider.GetDeviceDefinitionAsync(888, 200710, "50142212");
+        var definition = await provider.GetDeviceDefinitionAsync(
+            888,
+            200710,
+            "50142212",
+            CancellationToken.None
+        );
 
         definition.ProfileBody.DeviceIdentity.VendorId.ShouldBe((ushort)888);
     }

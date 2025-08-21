@@ -1,6 +1,5 @@
 using System.Xml.Linq;
 using IOLink.NET.IODD.Helpers;
-using IOLink.NET.IODD.Parser;
 using IOLink.NET.IODD.Parser.Parts.ExternalTextCollection;
 using IOLink.NET.IODD.Parser.Parts.Menu;
 using IOLink.NET.IODD.Parts;

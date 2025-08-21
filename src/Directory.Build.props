@@ -29,4 +29,11 @@
     <CopyDebugSymbolFilesFromPackages>true</CopyDebugSymbolFilesFromPackages>
     <CopyDocumentationFilesFromPackages>true</CopyDocumentationFilesFromPackages>
  </PropertyGroup>
+
+ <!-- Async analyzers for all projects -->
+ <ItemGroup>
+   <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" PrivateAssets="all" />
+   <PackageReference Include="AsyncFixer" PrivateAssets="all" />
+   <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="all" />
+ </ItemGroup>
 </Project>

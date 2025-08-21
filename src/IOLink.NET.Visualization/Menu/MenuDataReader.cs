@@ -3,7 +3,6 @@ using IOLink.NET.IODD.Structure;
 using IOLink.NET.IODD.Structure.Interfaces.Menu;
 using IOLink.NET.Visualization.IODDConversion;
 using IOLink.NET.Visualization.Structure.Structure;
-using static IOLink.NET.Integration.IODDPortReader;
 
 namespace IOLink.NET.Visualization.Menu
 {
@@ -18,9 +17,11 @@ namespace IOLink.NET.Visualization.Menu
             _ioddPortReader = ioddPortReader;
         }
 
-        public async Task InitializeForPortAsync(byte port)
+        public async Task InitializeForPortAsync(byte port, CancellationToken cancellationToken)
         {
-            await _ioddPortReader.InitializeForPortAsync(port);
+            await _ioddPortReader
+                .InitializeForPortAsync(port, cancellationToken)
+                .ConfigureAwait(false);
             _device = _ioddPortReader.Device;
             _iODDUserInterfaceConverter = new(_device, _ioddPortReader);
         }

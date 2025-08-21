@@ -10,16 +10,9 @@ public class IODDFinderPublicClientTests
     public async Task DoesLoadIoddAsync()
     {
         var client = new IODDFinderPublicClient(_baseUrl);
-        var iodd = await client.GetIODDPackageAsync(888, 131329, "");
+        var iodd = await client.GetIODDPackageAsync(888, 131329, "", CancellationToken.None);
 
         iodd.ShouldNotBeNull();
         iodd.CanRead.ShouldBeTrue();
     }
 }
-
-
-
-
-
-
-

@@ -1,4 +1,3 @@
-using System.Net.Http;
 using System.Net.Http.Json;
 using IOLink.NET.IODD.Provider.Data;
 
@@ -34,12 +33,15 @@ public class IODDFinderPublicClient : IIODDProvider
         ushort vendorId,
         uint deviceId,
         string productId,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
-        var entries = await _httpClient.GetFromJsonAsync<IODDFinderSearchResponse>(
-            $"api/drivers?status=APPROVED&status=UPLOADED&vendorId={vendorId}&deviceId={deviceId}&productId={productId}"
-        );
+        var entries = await _httpClient
+            .GetFromJsonAsync<IODDFinderSearchResponse>(
+                $"api/drivers?status=APPROVED&status=UPLOADED&vendorId={vendorId}&deviceId={deviceId}&productId={productId}",
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (entries is null)
         {
             throw new InvalidOperationException("Could not deserialize response");
@@ -47,9 +49,12 @@ public class IODDFinderPublicClient : IIODDProvider
 
         if (entries.Content.Count() < 1)
         {
-            entries = await _httpClient.GetFromJsonAsync<IODDFinderSearchResponse>(
-                $"api/drivers?status=APPROVED&status=UPLOADED&vendorId={vendorId}&deviceId={deviceId}"
-            );
+            entries = await _httpClient
+                .GetFromJsonAsync<IODDFinderSearchResponse>(
+                    $"api/drivers?status=APPROVED&status=UPLOADED&vendorId={vendorId}&deviceId={deviceId}",
+                    cancellationToken
+                )
+                .ConfigureAwait(false);
 
             if (entries?.Content.Count() < 1)
             {
@@ -59,9 +64,12 @@ public class IODDFinderPublicClient : IIODDProvider
 
         var entry = entries.Content.OrderByDescending(x => x.IoLinkRev).First();
 
-        var zipStream = await _httpClient.GetStreamAsync(
-            $"api/vendors/{vendorId}/iodds/{entry.IoddId}/files/zip/rated"
-        );
+        var zipStream = await _httpClient
+            .GetStreamAsync(
+                $"api/vendors/{vendorId}/iodds/{entry.IoddId}/files/zip/rated",
+                cancellationToken
+            )
+            .ConfigureAwait(false);
 
         return zipStream;
     }

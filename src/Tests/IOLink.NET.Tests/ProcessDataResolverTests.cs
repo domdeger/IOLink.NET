@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using IOLink.NET.IODD;
 using IOLink.NET.IODD.Resolution;
 
 namespace IOLink.NET.Tests;
@@ -21,10 +20,3 @@ public class ProcessDataResolverTests
         parsablePdIn.ShouldBeOfType<ParsableRecord>();
     }
 }
-
-
-
-
-
-
-

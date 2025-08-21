@@ -7,11 +7,62 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Tests/IODD.Parser.Tests/IODD.Parser.Tests.csproj",
+                "${file}",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            }
+        },
+        {
+            "label": "build: current project",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${fileDirname}",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "build: solution",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/IOLink.NET.sln",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "label": "build: ConsoleRunner",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Tests/IOLink.NET.ConsoleRunner/IOLink.NET.ConsoleRunner.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
         },
         {
             "label": "publish",
@@ -19,11 +70,12 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Tests/IODD.Parser.Tests/IODD.Parser.Tests.csproj",
+                "${file}",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": "build"
         },
         {
             "label": "watch",
@@ -33,9 +85,11 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/Tests/IODD.Parser.Tests/IODD.Parser.Tests.csproj"
+                "${file}"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "group": "build",
+            "isBackground": true
         }
     ]
 }

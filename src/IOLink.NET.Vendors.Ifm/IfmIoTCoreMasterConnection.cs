@@ -14,12 +14,11 @@ public class IfmIotCoreMasterConnection : IMasterConnection
         _client = client;
     }
 
-    public async Task<byte> GetPortCountAsync(CancellationToken cancellationToken = default)
+    public async Task<byte> GetPortCountAsync(CancellationToken cancellationToken)
     {
-        var portTree = await _client.GetPortTreeAsync(
-            new IfmIoTGetPortTreeRequest(),
-            cancellationToken
-        );
+        var portTree = await _client
+            .GetPortTreeAsync(new IfmIoTGetPortTreeRequest(), cancellationToken)
+            .ConfigureAwait(false);
 
         if (portTree.Data.Subs == null)
         {
@@ -31,7 +30,7 @@ public class IfmIotCoreMasterConnection : IMasterConnection
 
     public async Task<IPortInformation> GetPortInformationAsync(
         byte portNumber,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
         var statusPath = IfmIoTCoreServicePathBuilder.PortDeviceStatusPath(portNumber);
@@ -44,21 +43,23 @@ public class IfmIotCoreMasterConnection : IMasterConnection
         var modePath = IfmIoTCoreServicePathBuilder.PortModePath(portNumber);
         var comSpeedPath = IfmIoTCoreServicePathBuilder.PortComSpeedPath(portNumber);
 
-        var resp = await _client.GetDataMultiAsync(
-            new IfmIoTGetDataMultiRequest(
-                new[]
-                {
-                    statusPath,
-                    productNamePath,
-                    vendorIdPath,
-                    deviceIdPath,
-                    masterCycleTimeActualPath,
-                    modePath,
-                    comSpeedPath,
-                }
-            ),
-            cancellationToken
-        );
+        var resp = await _client
+            .GetDataMultiAsync(
+                new IfmIoTGetDataMultiRequest(
+                    new[]
+                    {
+                        statusPath,
+                        productNamePath,
+                        vendorIdPath,
+                        deviceIdPath,
+                        masterCycleTimeActualPath,
+                        modePath,
+                        comSpeedPath,
+                    }
+                ),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
 
         var mode = resp.Data[modePath].Data.Deserialize<IfmIotCorePortMode>();
         var status = resp.Data[statusPath].Data.Deserialize<IfmIoTCorePortStatus>();
@@ -88,28 +89,30 @@ public class IfmIotCoreMasterConnection : IMasterConnection
     }
 
     public async Task<IPortInformation[]> GetPortInformationsAsync(
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
         var tasks = new List<Task<IPortInformation>>();
-        for (byte i = 1; i <= await GetPortCountAsync(); i++)
+        for (byte i = 1; i <= await GetPortCountAsync(cancellationToken).ConfigureAwait(false); i++)
         {
             tasks.Add(GetPortInformationAsync(i, cancellationToken));
         }
-        return await Task.WhenAll(tasks);
+        return await Task.WhenAll(tasks).ConfigureAwait(false);
     }
 
     public async Task<ReadOnlyMemory<byte>> ReadIndexAsync(
         byte portNumber,
         ushort index,
-        byte subIndex = 0,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken,
+        byte subIndex = 0
     )
     {
-        var resp = await _client.GetDeviceAcyclicDataAsync(
-            new IfmIoTReadAcyclicRequest(portNumber, index, subIndex),
-            cancellationToken
-        );
+        var resp = await _client
+            .GetDeviceAcyclicDataAsync(
+                new IfmIoTReadAcyclicRequest(portNumber, index, subIndex),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
         if (resp?.Data == null)
         {
             return null;
@@ -120,25 +123,23 @@ public class IfmIotCoreMasterConnection : IMasterConnection
 
     public async Task<ReadOnlyMemory<byte>> ReadProcessDataInAsync(
         byte portNumber,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
-        var resp = await _client.GetDevicePdinDataAsync(
-            new IfmIoTReadPdInRequest(portNumber),
-            cancellationToken
-        );
+        var resp = await _client
+            .GetDevicePdinDataAsync(new IfmIoTReadPdInRequest(portNumber), cancellationToken)
+            .ConfigureAwait(false);
         return Convert.FromHexString(resp.Data.Value);
     }
 
     public async Task<ReadOnlyMemory<byte>> ReadProcessDataOutAsync(
         byte portNumber,
-        CancellationToken cancellationToken = default
+        CancellationToken cancellationToken
     )
     {
-        var resp = await _client.GetDevicePdoutDataAsync(
-            new IfmIoTReadPdOutRequest(portNumber),
-            cancellationToken
-        );
+        var resp = await _client
+            .GetDevicePdoutDataAsync(new IfmIoTReadPdOutRequest(portNumber), cancellationToken)
+            .ConfigureAwait(false);
         return Convert.FromHexString(resp.Data.Value);
     }
 }

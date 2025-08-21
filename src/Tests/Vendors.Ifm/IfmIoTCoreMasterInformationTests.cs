@@ -1,6 +1,3 @@
-using Shouldly;
-using IOLink.NET.Vendors.Ifm;
-using IOLink.NET.Vendors.Ifm.Data;
 using Vendors.Ifm.Configuration;
 
 namespace Vendors.Ifm;
@@ -76,10 +73,3 @@ public class IfmIoTCoreMasterInformationTests
         result.ShouldNotBeNull();
     }
 }
-
-
-
-
-
-
-

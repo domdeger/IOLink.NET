@@ -2,25 +2,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            // Use IntelliSense to find out which attributes exist for C# debugging
-            // Use hover for the description of the existing attributes
-            // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-            "name": ".NET Core Launch (console)",
-            "type": "coreclr",
+            "name": "C#: 02_read_process_data_from_ifm_iotcore Debug",
+            "type": "dotnet",
             "request": "launch",
-            "preLaunchTask": "build",
-            // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/src/Tests/IODD.Parser.Tests/bin/Debug/net7.0/IODD.Parser.Tests.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/src/Tests/IODD.Parser.Tests",
-            // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
-            "console": "internalConsole",
-            "stopAtEntry": false
+            "projectPath": "${workspaceFolder}/samples/02_read_process_data_from_ifm_iotcore/02_read_process_data_from_ifm_iotcore.csproj"
         },
         {
-            "name": ".NET Core Attach",
+            "name": "C#: IOLink.NET.ConsoleRunner",
             "type": "coreclr",
-            "request": "attach"
+            "request": "launch",
+            "program": "${workspaceFolder}/src/Tests/IOLink.NET.ConsoleRunner/bin/Debug/net9.0/IOLink.NET.ConsoleRunner.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Tests/IOLink.NET.ConsoleRunner",
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "preLaunchTask": "build: ConsoleRunner"
         }
     ]
 }

@@ -1,6 +1,4 @@
 using System.Xml.Linq;
-using IOLink.NET.IODD.Standard.Structure;
-using IOLink.NET.IODD.Structure;
 
 namespace IOLink.NET.Tests;
 

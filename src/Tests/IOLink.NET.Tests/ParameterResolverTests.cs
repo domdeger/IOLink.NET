@@ -1,5 +1,4 @@
 using System.Xml.Linq;
-using IOLink.NET.IODD;
 using IOLink.NET.IODD.Resolution;
 using IOLink.NET.IODD.Structure;
 

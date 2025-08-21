@@ -18,7 +18,7 @@ IOLink.NET also provides a parser for the IO Device Description or short [IODD](
 
 ## Getting started
 
-IOLinkNET offers a modular toolset to work with IOLink data and device descriptions. Since we do not know the requirements specific to your project we have provide you with different components that you are free to orchestrate in order to achieve your goals. Otherwise we also maintain a default implementation.
+IOLink.NET offers a modular toolset to work with IOLink data and device descriptions. Since we do not know the requirements specific to your project we have provide you with different components that you are free to orchestrate in order to achieve your goals. Otherwise we also maintain a default implementation.
 
 Different Usage samples are provided in the samples/ folder. It is still work in progress but growing steadily.
 
@@ -26,21 +26,15 @@ Different Usage samples are provided in the samples/ folder. It is still work in
 
 Decoding IO-Link data requires us to complete different workloads before hands. First of all we need to source the IODD package for the device we are working with. Then the IODD package has to be searched for the correct description file which in turn has be to parsed. The raw IODD format has some shortcomings when it comes to automatic processing so it needs to be preprocessed.
 
-Based on the preprocessed IODD structure we are able to select the correct data types and decode/encode the given payloads. As you notice there is plenty of work to do for IOLinkNET. In this section we describe the functionality of the different projects.
+Based on the preprocessed IODD structure we are able to select the correct data types and decode/encode the given payloads. As you notice there is plenty of work to do for IOLink.NET. In this section we describe the functionality of the different projects.
 
-| Package                           | Purpose                                                                                                                                    |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| IOLinkNET.IODD.Structure          | Contains model to represent the XML structure of an IODD.                                                                                  |
-| IOLinkNET.IODD.Provider           | Functionality to retrieve IODD packages from e.g. the IODDFinderAPI                                                                        |
-| IOLinkNET.IODD.Parser             | Parser components to transform XML IODD to IOLinkNET.IODD.Structure format                                                                 |
-| IOLinkNET.IODD.Resolution         | Defines favorable and self-contained format for data type representation and utility to create those from IOLinkNET.IODD.Structure format. |
-| IOLinkNET.IODD.Standard           | Contains IODD Standard components to support IO-Link Standards                                                                             |
-| IOLinkNET.Conversion              | Defines functionality to convert from and to iolink data.                                                                                  |
-| IOLinkNET.Device                  | Defines contracts how communication with io link masters.                                                                                  |
-| IOLinkNET.Vendors.\*              | Provides vendor specific implementation of the Device interfaces.                                                                          |
-| IOLinkNET.Integration             | Orchestrates the modules to functionality that can read process data or parameter data from a device implementation.                       |
-| IOLinkNET.Visualization           | Base implementation to provide easy to use components which are useful for data visualization e.g. device readable menu structure          |
-| IOLinkNET.Visualization.Structure | Contains visualization models which are more usable than using IODD structures with references                                             |
+| Package                     | Purpose                                                                                                                                    |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| IOLink.NET.Core             | Contains core contracts, models, and extensions that define the foundation interfaces for device communication and data structures       |
+| IOLink.NET                  | Main library containing Conversion and Integration functionality for working with IO-Link data                                            |
+| IOLink.NET.IODD             | Complete IODD (IO Device Description) handling including Structure, Provider, Parser, Resolution, and Standard components                |
+| IOLink.NET.Vendors.Ifm      | IFM vendor specific implementation for communicating with IFM IO-Link masters                                                             |
+| IOLink.NET.Visualization    | Base implementation to provide easy to use components which are useful for data visualization e.g. device readable menu structure         |
 
 ## Supporters
 
