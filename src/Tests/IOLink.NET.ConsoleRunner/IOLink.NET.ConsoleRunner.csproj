@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\IOLink.NET\IOLink.NET.csproj" />
     <ProjectReference Include="..\..\IOLink.NET.Vendors.Ifm\IOLink.NET.Vendors.Ifm.csproj" />
+    <ProjectReference Include="..\..\IOLink.NET.Visualization\IOLink.NET.Visualization.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

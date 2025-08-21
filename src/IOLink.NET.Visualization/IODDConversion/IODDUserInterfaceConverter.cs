@@ -1,4 +1,5 @@
 using IOLink.NET.Core.Contracts;
+using IOLink.NET.Integration;
 using IOLink.NET.IODD.Standard.Structure;
 using IOLink.NET.IODD.Structure.Interfaces;
 using IOLink.NET.IODD.Structure.Interfaces.Menu;
@@ -12,6 +13,9 @@ public class IODDUserInterfaceConverter
     private readonly IIODevice _ioDevice;
     private readonly IIODDPortReader _ioddPortReader;
     private readonly IUserInterfaceT _userInterface;
+
+    public IODDUserInterfaceConverter(IODDPortReader ioddPortReader)
+        : this(ioddPortReader.Device, ioddPortReader) { }
 
     public IODDUserInterfaceConverter(IIODevice ioDevice, IIODDPortReader ioddPortReader)
     {
