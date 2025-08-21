@@ -8,6 +8,12 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  discussions: write
+
 jobs:
   build:
     name: Build and Test
